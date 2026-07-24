@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Static Studios</title>
+<style>
+  :root{
+    --ink:#0a0a0a;
+    --paper:#ffffff;
+    --pink:#f4a7c8;
+    --pink-deep:#e97fb0;
+    --line:#0a0a0a;
+    --mono:'Courier New',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;min-height:100%;}
+  body{
+    background:var(--paper);color:var(--ink);font-family:var(--mono);
+    overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--pink);color:#000;}
+  a{color:inherit;}
+
+  /* subtle paper vignette for a sharper, framed feel */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+    box-shadow:inset 0 0 160px rgba(0,0,0,0.05);
+  }
+
+  canvas#bg{position:fixed;top:0;left:0;z-index:0;pointer-events:none;}
+
+  /* ── Pages ───────────────────────────────────────── */
+  .page{
+    position:fixed;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;z-index:10;
+    opacity:0;pointer-events:none;transition:opacity .35s ease;
+    padding:clamp(64px,10vh,96px) 18px clamp(56px,8vh,72px);
+    overflow-y:auto;
+  }
+  .page.active{opacity:1;pointer-events:auto;}
+
+  /* ── Home ────────────────────────────────────────── */
+  #hero-eye{display:block;margin:0 auto 30px;max-width:min(340px,84vw);height:auto;}
+  #home h1{
+    font-size:clamp(2rem,7vw,5rem);font-weight:900;letter-spacing:-2px;
+    text-transform:uppercase;margin-bottom:clamp(36px,7vh,64px);line-height:.95;text-align:center;
+  }
+  #home nav{display:flex;flex-direction:column;align-items:center;gap:26px;}
+  #home nav a{
+    position:relative;font-size:clamp(.9rem,2vw,1.2rem);text-decoration:none;
+    letter-spacing:6px;text-transform:uppercase;font-weight:700;padding-bottom:4px;
+  }
+  #home nav a::after{
+    content:"";position:absolute;left:50%;bottom:0;width:0;height:2px;
+    background:var(--ink);transition:width .28s ease,left .28s ease;
+  }
+  #home nav a:hover::after,#home nav a:focus-visible::after{width:100%;left:0;}
+  #home nav a:focus-visible{outline:none;}
+
+  /* ── Shared page header + back ───────────────────── */
+  .back-btn{
+    position:fixed;top:clamp(20px,3vh,32px);left:clamp(18px,3vw,40px);
+    font-size:.72rem;letter-spacing:4px;text-transform:uppercase;text-decoration:none;
+    font-weight:700;border-bottom:2px solid var(--ink);z-index:30;padding-bottom:2px;
+  }
+  .page-title{
+    position:absolute;top:clamp(52px,8vh,76px);left:0;width:100%;text-align:center;
+    font-size:clamp(1.3rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;text-transform:uppercase;
+  }
+
+  /* ── Campaign carousel ───────────────────────────── */
+  #campaigns{justify-content:center;}
+  .carousel{width:min(920px,94vw);display:flex;flex-direction:column;align-items:center;gap:22px;margin:auto 0;}
+  .car-row{display:flex;align-items:center;gap:clamp(8px,2vw,20px);width:100%;}
+  .car-viewport{flex:1;overflow:hidden;}
+  .car-lift{will-change:transform;}
+  .car-lift.bounce{animation:cbounce .6s ease-in-out;}
+  @keyframes cbounce{0%{transform:translateY(0);}42%{transform:translateY(-16px);}100%{transform:translateY(0);}}
+  .car-track{
+    display:flex;width:100%;
+    transition:transform .62s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .camp-card{
+    flex:0 0 100%;display:flex;gap:0;background:var(--paper);
+    border:2px solid var(--ink);box-shadow:10px 10px 0 rgba(0,0,0,.08);
+    min-height:340px;overflow:hidden;
+  }
+  /* left cover */
+  .camp-art{
+    flex:0 0 44%;position:relative;border-right:2px solid var(--ink);
+    background:var(--pink);display:flex;align-items:center;justify-content:center;
+  }
+  .camp-art svg{width:82%;height:auto;display:block;}
+  /* right info */
+  .camp-info{
+    flex:1;display:flex;flex-direction:column;justify-content:center;
+    gap:14px;padding:clamp(22px,3.4vw,42px);text-align:left;
+  }
+  .camp-song{
+    font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:900;line-height:1;
+    letter-spacing:-1px;text-transform:uppercase;
+  }
+  .camp-artist{
+    font-size:clamp(.85rem,1.8vw,1.15rem);font-weight:700;letter-spacing:5px;
+    text-transform:uppercase;color:var(--pink-deep);
+  }
+  .stat{display:flex;align-items:baseline;gap:12px;margin:8px 0 4px;
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:14px 0;}
+  .stat-num{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;letter-spacing:-2px;font-variant-numeric:tabular-nums;line-height:.9;}
+  .stat-lbl{font-size:.72rem;letter-spacing:5px;text-transform:uppercase;font-weight:700;color:#555;}
+  .camp-quote{
+    font-size:clamp(.82rem,1.5vw,1rem);line-height:1.55;font-style:normal;position:relative;padding-left:18px;
+  }
+  .camp-quote::before{content:"“";position:absolute;left:-2px;top:-6px;font-size:1.7rem;font-weight:900;color:var(--pink-deep);}
+  .camp-quote cite{display:block;margin-top:10px;font-style:normal;font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:#777;}
+
+  /* mystery card */
+  .camp-card.mystery{
+    align-items:center;justify-content:center;flex-direction:column;gap:18px;
+    background:repeating-linear-gradient(45deg,#fafafa 0 14px,#fff 14px 28px);
+    border-style:dashed;text-align:center;padding:40px 20px;
+  }
+  .mystery-mark{
+    font-size:clamp(5rem,16vw,9rem);font-weight:900;line-height:1;
+    animation:float 2.6s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-14px) rotate(3deg);}}
+  .mystery p{font-size:.8rem;letter-spacing:5px;text-transform:uppercase;font-weight:700;color:#666;line-height:1.9;}
+
+  /* arrows */
+  .car-btn{
+    flex:0 0 auto;width:clamp(40px,6vw,54px);height:clamp(40px,6vw,54px);
+    border:2px solid var(--ink);background:var(--paper);font-family:var(--mono);
+    font-size:1.5rem;font-weight:900;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .12s ease,background .15s ease,color .15s ease,opacity .2s ease;
+  }
+  .car-btn:hover:not(:disabled){background:var(--ink);color:var(--paper);transform:translateY(-2px);}
+  .car-btn:active:not(:disabled){transform:translateY(0);}
+  .car-btn:disabled{opacity:.22;cursor:default;}
+  .car-btn:focus-visible{outline:3px solid var(--pink-deep);outline-offset:2px;}
+
+  /* dots + hint */
+  .car-dots{display:flex;gap:10px;align-items:center;}
+  .dot{width:9px;height:9px;border:2px solid var(--ink);border-radius:50%;background:transparent;
+    cursor:pointer;padding:0;transition:background .2s ease,transform .2s ease;}
+  .dot.on{background:var(--ink);transform:scale(1.2);}
+  .car-hint{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#999;margin-top:2px;}
+
+  /* ── Ticker ──────────────────────────────────────── */
+  .ticker{
+    position:fixed;bottom:0;left:0;width:100%;height:38px;border-top:2px solid var(--ink);
+    display:flex;align-items:center;overflow:hidden;z-index:25;background:var(--paper);
+  }
+  .ticker-inner{white-space:nowrap;animation:tick 26s linear infinite;font-size:.7rem;
+    letter-spacing:3px;text-transform:uppercase;font-weight:700;}
+  @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ── Contact ─────────────────────────────────────── */
+  #contact h2{font-size:clamp(1.5rem,4vw,3rem);font-weight:900;letter-spacing:-1px;text-transform:uppercase;margin-bottom:38px;text-align:center;}
+  #contact .info{display:flex;flex-direction:column;gap:22px;align-items:center;}
+  #contact .info a{font-size:clamp(.85rem,1.8vw,1.1rem);text-decoration:none;letter-spacing:3px;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:2px;}
+  #contact .sub{font-size:.72rem;letter-spacing:2px;color:#555;max-width:360px;text-align:center;line-height:1.8;text-transform:lowercase;}
+
+  /* ── Mobile ──────────────────────────────────────── */
+  @media(max-width:680px){
+    .camp-card{flex-direction:column;min-height:0;box-shadow:6px 6px 0 rgba(0,0,0,.08);}
+    .camp-art{flex:0 0 auto;border-right:none;border-bottom:2px solid var(--ink);aspect-ratio:16/10;}
+    .camp-art svg{width:auto;height:70%;}
+    .camp-info{gap:11px;}
+    .car-row{gap:6px;}
+    .stat{padding:10px 0;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:.001s!important;}
+    .car-track{transition:transform .2s ease;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- ── HOME ── -->
+<div class="page active" id="home">
+  <canvas id="hero-eye" width="336" height="160"></canvas>
+  <h1>Static Studios</h1>
+  <nav>
+    <a href="#" data-target="campaigns" class="nav-link">Campaigns</a>
+    <a href="https://instagram.com/staticstudios.io" target="_blank" rel="noopener" class="ext-link">@staticstudios.io</a>
+    <a href="#" data-target="contact" class="nav-link">Contact</a>
+  </nav>
+</div>
+
+<!-- ── CAMPAIGNS ── -->
+<div class="page" id="campaigns">
+  <a href="#" class="back-btn nav-link" data-target="home">← Back</a>
+  <div class="page-title">Campaigns</div>
+
+  <div class="carousel">
+    <div class="car-row">
+      <button class="car-btn car-prev" aria-label="Previous campaign">‹</button>
+      <div class="car-viewport">
+        <div class="car-lift">
+          <div class="car-track">
+
+            <!-- Slide 1 — Harvey -->
+            <article class="camp-card">
+              <div class="camp-art">
+                <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="Dance Until We're Dead cover art">
+                  <g fill="#0a0a0a" stroke="#0a0a0a" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="118" cy="150" rx="15" ry="21" transform="rotate(-8 118 150)"/>
+                    <ellipse cx="114" cy="214" rx="15" ry="21" transform="rotate(-8 114 214)"/>
+                    <path d="M182 128 Q252 200 190 288" fill="none" stroke-width="20"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="camp-info">
+                <div class="camp-song">Dance Until<br>We're Dead</div>
+                <div class="camp-artist">Harvey</div>
+                <div class="stat">
+                  <span class="stat-num" data-count="2.7">0.0M</span>
+                  <span class="stat-lbl">Views</span>
+                </div>
+                <blockquote class="camp-quote">
+                  Static got my track in front of millions and created so many opportunities for people to discover my music.
+                  <cite>— Harvey</cite>
+                </blockquote>
+              </div>
+            </article>
+
+            <!-- Slide 2 — Mystery -->
+            <article class="camp-card mystery">
+              <div class="mystery-mark">?</div>
+              <p>Your campaign<br>could be next</p>
+            </article>
+
+          </div>
+        </div>
+      </div>
+      <button class="car-btn car-next" aria-label="Next campaign">›</button>
+    </div>
+
+    <div class="car-dots" role="tablist"></div>
+    <div class="car-hint">use ← → arrows or the buttons</div>
+  </div>
+
+  <div class="ticker">
+    <div class="ticker-inner"></div>
+  </div>
+</div>
+
+<!-- ── CONTACT ── -->
+<div class="page" id="contact">
+  <a href="#" class="back-btn nav-link" data-target="home">← Back</a>
+  <h2>Contact</h2>
+  <div class="info">
+    <a href="https://instagram.com/staticstudios.io" target="_blank" rel="noopener">@staticstudios.io</a>
+    <a href="mailto:alexleppanen21@gmail.com">alexleppanen21@gmail.com</a>
+    <p class="sub">inquire for us to run your next campaign, partnerships, or for creator opportunities.</p>
+  </div>
+</div>
+
+<script>
+"use strict";
+const reduceMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+const isTouch = window.matchMedia('(pointer:coarse)').matches;
+
+/* ─── DRIFTING PARTICLE FIELD (home only) ───────────────────── */
+const bgC=document.getElementById('bg');
+const bx=bgC.getContext('2d');
+let W,H,pts,connDist,cell,gw,gh,grid,bgOn=true;
+
+function build(){
+  W=bgC.width=window.innerWidth;
+  H=bgC.height=window.innerHeight;
+  // fewer points on phones → crisper, lighter
+  const density = isTouch ? 15000 : 9000;
+  const cap = isTouch ? 130 : 260;
+  const n=Math.round(Math.min(cap,Math.max(90,W*H/density)));
+  pts=[];
+  for(let i=0;i<n;i++){
+    const ang=Math.random()*6.2832, sp=0.18+Math.random()*0.30;
+    pts.push({x:Math.random()*W,y:Math.random()*H,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,sp0:sp,turn:(Math.random()-.5)*0.005});
+  }
+  connDist=Math.max(95,Math.min(150,Math.sqrt(W*H/n)*1.25));
+  cell=connDist;gw=Math.ceil(W/cell)+1;gh=Math.ceil(H/cell)+1;
+}
+let mx=-9999,my=-9999;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+window.addEventListener('mouseout',()=>{mx=-9999;my=-9999;});
+const RAD=150;
+function drawBg(){
+  if(!bgOn){requestAnimationFrame(drawBg);return;}
+  bx.clearRect(0,0,W,H);
+  for(const p of pts){
+    const sp=Math.hypot(p.vx,p.vy),a=Math.atan2(p.vy,p.vx)+p.turn;
+    p.vx=Math.cos(a)*sp;p.vy=Math.sin(a)*sp;
+    const dx=p.x-mx,dy=p.y-my;let d=Math.hypot(dx,dy);
+    if(d<RAD){if(d<0.01)d=0.01;const f=(1-d/RAD)*0.55;p.vx+=dx/d*f;p.vy+=dy/d*f;}
+    const cs=Math.hypot(p.vx,p.vy),ns=cs+(p.sp0-cs)*0.03;
+    if(cs>0){p.vx*=ns/cs;p.vy*=ns/cs;}
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<-15)p.x=W+15;if(p.x>W+15)p.x=-15;
+    if(p.y<-15)p.y=H+15;if(p.y>H+15)p.y=-15;
+  }
+  grid=Array.from({length:gw*gh},()=>[]);
+  for(let i=0;i<pts.length;i++){const gx=Math.min(gw-1,Math.max(0,Math.floor(pts[i].x/cell))),gy=Math.min(gh-1,Math.max(0,Math.floor(pts[i].y/cell)));grid[gy*gw+gx].push(i);}
+  bx.lineWidth=.9;
+  for(let i=0;i<pts.length;i++){
+    const a=pts[i],gx=Math.min(gw-1,Math.max(0,Math.floor(a.x/cell))),gy=Math.min(gh-1,Math.max(0,Math.floor(a.y/cell)));
+    for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++){
+      const nx=gx+ox,ny=gy+oy;if(nx<0||ny<0||nx>=gw||ny>=gh)continue;
+      for(const j of grid[ny*gw+nx]){if(j<=i)continue;const b=pts[j];const dd=Math.hypot(a.x-b.x,a.y-b.y);if(dd<connDist){bx.strokeStyle=`rgba(10,10,10,${(1-dd/connDist)*.28})`;bx.beginPath();bx.moveTo(a.x,a.y);bx.lineTo(b.x,b.y);bx.stroke();}}
+    }
+  }
+  for(const p of pts){bx.fillStyle='rgba(10,10,10,0.62)';bx.beginPath();bx.arc(p.x,p.y,1.7,0,6.2832);bx.fill();}
+  requestAnimationFrame(drawBg);
+}
+function setBg(on){bgOn=on;bgC.style.display=on?'block':'none';}
+window.addEventListener('resize',build);
+build();drawBg();
+
+/* ─── HERO SYMBOL EYE ───────────────────────────────────────── */
+const hc=document.getElementById('hero-eye');
+const hx=hc.getContext('2d');
+const EW=336,EH=160,ECX=168,ECY=80;
+let pupilX=ECX,pupilY=ECY,tpX=ECX,tpY=ECY,blinkT=0,blinking=false,nextBlink=140;
+function newTarget(){const r=Math.random()*28,a=Math.random()*Math.PI*2;tpX=ECX+Math.cos(a)*r;tpY=ECY+Math.sin(a)*r*0.55;}
+newTarget();
+function schedTarget(){setTimeout(()=>{newTarget();schedTarget();},120+Math.random()*200);}
+schedTarget();
+function almondInside(x,y,blink){const dx=x-ECX,dy=(y-ECY)/blink,a=EW*0.455,b=EH*0.365,t=dx/a;if(Math.abs(t)>=1)return -99;const yMax=b*Math.sqrt(1-t*t)*(1-0.18*t*t);return yMax-Math.abs(dy);}
+function outlineChar(x,y){const tang=Math.atan2(y-ECY,x-ECX)+Math.PI/2;const n=((tang%Math.PI)+Math.PI)%Math.PI;if(n<Math.PI/8||n>7*Math.PI/8)return '-';if(n<3*Math.PI/8)return '/';if(n<5*Math.PI/8)return '|';return '\\';}
+function drawHeroEye(){
+  hx.clearRect(0,0,EW,EH);
+  pupilX+=(tpX-pupilX)*0.28;pupilY+=(tpY-pupilY)*0.28;
+  let bScale=1;
+  if(blinking){blinkT++;bScale=Math.max(0.08,Math.abs(Math.cos(blinkT*0.22)));if(blinkT>14){blinking=false;blinkT=0;}}
+  nextBlink--;if(nextBlink<=0&&!blinking){blinking=true;blinkT=0;nextBlink=90+Math.floor(Math.random()*220);}
+  const px=pupilX,py=pupilY,irisR=46,pupR=20,CW=7,CH=10;
+  const cols=Math.ceil(EW/CW)+1,rows=Math.ceil(EH/CH)+1;
+  hx.font=`bold ${CH-1}px Courier New`;hx.textAlign='left';hx.textBaseline='top';
+  for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){
+    const x=c*CW,y=r*CH,cxp=x+CW*0.5,cyp=y+CH*0.5;
+    const inside=almondInside(cxp,cyp,bScale);if(inside<-CW*1.2)continue;
+    const onB=inside>=-CW*1.2&&inside<0;const dIris=Math.hypot(cxp-px,cyp-py);
+    let sym=' ',alpha=0;
+    if(onB){sym=outlineChar(cxp,cyp);alpha=1;}
+    else if(dIris<pupR*0.5){sym='@';alpha=1;}
+    else if(dIris<pupR){sym='#';alpha=1;}
+    else if(dIris<irisR*0.45){sym='%';alpha=0.95;}
+    else if(dIris<irisR*0.72){const seg=Math.round(Math.atan2(cyp-py,cxp-px)/(Math.PI/4));const f=['-','\\','|','/','\\','|','/','-'];sym=f[((seg%8)+8)%8];alpha=0.75;}
+    else if(dIris<irisR){sym='+';alpha=0.55;}
+    else{const cL=Math.hypot(cxp-(ECX-EW*0.44),cyp-ECY),cR=Math.hypot(cxp-(ECX+EW*0.44),cyp-ECY),topS=(ECY-cyp)/EH;
+      if(Math.min(cL,cR)<38){const dd=Math.min(cL,cR)/38;if(dd<0.35){sym=':';alpha=0.55;}else if(dd<0.65){sym=',';alpha=0.35;}else{if((c*5+r*11)%9<3){sym='.';alpha=0.2;}else continue;}}
+      else if(topS>0.18){if((c*3+r*7)%7<2){sym='.';alpha=0.25;}else continue;}
+      else{if((c*7+r*13)%12===0){sym='.';alpha=0.15;}else continue;}}
+    if(sym===' '||alpha===0)continue;
+    hx.fillStyle=`rgba(10,10,10,${alpha})`;hx.fillText(sym,x,y);
+  }}
+  requestAnimationFrame(drawHeroEye);
+}
+drawHeroEye();
+
+/* ─── SHATTER + NAV ─────────────────────────────────────────── */
+const syms=['+','-','*','/','.','=','{','}','<','>','#','~'];
+const pages=document.querySelectorAll('.page');
+let cur='home';
+function showPage(id){
+  pages.forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  cur=id;setBg(id==='home');
+  if(id==='campaigns'){goTo(0,0,true);}
+}
+function shatter(x,y,cb){
+  const frags=[];
+  for(let i=0;i<26;i++){const s=document.createElement('div');
+    s.style.cssText='position:fixed;z-index:9998;pointer-events:none;font-family:Courier New,monospace;font-weight:bold;font-size:12px;color:#0a0a0a;';
+    s.style.left=x+'px';s.style.top=y+'px';s.textContent=syms[Math.floor(Math.random()*syms.length)];
+    document.body.appendChild(s);frags.push({el:s,vx:(Math.random()-.5)*18,vy:(Math.random()-.5)*18,op:1});}
+  let t=0;
+  (function anim(){t++;frags.forEach(f=>{f.op-=0.033;f.el.style.left=x+f.vx*t+'px';f.el.style.top=y+f.vy*t+'px';f.el.style.opacity=f.op;});
+    if(t<30)requestAnimationFrame(anim);else{frags.forEach(f=>f.el.remove());cb();}})();
+}
+document.querySelectorAll('.nav-link').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();const target=a.dataset.target;if(target===cur)return;
+    const r=a.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;
+    if(reduceMotion){showPage(target);}else{shatter(x,y,()=>showPage(target));}
+  });
+});
+
+/* ─── CAMPAIGN CAROUSEL ─────────────────────────────────────── */
+const track=document.querySelector('.car-track');
+const lift=document.querySelector('.car-lift');
+const cards=[...document.querySelectorAll('.camp-card')];
+const prevBtn=document.querySelector('.car-prev');
+const nextBtn=document.querySelector('.car-next');
+const dotsWrap=document.querySelector('.car-dots');
+let idx=0, countRAF;
+
+// build dots
+cards.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='dot'+(i===0?' on':'');d.setAttribute('aria-label','Go to campaign '+(i+1));
+  d.addEventListener('click',()=>goTo(i,i>idx?1:-1));
+  dotsWrap.appendChild(d);
+});
+const dots=[...dotsWrap.children];
+
+function updateUI(){
+  prevBtn.disabled=idx===0;nextBtn.disabled=idx===cards.length-1;
+  dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
+}
+function goTo(i,dir,force){
+  i=Math.max(0,Math.min(cards.length-1,i));
+  if(i===idx && !force)return;
+  idx=i;
+  track.style.transform=`translateX(${-idx*100}%)`;
+  if(!reduceMotion){lift.classList.remove('bounce');void lift.offsetWidth;lift.classList.add('bounce');}
+  updateUI();
+  if(idx===0)startCount();
+}
+prevBtn.addEventListener('click',()=>goTo(idx-1,-1));
+nextBtn.addEventListener('click',()=>goTo(idx+1,1));
+document.addEventListener('keydown',e=>{
+  if(cur!=='campaigns')return;
+  if(e.key==='ArrowRight'){e.preventDefault();goTo(idx+1,1);}
+  else if(e.key==='ArrowLeft'){e.preventDefault();goTo(idx-1,-1);}
+});
+// swipe on touch
+let sx=0;
+track.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+track.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>45)goTo(idx+(dx<0?1:-1),dx<0?1:-1);},{passive:true});
+
+// animated view counter
+function startCount(){
+  const el=document.querySelector('.stat-num');if(!el)return;
+  const target=parseFloat(el.dataset.count);
+  if(reduceMotion){el.textContent=target.toFixed(1)+'M';return;}
+  cancelAnimationFrame(countRAF);let t0=null;const dur=1100;
+  function step(ts){if(!t0)t0=ts;const p=Math.min(1,(ts-t0)/dur);const e=1-Math.pow(1-p,3);
+    el.textContent=(target*e).toFixed(1)+'M';if(p<1)countRAF=requestAnimationFrame(step);}
+  countRAF=requestAnimationFrame(step);
+}
+updateUI();
+
+/* ─── TICKER TEXT ───────────────────────────────────────────── */
+const tickMsg='★ CONTACT STATIC STUDIOS ON INSTAGRAM FOR US TO RUN YOUR NEXT CAMPAIGN — @STATICSTUDIOS.IO — NEW CAMPAIGNS COMING SOON — UGC & SHORT-FORM CONTENT — ';
+document.querySelector('.ticker-inner').textContent=(tickMsg+tickMsg);
+</script>
+</body>
+</html>
