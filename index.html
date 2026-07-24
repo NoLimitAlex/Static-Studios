@@ -74,14 +74,16 @@
   #campaigns{justify-content:center;}
   .carousel{width:min(920px,94vw);display:flex;flex-direction:column;align-items:center;gap:22px;margin:auto 0;}
   .car-row{display:flex;align-items:center;gap:clamp(8px,2vw,20px);width:100%;}
-  .car-viewport{flex:1;overflow:hidden;}
+  /* vertical padding gives the card's shadow + shake room so nothing clips */
+  .car-viewport{flex:1;overflow:hidden;padding:12px 0 22px;}
   .car-lift{will-change:transform;}
-  .car-lift.bounce{animation:cbounce .6s ease-in-out;}
-  @keyframes cbounce{0%{transform:translateY(0);}42%{transform:translateY(-16px);}100%{transform:translateY(0);}}
   .car-track{
     display:flex;width:100%;
-    transition:transform .62s cubic-bezier(.34,1.56,.64,1);
+    transition:transform .5s cubic-bezier(.45,.05,.35,1),filter .5s ease;
   }
+  .car-track.moving{filter:url(#mblur);}          /* horizontal motion blur while sliding */
+  .camp-card.shake{animation:cshake .18s ease-in-out;}
+  @keyframes cshake{0%,100%{transform:translateX(0);}28%{transform:translateX(-5px);}62%{transform:translateX(5px);}85%{transform:translateX(-2px);}}
 
   .camp-card{
     flex:0 0 100%;display:flex;gap:0;background:var(--paper);
@@ -182,6 +184,13 @@
 </head>
 <body>
 
+<!-- horizontal motion-blur filter used during carousel slides -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="mblur" x="-10%" y="-5%" width="120%" height="110%">
+    <feGaussianBlur stdDeviation="5 0"/>
+  </filter>
+</svg>
+
 <canvas id="bg"></canvas>
 
 <!-- ── HOME ── -->
@@ -275,11 +284,17 @@ const bx=bgC.getContext('2d');
 let W,H,pts,connDist,cell,gw,gh,grid,bgOn=true;
 
 function build(){
-  W=bgC.width=window.innerWidth;
-  H=bgC.height=window.innerHeight;
-  // fewer points on phones → crisper, lighter
-  const density = isTouch ? 15000 : 9000;
-  const cap = isTouch ? 130 : 260;
+  // draw at the device's real pixel density → sharp black dots on retina/phone
+  // screens instead of a low-res canvas stretched up (which looks grey & blurry).
+  const dpr=Math.min(window.devicePixelRatio||1,2.5);
+  const cssW=window.innerWidth,cssH=window.innerHeight;
+  bgC.style.width=cssW+'px';bgC.style.height=cssH+'px';
+  bgC.width=Math.round(cssW*dpr);bgC.height=Math.round(cssH*dpr);
+  bx.setTransform(dpr,0,0,dpr,0,0);           // everything below draws in CSS pixels
+  W=cssW;H=cssH;
+  // keep the network dense on phones so it reads like the desktop version
+  const density = isTouch ? 6000 : 9000;
+  const cap = isTouch ? 150 : 260;
   const n=Math.round(Math.min(cap,Math.max(90,W*H/density)));
   pts=[];
   for(let i=0;i<n;i++){
@@ -416,14 +431,29 @@ function updateUI(){
   prevBtn.disabled=idx===0;nextBtn.disabled=idx===cards.length-1;
   dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
 }
+let animating=false;
 function goTo(i,dir,force){
   i=Math.max(0,Math.min(cards.length-1,i));
-  if(i===idx && !force)return;
-  idx=i;
-  track.style.transform=`translateX(${-idx*100}%)`;
-  if(!reduceMotion){lift.classList.remove('bounce');void lift.offsetWidth;lift.classList.add('bounce');}
-  updateUI();
-  if(idx===0)startCount();
+  // force = jump instantly (used when the Campaigns page opens), no shake/blur
+  if(force){
+    idx=i;track.style.transition='none';track.style.transform=`translateX(${-idx*100}%)`;
+    void track.offsetWidth;track.style.transition='';
+    updateUI();if(idx===0)startCount();return;
+  }
+  if(i===idx||animating)return;
+  const prev=idx;idx=i;updateUI();
+  const slide=()=>{
+    track.classList.add('moving');                       // motion blur on
+    track.style.transform=`translateX(${-idx*100}%)`;
+    if(idx===0)startCount();
+    setTimeout(()=>{track.classList.remove('moving');animating=false;},520);
+  };
+  if(reduceMotion){slide();return;}
+  // small side-to-side "anticipation" shake, then slide
+  animating=true;
+  const card=cards[prev];
+  card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');
+  setTimeout(()=>{card.classList.remove('shake');slide();},180);
 }
 prevBtn.addEventListener('click',()=>goTo(idx-1,-1));
 nextBtn.addEventListener('click',()=>goTo(idx+1,1));
