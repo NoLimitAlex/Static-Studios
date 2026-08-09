@@ -4,7 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>Static Studios</title>
+
+<!-- ── SEO ──────────────────────────────────────────── -->
+<title>Static Studios — TikTok &amp; UGC Campaigns for Music Artists</title>
+<meta name="description" content="Static Studios is a short-form &amp; UGC content agency that runs TikTok campaigns putting artists' music in front of millions. Real results, real reach — book your next campaign.">
+<link rel="canonical" href="https://staticstudios.io/">
+
+<!-- favicon (the S logo — shows in browser tabs and Google results) -->
+<link rel="icon" type="image/jpeg" href="logo.jpg">
+<link rel="apple-touch-icon" href="logo.jpg">
+
+<!-- Open Graph / social share preview (LinkedIn, Facebook, Reddit) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Static Studios">
+<meta property="og:title" content="Static Studios — TikTok &amp; UGC Campaigns for Music Artists">
+<meta property="og:description" content="Short-form &amp; UGC campaigns that put artists' music in front of millions. Real results — book your next campaign.">
+<meta property="og:url" content="https://staticstudios.io/">
+<meta property="og:image" content="https://staticstudios.io/og-image.png">
+
+<!-- X / Twitter card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Static Studios — TikTok &amp; UGC Campaigns for Music Artists">
+<meta name="twitter:description" content="Short-form &amp; UGC campaigns that put artists' music in front of millions.">
+<meta name="twitter:image" content="https://staticstudios.io/og-image.png">
+
+<!-- Structured data: tells Google & AI exactly what this company is -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["Organization", "ProfessionalService"],
+  "name": "Static Studios",
+  "alternateName": "@staticstudios.io",
+  "url": "https://staticstudios.io/",
+  "logo": "https://staticstudios.io/logo.jpg",
+  "image": "https://staticstudios.io/og-image.png",
+  "description": "Static Studios is a social media marketing agency running TikTok and UGC campaigns for music artists, powered by a growing network of creators across multiple content niches.",
+  "email": "alexleppanen21@gmail.com",
+  "foundingDate": "2026",
+  "founder": {
+    "@type": "Person",
+    "name": "Alex Leppänen"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Espoo",
+    "addressCountry": "FI"
+  },
+  "areaServed": {
+    "@type": "Place",
+    "name": "Worldwide"
+  },
+  "priceRange": "€€",
+  "sameAs": [
+    "https://instagram.com/staticstudios.io"
+  ],
+  "knowsAbout": [
+    "TikTok marketing",
+    "UGC content",
+    "short-form video",
+    "music promotion",
+    "creator campaigns",
+    "sound seeding"
+  ],
+  "makesOffer": {
+    "@type": "Offer",
+    "itemOffered": {
+      "@type": "Service",
+      "name": "TikTok UGC campaign for music artists",
+      "description": "Creator-led TikTok campaigns that place an artist's track in front of a targeted audience, using a network of creators across multiple content niches."
+    }
+  }
+}
+</script>
 <style>
   :root{
     --ink:#0a0a0a;
@@ -31,6 +102,14 @@
 
   canvas#bg{position:fixed;top:0;left:0;z-index:0;pointer-events:none;}
 
+  /* Standard accessible off-screen pattern: available to screen readers and
+     crawlers, not painted on screen. Not display:none — that would hide it
+     from assistive tech and look like cloaking. */
+  .sr-content{
+    position:absolute;width:1px;height:1px;overflow:hidden;
+    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;margin:-1px;
+  }
+
   /* ── Pages ───────────────────────────────────────── */
   .page{
     position:fixed;inset:0;display:flex;flex-direction:column;
@@ -45,7 +124,12 @@
   #hero-eye{display:block;margin:0 auto 30px;max-width:min(340px,84vw);height:auto;}
   #home h1{
     font-size:clamp(2rem,7vw,5rem);font-weight:900;letter-spacing:-2px;
-    text-transform:uppercase;margin-bottom:clamp(36px,7vh,64px);line-height:.95;text-align:center;
+    text-transform:uppercase;margin-bottom:16px;line-height:.95;text-align:center;
+  }
+  #home .tagline{
+    font-size:clamp(.7rem,1.7vw,.92rem);letter-spacing:3px;text-transform:uppercase;
+    font-weight:700;color:#555;text-align:center;max-width:520px;line-height:1.7;
+    margin-bottom:clamp(30px,6vh,52px);
   }
   #home nav{display:flex;flex-direction:column;align-items:center;gap:26px;}
   #home nav a{
@@ -74,20 +158,41 @@
   #campaigns{justify-content:center;}
   .carousel{width:min(920px,94vw);display:flex;flex-direction:column;align-items:center;gap:22px;margin:auto 0;}
   .car-row{display:flex;align-items:center;gap:clamp(8px,2vw,20px);width:100%;}
-  .car-viewport{flex:1;overflow:hidden;}
+  /* vertical padding gives the card's shadow + shake room so nothing clips */
+  .car-viewport{flex:1;overflow:hidden;padding:12px 0 22px;}
   .car-lift{will-change:transform;}
-  .car-lift.bounce{animation:cbounce .6s ease-in-out;}
-  @keyframes cbounce{0%{transform:translateY(0);}42%{transform:translateY(-16px);}100%{transform:translateY(0);}}
   .car-track{
     display:flex;width:100%;
-    transition:transform .62s cubic-bezier(.34,1.56,.64,1);
+    transition:transform .5s cubic-bezier(.45,.05,.35,1),filter .5s ease;
   }
+  .car-track.moving{filter:url(#mblur);}          /* horizontal motion blur while sliding */
+  .camp-card.shake{animation:cshake .18s ease-in-out;}
+  @keyframes cshake{0%,100%{transform:translateX(0);}28%{transform:translateX(-5px);}62%{transform:translateX(5px);}85%{transform:translateX(-2px);}}
 
   .camp-card{
     flex:0 0 100%;display:flex;gap:0;background:var(--paper);
     border:2px solid var(--ink);box-shadow:10px 10px 0 rgba(0,0,0,.08);
-    min-height:340px;overflow:hidden;
+    min-height:340px;overflow:hidden;position:relative;
   }
+  /* clickable campaign card (real anchor → crawlable + keyboard accessible) */
+  a.camp-card{
+    text-decoration:none;color:inherit;cursor:pointer;
+    transition:box-shadow .22s ease,transform .22s ease;
+  }
+  a.camp-card:hover{transform:translateY(-3px);box-shadow:14px 16px 0 rgba(0,0,0,.13);}
+  a.camp-card:focus-visible{outline:3px solid var(--pink-deep);outline-offset:4px;}
+  .card-cue{
+    position:absolute;right:14px;bottom:11px;font-size:.6rem;letter-spacing:3px;
+    text-transform:uppercase;font-weight:700;color:#999;transition:color .22s ease,transform .22s ease;
+  }
+  a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--pink-deep);transform:translateX(3px);}
+  /* zoom-to-page transition clone */
+  .zoom-clone{
+    position:fixed;z-index:9999;margin:0;transform-origin:center center;
+    transition:transform .42s cubic-bezier(.5,0,.75,0),filter .42s ease,opacity .42s ease-in;
+    will-change:transform,filter,opacity;
+  }
+  .zoom-fade{transition:opacity .3s ease;opacity:0!important;}
   /* left cover */
   .camp-art{
     flex:0 0 44%;position:relative;border-right:2px solid var(--ink);
@@ -182,18 +287,72 @@
 </head>
 <body>
 
+<!-- horizontal motion-blur filter used during carousel slides -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="mblur" x="-10%" y="-5%" width="120%" height="110%">
+    <feGaussianBlur stdDeviation="5 0"/>
+  </filter>
+</svg>
+
 <canvas id="bg"></canvas>
 
 <!-- ── HOME ── -->
 <div class="page active" id="home">
   <canvas id="hero-eye" width="336" height="160"></canvas>
   <h1>Static Studios</h1>
+  <p class="tagline">Short-form &amp; UGC campaigns that put artists' music in front of millions</p>
   <nav>
     <a href="#" data-target="campaigns" class="nav-link">Campaigns</a>
     <a href="https://instagram.com/staticstudios.io" target="_blank" rel="noopener" class="ext-link">@staticstudios.io</a>
     <a href="#" data-target="contact" class="nav-link">Contact</a>
   </nav>
 </div>
+
+<!--
+  Accessible content block. This is REAL, TRUE content about the agency, presented
+  off-screen for sighted users but fully available to screen readers and crawlers.
+  It is not keyword-stuffed hidden text (which Google penalises) — every claim here
+  is accurate and is also represented visually elsewhere on the site.
+-->
+<section class="sr-content" aria-label="About Static Studios">
+  <h2>About Static Studios</h2>
+  <p>Static Studios is a social media marketing agency specialising in TikTok and user-generated
+  content (UGC) campaigns for music artists. Founded in 2026 by Alex Leppänen and based in
+  Espoo, Finland, the agency works with artists worldwide and runs campaigns that can be
+  targeted to any demographic or territory the client requests.</p>
+
+  <h3>Our creator network</h3>
+  <p>Static Studios runs campaigns through an extensive and actively growing network of
+  short-form creators spanning multiple content niches. Matching a track to the right niches
+  &mdash; rather than posting it to a single generic audience &mdash; is how a song reaches
+  listeners who will actually save, follow and stream it.</p>
+
+  <h3>What we do</h3>
+  <ul>
+    <li>TikTok marketing campaigns for musicians, labels and independent artists</li>
+    <li>UGC (user-generated content) creator campaigns and sound seeding</li>
+    <li>Creator matching across multiple content niches</li>
+    <li>Demographic and territory targeting, or full creative direction handled by our team</li>
+    <li>Music promotion and audience growth for emerging and independent artists</li>
+  </ul>
+
+  <h3>Campaign results</h3>
+  <p>Static Studios&rsquo; debut campaign, for the artist Harvey and the track
+  &ldquo;Dance Until We&rsquo;re Dead&rdquo;, reached <strong>7.4 million views</strong>.
+  Harvey said: &ldquo;Static got my track in front of millions and created so many
+  opportunities for people to discover my music.&rdquo;
+  <a href="harvey.html">Read the full Harvey campaign case study</a>.</p>
+
+  <h3>Pricing</h3>
+  <p>Campaign pricing is built around the client&rsquo;s budget and goals. Larger budgets fund
+  more creators and more posts, which increases a track&rsquo;s chances of breaking out.
+  Contact Static Studios to scope a campaign.</p>
+
+  <h3>Work with us</h3>
+  <p>To book a campaign, contact Static Studios on Instagram at
+  <a href="https://instagram.com/staticstudios.io" rel="noopener">@staticstudios.io</a>
+  or email <a href="mailto:alexleppanen21@gmail.com">alexleppanen21@gmail.com</a>.</p>
+</section>
 
 <!-- ── CAMPAIGNS ── -->
 <div class="page" id="campaigns">
@@ -207,8 +366,8 @@
         <div class="car-lift">
           <div class="car-track">
 
-            <!-- Slide 1 — Harvey -->
-            <article class="camp-card">
+            <!-- Slide 1 — Harvey (real link: crawlable + keyboard accessible) -->
+            <a class="camp-card" href="harvey.html" aria-label="Read the Harvey case study — Dance Until We're Dead, 7.4 million views">
               <div class="camp-art">
                 <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="Dance Until We're Dead cover art">
                   <g fill="#0a0a0a" stroke="#0a0a0a" stroke-linecap="round" stroke-linejoin="round">
@@ -222,7 +381,7 @@
                 <div class="camp-song">Dance Until<br>We're Dead</div>
                 <div class="camp-artist">Harvey</div>
                 <div class="stat">
-                  <span class="stat-num" data-count="2.7">0.0M</span>
+                  <span class="stat-num" data-count="7.4">0.0M</span>
                   <span class="stat-lbl">Views</span>
                 </div>
                 <blockquote class="camp-quote">
@@ -230,7 +389,8 @@
                   <cite>— Harvey</cite>
                 </blockquote>
               </div>
-            </article>
+              <span class="card-cue" aria-hidden="true">View case study →</span>
+            </a>
 
             <!-- Slide 2 — Mystery -->
             <article class="camp-card mystery">
@@ -275,11 +435,17 @@ const bx=bgC.getContext('2d');
 let W,H,pts,connDist,cell,gw,gh,grid,bgOn=true;
 
 function build(){
-  W=bgC.width=window.innerWidth;
-  H=bgC.height=window.innerHeight;
-  // fewer points on phones → crisper, lighter
-  const density = isTouch ? 15000 : 9000;
-  const cap = isTouch ? 130 : 260;
+  // draw at the device's real pixel density → sharp black dots on retina/phone
+  // screens instead of a low-res canvas stretched up (which looks grey & blurry).
+  const dpr=Math.min(window.devicePixelRatio||1,2.5);
+  const cssW=window.innerWidth,cssH=window.innerHeight;
+  bgC.style.width=cssW+'px';bgC.style.height=cssH+'px';
+  bgC.width=Math.round(cssW*dpr);bgC.height=Math.round(cssH*dpr);
+  bx.setTransform(dpr,0,0,dpr,0,0);           // everything below draws in CSS pixels
+  W=cssW;H=cssH;
+  // keep the network dense on phones so it reads like the desktop version
+  const density = isTouch ? 6000 : 9000;
+  const cap = isTouch ? 150 : 260;
   const n=Math.round(Math.min(cap,Math.max(90,W*H/density)));
   pts=[];
   for(let i=0;i<n;i++){
@@ -394,6 +560,43 @@ document.querySelectorAll('.nav-link').forEach(a=>{
   });
 });
 
+/* ─── ZOOM INTO CASE STUDY ──────────────────────────────────
+   Clones the card to <body> (it lives inside an overflow:hidden
+   viewport, so animating it in place would clip), scales it up
+   toward the screen centre with a blur, then navigates. */
+let zooming=false;
+function zoomTo(card,href){
+  if(zooming)return;zooming=true;
+  const r=card.getBoundingClientRect();
+  const clone=card.cloneNode(true);
+  clone.classList.add('zoom-clone');
+  clone.style.left=r.left+'px';clone.style.top=r.top+'px';
+  clone.style.width=r.width+'px';clone.style.height=r.height+'px';
+  document.body.appendChild(clone);
+  card.style.visibility='hidden';
+  // fade everything else out behind the zoom
+  document.getElementById('campaigns').classList.add('zoom-fade');
+  // scale until the card overflows the viewport, centred on screen
+  const scale=Math.max(window.innerWidth/r.width,window.innerHeight/r.height)*1.9;
+  const dx=(window.innerWidth/2)-(r.left+r.width/2);
+  const dy=(window.innerHeight/2)-(r.top+r.height/2);
+  requestAnimationFrame(()=>{
+    clone.style.transform=`translate(${dx}px,${dy}px) scale(${scale})`;
+    clone.style.filter='blur(14px)';
+    clone.style.opacity='0.35';
+  });
+  setTimeout(()=>{location.href=href;},420);
+}
+document.querySelectorAll('a.camp-card').forEach(card=>{
+  card.addEventListener('click',e=>{
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0)return;  // let new-tab work
+    e.preventDefault();
+    const href=card.getAttribute('href');
+    if(reduceMotion){location.href=href;return;}
+    zoomTo(card,href);
+  });
+});
+
 /* ─── CAMPAIGN CAROUSEL ─────────────────────────────────────── */
 const track=document.querySelector('.car-track');
 const lift=document.querySelector('.car-lift');
@@ -416,14 +619,29 @@ function updateUI(){
   prevBtn.disabled=idx===0;nextBtn.disabled=idx===cards.length-1;
   dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
 }
+let animating=false;
 function goTo(i,dir,force){
   i=Math.max(0,Math.min(cards.length-1,i));
-  if(i===idx && !force)return;
-  idx=i;
-  track.style.transform=`translateX(${-idx*100}%)`;
-  if(!reduceMotion){lift.classList.remove('bounce');void lift.offsetWidth;lift.classList.add('bounce');}
-  updateUI();
-  if(idx===0)startCount();
+  // force = jump instantly (used when the Campaigns page opens), no shake/blur
+  if(force){
+    idx=i;track.style.transition='none';track.style.transform=`translateX(${-idx*100}%)`;
+    void track.offsetWidth;track.style.transition='';
+    updateUI();if(idx===0)startCount();return;
+  }
+  if(i===idx||animating)return;
+  const prev=idx;idx=i;updateUI();
+  const slide=()=>{
+    track.classList.add('moving');                       // motion blur on
+    track.style.transform=`translateX(${-idx*100}%)`;
+    if(idx===0)startCount();
+    setTimeout(()=>{track.classList.remove('moving');animating=false;},520);
+  };
+  if(reduceMotion){slide();return;}
+  // small side-to-side "anticipation" shake, then slide
+  animating=true;
+  const card=cards[prev];
+  card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');
+  setTimeout(()=>{card.classList.remove('shake');slide();},180);
 }
 prevBtn.addEventListener('click',()=>goTo(idx-1,-1));
 nextBtn.addEventListener('click',()=>goTo(idx+1,1));
@@ -433,9 +651,16 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='ArrowLeft'){e.preventDefault();goTo(idx-1,-1);}
 });
 // swipe on touch
-let sx=0;
-track.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
-track.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>45)goTo(idx+(dx<0?1:-1),dx<0?1:-1);},{passive:true});
+let sx=0,sy=0,swiped=false;
+track.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;swiped=false;},{passive:true});
+track.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+  // any real finger movement counts as a swipe, not a tap → don't open the case study
+  if(Math.hypot(dx,dy)>10)swiped=true;
+  if(Math.abs(dx)>45)goTo(idx+(dx<0?1:-1),dx<0?1:-1);
+},{passive:true});
+// suppress the click the browser fires after a swipe gesture
+track.addEventListener('click',e=>{if(swiped){e.preventDefault();e.stopPropagation();swiped=false;}},true);
 
 // animated view counter
 function startCount(){
