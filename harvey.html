@@ -40,7 +40,7 @@
   "about": {
     "@type": "MusicRecording",
     "name": "Dance Until We're Dead",
-    "byArtist": { "@type": "MusicGroup", "name": "Harvey" }
+    "byArtist": { "@type": "MusicGroup", "name": "Harvey Hilton" }
   }
 }
 </script>
@@ -77,21 +77,33 @@
     background:var(--paper);
   }
 
-  /* ── Hero ── */
-  .hero{display:flex;border:2px solid var(--ink);box-shadow:10px 10px 0 rgba(0,0,0,.08);margin-bottom:54px;}
-  .hero-art{
-    flex:0 0 42%;background:var(--pink);border-right:2px solid var(--ink);
-    display:flex;align-items:center;justify-content:center;padding:26px;
+  /* ── Compact hero: a small square badge + title, deliberately NOT a
+        restatement of the full campaign card (no stat, no quote here) ── */
+  .eyebrow{
+    font-size:.62rem;letter-spacing:5px;text-transform:uppercase;
+    font-weight:700;color:#888;margin-bottom:16px;
   }
-  .hero-art svg{width:78%;height:auto;display:block;}
-  .hero-info{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:clamp(24px,3.6vw,44px);}
-  .eyebrow{font-size:.62rem;letter-spacing:5px;text-transform:uppercase;font-weight:700;color:#888;}
-  h1{font-size:clamp(1.7rem,4.2vw,3rem);font-weight:900;line-height:.98;letter-spacing:-1.5px;text-transform:uppercase;}
-  .artist{font-size:clamp(.85rem,1.8vw,1.15rem);font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--pink-deep);}
-  .stat{display:flex;align-items:baseline;gap:12px;margin-top:6px;
-    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:14px 0;}
-  .stat-num{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;letter-spacing:-2px;line-height:.9;font-variant-numeric:tabular-nums;}
-  .stat-lbl{font-size:.72rem;letter-spacing:5px;text-transform:uppercase;font-weight:700;color:#555;}
+  .hero{display:flex;align-items:center;gap:clamp(18px,3vw,30px);margin-bottom:56px;}
+  .hero-badge{
+    flex:0 0 auto;width:clamp(96px,15vw,140px);aspect-ratio:1;
+    background:var(--pink);border:2px solid var(--ink);box-shadow:7px 7px 0 rgba(0,0,0,.1);
+    display:flex;align-items:center;justify-content:center;padding:16px;
+  }
+  .hero-badge svg{width:100%;height:auto;display:block;}
+  .hero-text{display:flex;flex-direction:column;gap:9px;min-width:0;}
+  h1{font-size:clamp(1.6rem,4.2vw,2.9rem);font-weight:900;line-height:.98;letter-spacing:-1.5px;text-transform:uppercase;}
+  .artist{font-size:clamp(.8rem,1.7vw,1.05rem);font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--pink-deep);}
+
+  /* the stat gets its own moment further down, where it isn't competing
+     with the card the reader just came from */
+  .bignum{
+    font-size:clamp(3.6rem,13vw,8rem);font-weight:900;letter-spacing:-5px;
+    line-height:.85;font-variant-numeric:tabular-nums;
+  }
+  .bignum-lbl{
+    font-size:.72rem;letter-spacing:8px;text-transform:uppercase;font-weight:700;
+    color:#555;margin:6px 0 20px;
+  }
 
   /* ── Body sections ── */
   section{margin-bottom:46px;}
@@ -134,11 +146,11 @@
   @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
   @media(max-width:680px){
-    .hero{flex-direction:column;box-shadow:6px 6px 0 rgba(0,0,0,.08);}
-    .hero-art{flex:0 0 auto;border-right:none;border-bottom:2px solid var(--ink);aspect-ratio:16/10;}
-    .hero-art svg{width:auto;height:74%;}
+    .hero{gap:16px;margin-bottom:44px;}
+    .hero-badge{box-shadow:5px 5px 0 rgba(0,0,0,.1);padding:12px;}
     .pullquote{box-shadow:6px 6px 0 rgba(0,0,0,.08);}
     .wrap{padding-top:clamp(58px,8vh,80px);}
+    .bignum{letter-spacing:-3px;}
   }
   @media(prefers-reduced-motion:reduce){
     *{animation-duration:.001s!important;}
@@ -153,8 +165,9 @@
 <div class="wrap">
 
   <article>
+    <div class="eyebrow">Campaign 001 / Case Study</div>
     <header class="hero">
-      <div class="hero-art">
+      <div class="hero-badge">
         <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="Dance Until We're Dead cover art">
           <g fill="#0a0a0a" stroke="#0a0a0a" stroke-linecap="round" stroke-linejoin="round">
             <ellipse cx="118" cy="150" rx="15" ry="21" transform="rotate(-8 118 150)"/>
@@ -163,24 +176,16 @@
           </g>
         </svg>
       </div>
-      <div class="hero-info">
-        <div class="eyebrow">Campaign 001 / Case Study</div>
+      <div class="hero-text">
         <h1>Dance Until<br>We're Dead</h1>
-        <div class="artist">Harvey</div>
-        <div class="stat">
-          <span class="stat-num">7.4M</span>
-          <span class="stat-lbl">Views</span>
-        </div>
+        <div class="artist">Harvey Hilton</div>
       </div>
     </header>
 
     <section>
       <h2>The Brief</h2>
-      <p>Harvey had an unreleased track with a release date one week out. It needed exposure:
-      real people hearing it before and as it dropped.</p>
-      <p class="aside">Exposure is what everything else is built on. Views turn into streams,
-      streams turn into a fanbase, and a fanbase is what makes playlist placements, bookings and
-      the next release land harder.</p>
+      <p>Harvey Hilton had an unreleased track with a release date one week out. It needed
+      exposure: real people hearing it before and as it dropped.</p>
     </section>
 
     <section>
@@ -192,16 +197,17 @@
 
     <section>
       <h2>The Result</h2>
-      <p><strong>7.4 million views</strong>, putting Harvey's track in front of millions of
-      people, and opening the door to the kind of organic discovery that keeps working after a
-      campaign ends.</p>
+      <div class="bignum">7.4M</div>
+      <div class="bignum-lbl">Views</div>
+      <p>Putting Harvey Hilton's track in front of millions of people, and opening the door to
+      the kind of organic discovery that keeps working after a campaign ends.</p>
     </section>
   </article>
 
   <blockquote class="pullquote">
     <p>&ldquo;Static got my track in front of millions and created so many opportunities for people
     to discover my music.&rdquo;</p>
-    <cite>Harvey</cite>
+    <cite>Harvey Hilton</cite>
   </blockquote>
 
   <section class="cta">
