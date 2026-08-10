@@ -6,25 +6,25 @@
 <meta name="theme-color" content="#ffffff">
 
 <!-- ── SEO ──────────────────────────────────────────── -->
-<title>Static Studios — TikTok &amp; UGC Campaigns for Music Artists</title>
-<meta name="description" content="Static Studios is a short-form &amp; UGC content agency that runs TikTok campaigns putting artists' music in front of millions. Real results, real reach — book your next campaign.">
+<title>Static Studios | TikTok &amp; UGC Campaigns for Music Artists</title>
+<meta name="description" content="Static Studios is a short-form &amp; UGC content agency that runs TikTok campaigns putting artists' music in front of millions. Real results, real reach. Book your next campaign.">
 <link rel="canonical" href="https://staticstudios.io/">
 
-<!-- favicon (the S logo — shows in browser tabs and Google results) -->
+<!-- favicon (the S logo, shows in browser tabs and Google results) -->
 <link rel="icon" type="image/jpeg" href="logo.jpg">
 <link rel="apple-touch-icon" href="logo.jpg">
 
 <!-- Open Graph / social share preview (LinkedIn, Facebook, Reddit) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Static Studios">
-<meta property="og:title" content="Static Studios — TikTok &amp; UGC Campaigns for Music Artists">
-<meta property="og:description" content="Short-form &amp; UGC campaigns that put artists' music in front of millions. Real results — book your next campaign.">
+<meta property="og:title" content="Static Studios | TikTok &amp; UGC Campaigns for Music Artists">
+<meta property="og:description" content="Short-form &amp; UGC campaigns that put artists' music in front of millions. Real results. Book your next campaign.">
 <meta property="og:url" content="https://staticstudios.io/">
 <meta property="og:image" content="https://staticstudios.io/og-image.png">
 
 <!-- X / Twitter card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Static Studios — TikTok &amp; UGC Campaigns for Music Artists">
+<meta name="twitter:title" content="Static Studios | TikTok &amp; UGC Campaigns for Music Artists">
 <meta name="twitter:description" content="Short-form &amp; UGC campaigns that put artists' music in front of millions.">
 <meta name="twitter:image" content="https://staticstudios.io/og-image.png">
 
@@ -103,7 +103,7 @@
   canvas#bg{position:fixed;top:0;left:0;z-index:0;pointer-events:none;}
 
   /* Standard accessible off-screen pattern: available to screen readers and
-     crawlers, not painted on screen. Not display:none — that would hide it
+     crawlers, not painted on screen. Not display:none, that would hide it
      from assistive tech and look like cloaking. */
   .sr-content{
     position:absolute;width:1px;height:1px;overflow:hidden;
@@ -124,13 +124,16 @@
   #hero-eye{display:block;margin:0 auto 30px;max-width:min(340px,84vw);height:auto;}
   #home h1{
     font-size:clamp(2rem,7vw,5rem);font-weight:900;letter-spacing:-2px;
-    text-transform:uppercase;margin-bottom:16px;line-height:.95;text-align:center;
+    text-transform:uppercase;margin-bottom:clamp(36px,7vh,64px);line-height:.95;text-align:center;
   }
-  #home .tagline{
-    font-size:clamp(.7rem,1.7vw,.92rem);letter-spacing:3px;text-transform:uppercase;
-    font-weight:700;color:#555;text-align:center;max-width:520px;line-height:1.7;
-    margin-bottom:clamp(30px,6vh,52px);
+  /* tiny corner mark: keeps the phrase crawlable for Google without
+     interrupting the layout */
+  .corner-tag{
+    position:fixed;left:16px;bottom:14px;z-index:20;max-width:44vw;
+    font-size:.5rem;letter-spacing:1.6px;text-transform:uppercase;
+    font-weight:700;color:#c2c2c2;line-height:1.6;pointer-events:none;
   }
+  @media(max-width:680px){.corner-tag{font-size:.44rem;letter-spacing:1.2px;max-width:60vw;}}
   #home nav{display:flex;flex-direction:column;align-items:center;gap:26px;}
   #home nav a{
     position:relative;font-size:clamp(.9rem,2vw,1.2rem);text-decoration:none;
@@ -300,18 +303,18 @@
 <div class="page active" id="home">
   <canvas id="hero-eye" width="336" height="160"></canvas>
   <h1>Static Studios</h1>
-  <p class="tagline">Short-form &amp; UGC campaigns that put artists' music in front of millions</p>
   <nav>
     <a href="#" data-target="campaigns" class="nav-link">Campaigns</a>
     <a href="https://instagram.com/staticstudios.io" target="_blank" rel="noopener" class="ext-link">@staticstudios.io</a>
     <a href="#" data-target="contact" class="nav-link">Contact</a>
   </nav>
+  <p class="corner-tag">Short-form &amp; UGC campaigns<br>for music artists</p>
 </div>
 
 <!--
   Accessible content block. This is REAL, TRUE content about the agency, presented
   off-screen for sighted users but fully available to screen readers and crawlers.
-  It is not keyword-stuffed hidden text (which Google penalises) — every claim here
+  It is not keyword-stuffed hidden text (which Google penalises), every claim here
   is accurate and is also represented visually elsewhere on the site.
 -->
 <section class="sr-content" aria-label="About Static Studios">
@@ -366,8 +369,8 @@
         <div class="car-lift">
           <div class="car-track">
 
-            <!-- Slide 1 — Harvey (real link: crawlable + keyboard accessible) -->
-            <a class="camp-card" href="harvey.html" aria-label="Read the Harvey case study — Dance Until We're Dead, 7.4 million views">
+            <!-- Slide 1 // Harvey (real link: crawlable + keyboard accessible) -->
+            <a class="camp-card" href="harvey.html" aria-label="Read the Harvey case study, Dance Until We're Dead, 7.4 million views">
               <div class="camp-art">
                 <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="Dance Until We're Dead cover art">
                   <g fill="#0a0a0a" stroke="#0a0a0a" stroke-linecap="round" stroke-linejoin="round">
@@ -386,13 +389,13 @@
                 </div>
                 <blockquote class="camp-quote">
                   Static got my track in front of millions and created so many opportunities for people to discover my music.
-                  <cite>— Harvey</cite>
+                  <cite>Harvey</cite>
                 </blockquote>
               </div>
               <span class="card-cue" aria-hidden="true">View case study →</span>
             </a>
 
-            <!-- Slide 2 — Mystery -->
+            <!-- Slide 2 // Mystery -->
             <article class="camp-card mystery">
               <div class="mystery-mark">?</div>
               <p>Your campaign<br>could be next</p>
@@ -675,7 +678,7 @@ function startCount(){
 updateUI();
 
 /* ─── TICKER TEXT ───────────────────────────────────────────── */
-const tickMsg='★ CONTACT STATIC STUDIOS ON INSTAGRAM FOR US TO RUN YOUR NEXT CAMPAIGN — @STATICSTUDIOS.IO — NEW CAMPAIGNS COMING SOON — UGC & SHORT-FORM CONTENT — ';
+const tickMsg='★ CONTACT STATIC STUDIOS ON INSTAGRAM FOR US TO RUN YOUR NEXT CAMPAIGN // @STATICSTUDIOS.IO // NEW CAMPAIGNS COMING SOON // UGC & SHORT-FORM CONTENT // ';
 document.querySelector('.ticker-inner').textContent=(tickMsg+tickMsg);
 </script>
 </body>
