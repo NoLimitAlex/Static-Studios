@@ -177,6 +177,7 @@
   @keyframes cshake{0%,100%{transform:translateX(0);}28%{transform:translateX(-5px);}62%{transform:translateX(5px);}85%{transform:translateX(-2px);}}
 
   .camp-card{
+    --accent:var(--pink);--accent-deep:var(--pink-deep);
     flex:0 0 100%;display:flex;gap:0;background:var(--paper);
     border:2px solid var(--ink);box-shadow:10px 10px 0 rgba(0,0,0,.08);
     min-height:340px;overflow:hidden;position:relative;
@@ -187,12 +188,12 @@
     transition:box-shadow .22s ease,transform .22s ease;
   }
   a.camp-card:hover{transform:translateY(-3px);box-shadow:14px 16px 0 rgba(0,0,0,.13);}
-  a.camp-card:focus-visible{outline:3px solid var(--pink-deep);outline-offset:4px;}
+  a.camp-card:focus-visible{outline:3px solid var(--accent-deep);outline-offset:4px;}
   .card-cue{
     position:absolute;right:14px;bottom:11px;font-size:.6rem;letter-spacing:3px;
     text-transform:uppercase;font-weight:700;color:#999;transition:color .22s ease,transform .22s ease;
   }
-  a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--pink-deep);transform:translateX(3px);}
+  a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--accent-deep);transform:translateX(3px);}
   /* zoom-to-page transition clone */
   .zoom-clone{
     position:fixed;z-index:9999;margin:0;transform-origin:center center;
@@ -200,12 +201,20 @@
     will-change:transform,filter,opacity;
   }
   .zoom-fade{transition:opacity .3s ease;opacity:0!important;}
+  /* Per-campaign themes: palette is drawn from the release artwork, so each
+     card carries its own colour while the structure stays identical. */
+  .camp-card.green{--accent:#3fce87;--accent-deep:#167f4d;}
+
   /* left cover */
   .camp-art{
     flex:0 0 44%;position:relative;border-right:2px solid var(--ink);
-    background:var(--pink);display:flex;align-items:center;justify-content:center;
+    background:var(--accent);overflow:hidden;display:flex;align-items:center;justify-content:center;
   }
   .camp-art svg{width:82%;height:auto;display:block;}
+  /* cover art as an inset square sleeve, so it reads as artwork rather than
+     a full-bleed photo. Mirrors how the Harvey SVG sits on its field. */
+  .camp-cover{width:78%;height:auto;aspect-ratio:1;object-fit:cover;display:block;
+    border:2px solid var(--ink);}
   /* right info */
   .camp-info{
     flex:1;display:flex;flex-direction:column;justify-content:center;
@@ -217,7 +226,7 @@
   }
   .camp-artist{
     font-size:clamp(.85rem,1.8vw,1.15rem);font-weight:700;letter-spacing:5px;
-    text-transform:uppercase;color:var(--pink-deep);
+    text-transform:uppercase;color:var(--accent-deep);
   }
   .stat{display:flex;align-items:baseline;gap:12px;margin:8px 0 4px;
     border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:14px 0;}
@@ -226,8 +235,20 @@
   .camp-quote{
     font-size:clamp(.82rem,1.5vw,1rem);line-height:1.55;font-style:normal;position:relative;padding-left:18px;
   }
-  .camp-quote::before{content:"“";position:absolute;left:-2px;top:-6px;font-size:1.7rem;font-weight:900;color:var(--pink-deep);}
+  .camp-quote::before{content:"“";position:absolute;left:-2px;top:-6px;font-size:1.7rem;font-weight:900;color:var(--accent-deep);}
   .camp-quote cite{display:block;margin-top:10px;font-style:normal;font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:#777;}
+
+  /* result card: anonymised campaign. Deliberately a different card TYPE to the
+     Harvey case-study card, so the absent name/quote read as discretion rather
+     than as missing fields. The stat itself is the artwork. */
+  .result-eyebrow{
+    font-size:.6rem;letter-spacing:5px;text-transform:uppercase;
+    font-weight:700;color:#999;
+  }
+  .result-brief{
+    font-size:clamp(.82rem,1.5vw,1rem);line-height:1.6;
+    border-left:2px solid var(--accent);padding-left:16px;
+  }
 
   /* mystery card */
   .camp-card.mystery{
@@ -282,6 +303,7 @@
     .camp-card{flex-direction:column;min-height:0;box-shadow:6px 6px 0 rgba(0,0,0,.08);}
     .camp-art{flex:0 0 auto;border-right:none;border-bottom:2px solid var(--ink);aspect-ratio:16/10;}
     .camp-art svg{width:auto;height:70%;}
+    .camp-cover{width:auto;height:70%;}
     .camp-info{gap:11px;}
     .car-row{gap:6px;}
     .stat{padding:10px 0;}
@@ -349,6 +371,10 @@
   Harvey said: &ldquo;Static got my track in front of millions and created so many
   opportunities for people to discover my music.&rdquo;
   <a href="harvey/">Read the full Harvey campaign case study</a>.</p>
+  <p>A second campaign, for the artist KayAitchBee and the track &ldquo;Say Shit&rdquo;,
+  passed <strong>2.2 million views</strong> from two videos, one of which became the most
+  viewed and most liked video on the sound. It was run through Static Studios&rsquo; own
+  in-house short-form accounts rather than solely through third-party creators.</p>
 
   <h3>Pricing</h3>
   <p>Campaign pricing is built around the client&rsquo;s budget and goals. Larger budgets fund
@@ -399,7 +425,28 @@
               <span class="card-cue" aria-hidden="true">View case study →</span>
             </a>
 
-            <!-- Slide 2 // Mystery -->
+            <!-- Slide 2 // KayAitchBee. Cover deliberately blurred pending consent. -->
+            <a class="camp-card green" href="kayaitchbee/"
+               aria-label="Read the KayAitchBee case study, Say Shit, over 2.2 million views">
+              <div class="camp-art">
+                <img class="camp-cover" src="kayaitchbee-cover.jpg"
+                     alt="Say Shit cover artwork" width="900" height="900">
+              </div>
+              <div class="camp-info">
+                <div class="result-eyebrow">Campaign 002</div>
+                <div class="camp-song">Say Shit</div>
+                <div class="camp-artist">KayAitchBee</div>
+                <div class="stat">
+                  <span class="stat-num" data-count="2.2" data-decimals="1" data-suffix="+">0.0M+</span>
+                  <span class="stat-lbl">Views</span>
+                </div>
+                <p class="result-brief">Run through Static Studios&rsquo; own
+                <strong>in-house short-form accounts</strong>.</p>
+              </div>
+              <span class="card-cue" aria-hidden="true">View case study →</span>
+            </a>
+
+            <!-- Slide 3 // Mystery -->
             <article class="camp-card mystery">
               <div class="mystery-mark">?</div>
               <p>Your campaign<br>could be next</p>
@@ -633,14 +680,14 @@ function goTo(i,dir,force){
   if(force){
     idx=i;track.style.transition='none';track.style.transform=`translateX(${-idx*100}%)`;
     void track.offsetWidth;track.style.transition='';
-    updateUI();if(idx===0)startCount();return;
+    updateUI();startCount(cards[idx]);return;
   }
   if(i===idx||animating)return;
   const prev=idx;idx=i;updateUI();
   const slide=()=>{
     track.classList.add('moving');                       // motion blur on
     track.style.transform=`translateX(${-idx*100}%)`;
-    if(idx===0)startCount();
+    startCount(cards[idx]);
     setTimeout(()=>{track.classList.remove('moving');animating=false;},520);
   };
   if(reduceMotion){slide();return;}
@@ -670,13 +717,20 @@ track.addEventListener('touchend',e=>{
 track.addEventListener('click',e=>{if(swiped){e.preventDefault();e.stopPropagation();swiped=false;}},true);
 
 // animated view counter
-function startCount(){
-  const el=document.querySelector('.stat-num');if(!el)return;
+// Scoped to one card: each slide may carry its own counter, and some
+// (the mystery card) carry none. data-decimals / data-suffix let a card
+// render e.g. "2M+" instead of the default "9.6M".
+function startCount(card){
+  if(!card)return;
+  const el=card.querySelector('[data-count]');if(!el)return;
   const target=parseFloat(el.dataset.count);
-  if(reduceMotion){el.textContent=target.toFixed(1)+'M';return;}
+  const dec=parseInt(el.dataset.decimals??'1',10);
+  const suf=el.dataset.suffix??'';
+  const fmt=v=>v.toFixed(dec)+'M'+suf;
+  if(reduceMotion){el.textContent=fmt(target);return;}
   cancelAnimationFrame(countRAF);let t0=null;const dur=1100;
   function step(ts){if(!t0)t0=ts;const p=Math.min(1,(ts-t0)/dur);const e=1-Math.pow(1-p,3);
-    el.textContent=(target*e).toFixed(1)+'M';if(p<1)countRAF=requestAnimationFrame(step);}
+    el.textContent=fmt(target*e);if(p<1)countRAF=requestAnimationFrame(step);}
   countRAF=requestAnimationFrame(step);
 }
 updateUI();
@@ -684,6 +738,11 @@ updateUI();
 /* ─── TICKER TEXT ───────────────────────────────────────────── */
 const tickMsg='★ CONTACT STATIC STUDIOS ON INSTAGRAM FOR US TO RUN YOUR NEXT CAMPAIGN // @STATICSTUDIOS.IO // NEW CAMPAIGNS COMING SOON // UGC & SHORT-FORM CONTENT // ';
 document.querySelector('.ticker-inner').textContent=(tickMsg+tickMsg);
+
+/* ─── DEEP LINK BACK INTO THE CAROUSEL ──────────────────────
+   Case-study pages link back as ../#campaigns so the visitor
+   lands on the carousel rather than the home screen. */
+if(location.hash.slice(1).startsWith('campaigns'))showPage('campaigns');
 </script>
 </body>
 </html>
