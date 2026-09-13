@@ -5,32 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 
-<title>Harvey: "Dance Until We're Dead" TikTok Campaign Case Study | 9.6M Views | Static Studios</title>
-<meta name="description" content="How Static Studios' debut TikTok UGC campaign took Harvey's track &quot;Dance Until We're Dead&quot; to 9.6 million views using a multi-niche creator network.">
-<link rel="canonical" href="https://staticstudios.io/harvey/">
+<title>KayAitchBee: "Say Shit" TikTok Campaign Case Study | 2.2M+ Views | Static Studios</title>
+<meta name="description" content="How Static Studios took KayAitchBee's track &quot;Say Shit&quot; past 2.2 million views from just two videos, one of which became the top video on the sound.">
+<link rel="canonical" href="https://staticstudios.io/kayaitchbee/">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="/icon-192.png">
 
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Static Studios">
-<meta property="og:title" content="Harvey: &quot;Dance Until We're Dead&quot; TikTok Campaign | 9.6M Views">
-<meta property="og:description" content="Static Studios' debut TikTok UGC campaign reached 9.6 million views. Here's how it was built.">
-<meta property="og:url" content="https://staticstudios.io/harvey/">
+<meta property="og:title" content="KayAitchBee: &quot;Say Shit&quot; TikTok Campaign | 2.2M+ Views">
+<meta property="og:description" content="Static Studios took KayAitchBee's track past 2.2 million views from two videos, one of which became the top video on the sound.">
+<meta property="og:url" content="https://staticstudios.io/kayaitchbee/">
 <meta property="og:image" content="https://staticstudios.io/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Harvey: &quot;Dance Until We're Dead&quot; TikTok Campaign | 9.6M Views">
-<meta name="twitter:description" content="Static Studios' debut TikTok UGC campaign reached 9.6 million views.">
+<meta name="twitter:title" content="KayAitchBee: &quot;Say Shit&quot; TikTok Campaign | 2.2M+ Views">
+<meta name="twitter:description" content="Static Studios took KayAitchBee's track past 2.2 million views.">
 <meta name="twitter:image" content="https://staticstudios.io/og-image.png">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Harvey: \"Dance Until We're Dead\" TikTok Campaign Case Study",
-  "description": "Static Studios' debut TikTok UGC campaign for the artist Harvey reached 9.6 million views using a network of short-form creators across multiple content niches.",
+  "headline": "KayAitchBee: \"Say Shit\" TikTok Campaign Case Study",
+  "description": "Static Studios took KayAitchBee's track past 2.2 million views from two videos, one of which became the most viewed and most liked video on the sound.",
   "image": "https://staticstudios.io/og-image.png",
-  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://staticstudios.io/harvey/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://staticstudios.io/kayaitchbee/" },
   "author":    { "@type": "Organization", "name": "Static Studios", "url": "https://staticstudios.io/" },
   "publisher": {
     "@type": "Organization",
@@ -40,8 +40,8 @@
   },
   "about": {
     "@type": "MusicRecording",
-    "name": "Dance Until We're Dead",
-    "byArtist": { "@type": "MusicGroup", "name": "Harvey Hilton" }
+    "name": "Say Shit",
+    "byArtist": { "@type": "MusicGroup", "name": "KayAitchBee" }
   }
 }
 </script>
@@ -49,6 +49,8 @@
 <style>
   :root{
     --ink:#0a0a0a;--paper:#ffffff;--pink:#f4a7c8;--pink-deep:#e97fb0;
+    /* campaign 002 palette, drawn from the release artwork */
+    --accent:#3fce87;--accent-deep:#167f4d;
     --mono:'Courier New',ui-monospace,monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -58,7 +60,7 @@
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
     padding-bottom:38px;
   }
-  ::selection{background:var(--pink);color:#000;}
+  ::selection{background:var(--accent);color:#000;}
   a{color:inherit;}
 
   /* arrives slightly zoomed-in + blurred so the zoom from the card reads as continuous */
@@ -87,13 +89,15 @@
   .hero{display:flex;align-items:center;gap:clamp(18px,3vw,30px);margin-bottom:56px;}
   .hero-badge{
     flex:0 0 auto;width:clamp(96px,15vw,140px);aspect-ratio:1;
-    background:var(--pink);border:2px solid var(--ink);box-shadow:7px 7px 0 rgba(0,0,0,.1);
+    background:var(--accent);border:2px solid var(--ink);box-shadow:7px 7px 0 rgba(0,0,0,.1);
     display:flex;align-items:center;justify-content:center;padding:16px;
   }
   .hero-badge svg{width:100%;height:auto;display:block;}
+  .hero-badge{padding:0;overflow:hidden;}
+  .hero-badge img{width:100%;height:100%;object-fit:cover;display:block;}
   .hero-text{display:flex;flex-direction:column;gap:9px;min-width:0;}
   h1{font-size:clamp(1.6rem,4.2vw,2.9rem);font-weight:900;line-height:.98;letter-spacing:-1.5px;text-transform:uppercase;}
-  .artist{font-size:clamp(.8rem,1.7vw,1.05rem);font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--pink-deep);}
+  .artist{font-size:clamp(.8rem,1.7vw,1.05rem);font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--accent-deep);}
 
   /* the stat gets its own moment further down, where it isn't competing
      with the card the reader just came from */
@@ -114,15 +118,15 @@
   }
   p{font-size:.92rem;line-height:1.85;max-width:66ch;margin-bottom:14px;}
   .aside{
-    font-size:.82rem;color:#666;border-left:2px solid var(--pink);
+    font-size:.82rem;color:#666;border-left:2px solid var(--accent);
     padding-left:16px;margin-top:18px;
   }
   ul{list-style:none;max-width:66ch;}
   li{font-size:.92rem;line-height:1.7;padding-left:22px;position:relative;margin-bottom:11px;}
-  li::before{content:"→";position:absolute;left:0;font-weight:900;color:var(--pink-deep);}
+  li::before{content:"→";position:absolute;left:0;font-weight:900;color:var(--accent-deep);}
 
   .pullquote{
-    border:2px solid var(--ink);background:var(--pink);padding:clamp(24px,4vw,40px);
+    border:2px solid var(--ink);background:var(--accent);padding:clamp(24px,4vw,40px);
     box-shadow:10px 10px 0 rgba(0,0,0,.08);margin-bottom:46px;
   }
   .pullquote p{font-size:clamp(1rem,2.2vw,1.35rem);line-height:1.55;font-weight:700;margin:0 0 14px;max-width:none;}
@@ -166,50 +170,46 @@
 <div class="wrap">
 
   <article>
-    <div class="eyebrow">Campaign 001 / Case Study</div>
+    <div class="eyebrow">Campaign 002 / Case Study</div>
     <header class="hero">
       <div class="hero-badge">
-        <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="Dance Until We're Dead cover art">
-          <g fill="#0a0a0a" stroke="#0a0a0a" stroke-linecap="round" stroke-linejoin="round">
-            <ellipse cx="118" cy="150" rx="15" ry="21" transform="rotate(-8 118 150)"/>
-            <ellipse cx="114" cy="214" rx="15" ry="21" transform="rotate(-8 114 214)"/>
-            <path d="M182 128 Q252 200 190 288" fill="none" stroke-width="20"/>
-          </g>
-        </svg>
+        <img src="../kayaitchbee-cover.jpg" alt="Say Shit cover artwork"
+             width="900" height="900">
       </div>
       <div class="hero-text">
-        <h1>Dance Until<br>We're Dead</h1>
-        <div class="artist">Harvey Hilton</div>
+        <h1>Say Shit</h1>
+        <div class="artist">KayAitchBee</div>
       </div>
     </header>
 
     <section>
       <h2>The Brief</h2>
-      <p>Harvey Hilton had an unreleased track with a release date one week out. It needed
-      exposure: real people hearing it before and as it dropped.</p>
+      <p>KayAitchBee approached Static Studios to post two videos for &ldquo;Say Shit&rdquo;.
+      A small, contained scope: two posts, run from accounts we own rather than a wide creator
+      buy.</p>
     </section>
 
     <section>
       <h2>The Approach</h2>
-      <p>We ran the track through our UGC creator network, placing it with creators whose
-      audiences already respond to that kind of sound. Campaigns can be aimed at a specific
-      audience or territory, or left to our team to direct.</p>
+      <p>The campaign was run entirely on Static Studios&rsquo; own in-house short-form
+      accounts. Posting from accounts we manage and operate enables us to execute deliverables
+      faster and more efficiently. Although the campaign was small, we maximised the results,
+      achieving a CPM of &euro;0.01.</p>
     </section>
 
     <section>
       <h2>The Result</h2>
-      <div class="bignum">9.6M</div>
+      <div class="bignum">2.2M+</div>
       <div class="bignum-lbl">Views</div>
-      <p>Putting Harvey Hilton's track in front of millions of people, with an efficient CPM
-      of &euro;0.005, opening the door to the kind of organic discovery that keeps working after
-      a campaign ends.</p>
+      <p>Across two videos. One of the two became the <strong>most viewed and most liked
+      video on the sound</strong>, out of every post using the track. Two posts, placed well,
+      outperforming the rest of the sound&rsquo;s catalogue.</p>
     </section>
   </article>
 
   <blockquote class="pullquote">
-    <p>&ldquo;Static got my track in front of millions and created so many opportunities for people
-    to discover my music.&rdquo;</p>
-    <cite>Harvey Hilton</cite>
+    <p>Owned distribution. This campaign ran entirely through short-form accounts Static Studios
+    built and operates, not through booked third-party creators.</p>
   </blockquote>
 
   <section class="cta">
