@@ -232,6 +232,10 @@
     border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:14px 0;}
   .stat-num{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;letter-spacing:-2px;font-variant-numeric:tabular-nums;line-height:.9;}
   .stat-lbl{font-size:.72rem;letter-spacing:5px;text-transform:uppercase;font-weight:700;color:#555;}
+  /* supporting metrics under the headline number */
+  .stat-sub{display:flex;gap:22px;flex-wrap:wrap;margin:-2px 0 2px;}
+  .stat-sub span{font-size:.66rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:#777;}
+  .stat-sub b{font-weight:900;color:var(--ink);letter-spacing:0;font-size:.82rem;}
   .camp-quote{
     font-size:clamp(.82rem,1.5vw,1rem);line-height:1.55;font-style:normal;position:relative;padding-left:18px;
   }
@@ -367,7 +371,7 @@
 
   <h3>Campaign results</h3>
   <p>Static Studios&rsquo; debut campaign, for the artist Harvey and the track
-  &ldquo;Dance Until We&rsquo;re Dead&rdquo;, reached <strong>9.6 million views</strong>.
+  &ldquo;Dance Until We&rsquo;re Dead&rdquo;, reached <strong>10 million views</strong> across 17 videos, with 257,000 shares and a 19.3% engagement rate.
   Harvey said: &ldquo;Static got my track in front of millions and created so many
   opportunities for people to discover my music.&rdquo;
   <a href="harvey/">Read the full Harvey campaign case study</a>.</p>
@@ -400,7 +404,7 @@
           <div class="car-track">
 
             <!-- Slide 1 // Harvey (real link: crawlable + keyboard accessible) -->
-            <a class="camp-card" href="harvey/" aria-label="Read the Harvey case study, Dance Until We're Dead, 9.6 million views">
+            <a class="camp-card" href="harvey/" aria-label="Read the Harvey case study, Dance Until We're Dead, 10 million views">
               <div class="camp-art">
                 <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="Dance Until We're Dead cover art">
                   <g fill="#0a0a0a" stroke="#0a0a0a" stroke-linecap="round" stroke-linejoin="round">
@@ -414,8 +418,12 @@
                 <div class="camp-song">Dance Until<br>We're Dead</div>
                 <div class="camp-artist">Harvey</div>
                 <div class="stat">
-                  <span class="stat-num" data-count="9.6">0.0M</span>
+                  <span class="stat-num" data-count="10" data-decimals="0">0M</span>
                   <span class="stat-lbl">Views</span>
+                </div>
+                <div class="stat-sub">
+                  <span><b>257K</b> shares</span>
+                  <span><b>19.3%</b> engagement</span>
                 </div>
                 <blockquote class="camp-quote">
                   Static got my track in front of millions and created so many opportunities for people to discover my music.
