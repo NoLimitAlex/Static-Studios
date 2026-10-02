@@ -727,7 +727,7 @@ track.addEventListener('click',e=>{if(swiped){e.preventDefault();e.stopPropagati
 // animated view counter
 // Scoped to one card: each slide may carry its own counter, and some
 // (the mystery card) carry none. data-decimals / data-suffix let a card
-// render e.g. "2M+" instead of the default "9.6M".
+// render e.g. "2M+" or "10M" instead of the default one-decimal form.
 function startCount(card){
   if(!card)return;
   const el=card.querySelector('[data-count]');if(!el)return;
