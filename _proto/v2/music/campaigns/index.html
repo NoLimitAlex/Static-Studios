@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campaigns | Static Studios</title>
+<meta name="description" content="Static Studios campaign results: 10,007,951 views for Harvey across 17 videos, 2.2M+ for KayAitchBee from two posts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v=20261101d">
+</head>
+<body class="subpage radio-page">
+<canvas id="heat" aria-hidden="true"></canvas>
+<canvas id="zap" aria-hidden="true"></canvas>
+
+<header>
+  <a class="wordmark" href="/" data-zap>STATIC STUDIOS</a>
+  <a href="/music/" data-zap aria-label="Back to music">Back</a>
+</header>
+
+<main class="radio-full">
+  <div class="radio" id="radio">
+    <div class="screen">
+      <div class="hud" aria-hidden="true">
+        <span id="hudFreq">FM 10.0</span>
+        <span id="hudState" class="lock">Locked</span>
+      </div>
+
+      <div class="cards">
+        <article class="station-card" data-f="2.2" id="st-kay" aria-labelledby="st-kay-t">
+          <div>
+            <div class="sc-freq"><span>CH 002</span><span>2.2</span></div>
+            <h2 class="sc-song" id="st-kay-t">Say Shit</h2>
+            <div class="sc-artist">KayAitchBee</div>
+            <p class="sc-brief">Two posts, run from short-form accounts we own and operate rather than a wide creator buy. One became the most viewed and most liked video on the sound, out of every post using the track.</p>
+          </div>
+          <div>
+            <div class="sc-big">2.2M+</div>
+            <div class="sc-big-l">Views from 2 videos</div>
+            <div class="sc-stats">
+              <div><b>#1</b><span>Most viewed on the sound</span></div>
+              <div><b>#1</b><span>Most liked on the sound</span></div>
+            </div>
+            <a class="link-arrow" href="/music/kayaitchbee/" data-zap>Read the case study &rarr;</a>
+          </div>
+        </article>
+
+        <article class="station-card" data-f="10" id="st-harvey" aria-labelledby="st-harvey-t">
+          <div>
+            <div class="sc-freq"><span>CH 001</span><span>10.0</span></div>
+            <h2 class="sc-song" id="st-harvey-t">Dance Until We&rsquo;re Dead</h2>
+            <div class="sc-artist">Harvey Hilton</div>
+            <p class="sc-brief">An unreleased track with a release date one week out. We placed it with creators whose audiences already respond to that kind of sound.</p>
+          </div>
+          <div>
+            <div class="sc-big" data-count="10007951">10,007,951</div>
+            <div class="sc-big-l">Views across 17 videos</div>
+            <div class="sc-stats">
+              <div><b>19.3%</b><span>Engagement rate</span></div>
+              <div><b>256,894</b><span>Shares</span></div>
+            </div>
+            <blockquote class="sc-quote">&ldquo;Static got my track in front of millions and created so many opportunities for people to discover my music.&rdquo;<cite>Harvey Hilton</cite></blockquote>
+            <a class="link-arrow" href="/music/harvey/" data-zap>Read the case study &rarr;</a>
+          </div>
+        </article>
+
+        <article class="station-card open-st" data-f="13" id="st-open" aria-labelledby="st-open-t">
+          <div>
+            <div class="sc-freq"><span>CH 003</span><span>--.-</span></div>
+            <h2 class="sc-song" id="st-open-t">This frequency is open.</h2>
+            <div class="sc-artist">Your track, app or game</div>
+          </div>
+          <div>
+            <p class="sc-brief sc-brief-top">The next station on the dial could be yours. Tell us what you are launching and we will come back on whether creator content is the right move yet.</p>
+            <a class="link-arrow" href="/music/contact/" data-zap>Start a campaign &rarr;</a>
+          </div>
+        </article>
+      </div>
+
+      <canvas class="screen-static" id="screenStatic" aria-hidden="true"></canvas>
+    </div>
+
+    <div class="band" id="band" tabindex="0" role="slider"
+         aria-label="Campaign tuner" aria-valuemin="0" aria-valuemax="14"
+         aria-valuenow="10" aria-valuetext="Channel 001, Harvey">
+      <div class="band-ticks" id="bandTicks">
+        <span class="deadair" aria-hidden="true"></span>
+        <div class="needle" id="needle" style="left:71.4%"></div>
+      </div>
+    </div>
+
+    <div class="radio-foot">
+      <span>Frequency marks views in millions &middot; drag the needle or use &larr; &rarr;</span>
+      <div class="st-chips" role="tablist" aria-label="Campaigns">
+        <button class="st-chip" role="tab" data-f="10"  aria-selected="true"  aria-controls="st-harvey">001 Harvey</button>
+        <button class="st-chip" role="tab" data-f="2.2" aria-selected="false" aria-controls="st-kay">002 KayAitchBee</button>
+        <button class="st-chip" role="tab" data-f="13"  aria-selected="false" aria-controls="st-open">003 Open</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-cta">
+    <h2>Your launch could be the next station.</h2>
+    <a class="btn" href="mailto:contact@staticstudios.io?subject=Campaign">Start a campaign <span class="arr">&rarr;</span></a>
+  </div>
+  <div class="foot-cols">
+    <div><h3>Channels</h3><a href="/music/" data-zap>Artists &amp; labels</a><a href="/games/" data-zap>Game studios</a><a href="/apps/" data-zap>App developers</a></div>
+    <div><h3>Work</h3><a href="/music/harvey/" data-zap>Harvey &middot; Dance Until We&rsquo;re Dead</a><a href="/music/kayaitchbee/" data-zap>KayAitchBee &middot; Say Shit</a><a href="/music/campaigns/" data-zap>Campaign log</a></div>
+    <div><h3>Studio</h3><a href="/creators/" data-zap>For creators</a><a href="/contact/" data-zap>Contact</a><a href="/privacy/" data-zap>Privacy &amp; legal</a></div>
+    <div><h3>Contact</h3><a href="mailto:contact@staticstudios.io">contact@staticstudios.io</a><a href="https://instagram.com/staticstudios.io" target="_blank" rel="noopener">Instagram @staticstudios.io</a><p>Espoo, Finland</p></div>
+  </div>
+  <div class="foot-mark static-fill" aria-hidden="true">Static Studios</div>
+  <div class="foot-base"><span>&copy; 2026 Static Studios</span><span>Creator campaigns for music, games and apps</span></div>
+</footer>
+<script src="/script.js?v=20261101d"></script>
+<script>
+/* Campaign dial. Structure follows the concept exactly: a dark screen carrying
+   stacked station cards under a permanent film of static, a tick band with a
+   draggable needle, and a chip row underneath.
+
+   Two deliberate departures. The palette is this site's, so the accent is paper
+   on ink rather than orange. And the open channel sits past the last numbered
+   tick in dead air, because the band is captioned as views in millions and
+   parking an empty channel at 13 would promise the next campaign beats ten. */
+(function(){
+  const band=document.getElementById('band'),
+        ticks=document.getElementById('bandTicks'),
+        needle=document.getElementById('needle'),
+        hudF=document.getElementById('hudFreq'),
+        hudS=document.getElementById('hudState'),
+        stc=document.getElementById('screenStatic');
+  if(!band) return;
+
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const MAX=14, LAST_TICK=12;
+  const cards=Array.prototype.slice.call(document.querySelectorAll('.station-card'));
+  const chips=Array.prototype.slice.call(document.querySelectorAll('.st-chip'));
+  const stations=cards.map(c=>({f:parseFloat(c.dataset.f),el:c,id:c.id}))
+                      .sort((a,b)=>a.f-b.f);
+  const names={'st-harvey':'Channel 001, Harvey','st-kay':'Channel 002, KayAitchBee',
+               'st-open':'Channel 003, open frequency'};
+  let freq=10, locked=null, anim=null, scanned=false, countRAF;
+
+  for(let v=0; v<=LAST_TICK*4; v++){
+    const val=v/4, el=document.createElement('span');
+    el.className='tick'+(val%2===0?' maj':(val%1===0?' mid':''));
+    el.style.left=(val/MAX*100)+'%'; ticks.appendChild(el);
+    if(val%2===0){
+      const l=document.createElement('span');
+      l.className='tick-l'; l.textContent=val; l.style.left=(val/MAX*100)+'%';
+      ticks.appendChild(l);
+    }
+  }
+  stations.forEach(s=>{
+    const b=document.createElement('button');
+    b.type='button'; b.className='st-mark'; b.tabIndex=-1;
+    b.style.left=(s.f/MAX*100)+'%';
+    b.textContent = s.id==='st-open' ? 'Open' : s.f.toFixed(1);
+    b.setAttribute('aria-label','Tune to '+names[s.id]);
+    b.addEventListener('click',e=>{e.stopPropagation(); tuneTo(s.f,true);});
+    ticks.appendChild(b); s.mark=b;
+  });
+
+  /* the headline figure counts up each time its station locks */
+  function startCount(card){
+    if(!card) return;
+    const el=card.querySelector('[data-count]'); if(!el) return;
+    const target=parseInt(el.dataset.count,10);
+    const fmt=v=>Math.round(v).toLocaleString('en-GB');
+    if(reduce){ el.textContent=fmt(target); return; }
+    cancelAnimationFrame(countRAF); let t0=null;
+    (function step(ts){
+      if(!t0)t0=ts;
+      const p=Math.min(1,(ts-t0)/1200), e=1-Math.pow(1-p,3);
+      el.textContent=fmt(target*e);
+      if(p<1) countRAF=requestAnimationFrame(step);
+    })(performance.now());
+  }
+
+  const nearest=f=>stations.reduce((b,s)=>Math.abs(s.f-f)<Math.abs(b.f-f)?s:b,stations[0]);
+
+  function render(){
+    needle.style.left=(freq/MAX*100)+'%';
+    const n=nearest(freq), d=Math.abs(n.f-freq);
+    const off=Math.min(1,d/0.55);
+    // never fully clear: a film of static sits on the screen even when locked
+    stc.style.opacity=(0.07+off*0.78).toFixed(3);
+    const lockNow = d<0.07 ? n : null;
+    cards.forEach(c=>c.classList.toggle('on', c===n.el));
+    stations.forEach(s=>s.mark.classList.toggle('on', s===lockNow));
+    hudF.textContent='FM '+(lockNow&&lockNow.id==='st-open' ? '--.-' : freq.toFixed(1));
+    hudS.textContent=lockNow?'Locked':'Searching';
+    hudS.classList.toggle('lock',!!lockNow);
+    if(lockNow!==locked){
+      if(lockNow) startCount(lockNow.el);
+      locked=lockNow;
+      chips.forEach(ch=>ch.setAttribute('aria-selected',
+        String(!!lockNow && ch.getAttribute('aria-controls')===lockNow.id)));
+      band.setAttribute('aria-valuenow',freq.toFixed(1));
+      band.setAttribute('aria-valuetext', lockNow?names[lockNow.id]:'Searching');
+    }
+  }
+
+  function tuneTo(target,user,dur){
+    if(anim) cancelAnimationFrame(anim);
+    if(user) scanned=true;
+    if(reduce){ freq=target; render(); return; }
+    const from=freq; let t0=null;
+    dur = dur || Math.min(900, 250+Math.abs(target-from)*70);
+    (function step(ts){
+      if(!t0)t0=ts;
+      const p=Math.min(1,(ts-t0)/dur), e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+      freq=from+(target-from)*e; render();
+      anim = p<1 ? requestAnimationFrame(step) : null;
+    })(performance.now());
+  }
+
+  const fromPointer=e=>{
+    const r=ticks.getBoundingClientRect();
+    return Math.max(0,Math.min(MAX,(e.clientX-r.left)/r.width*MAX));
+  };
+
+  let dragging=false, startX=0, moved=false;
+  band.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.st-mark')) return;
+    dragging=true; moved=false; startX=e.clientX; scanned=true;
+    if(anim) cancelAnimationFrame(anim);
+    band.setPointerCapture(e.pointerId);
+  });
+  band.addEventListener('pointermove',e=>{
+    if(!dragging) return;
+    if(Math.abs(e.clientX-startX)>3) moved=true;
+    if(moved){ freq=fromPointer(e); render(); }
+  });
+  function end(e){
+    if(!dragging) return; dragging=false;
+    if(!moved) freq=fromPointer(e);
+    tuneTo(nearest(freq).f,true);
+  }
+  band.addEventListener('pointerup',end);
+  band.addEventListener('pointercancel',end);
+  band.addEventListener('keydown',e=>{
+    const i=stations.indexOf(nearest(freq));
+    if(e.key==='ArrowRight'||e.key==='ArrowUp'){e.preventDefault();tuneTo(stations[Math.min(stations.length-1,i+1)].f,true);}
+    if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();tuneTo(stations[Math.max(0,i-1)].f,true);}
+    if(e.key==='Home'){e.preventDefault();tuneTo(stations[0].f,true);}
+    if(e.key==='End'){e.preventDefault();tuneTo(stations[stations.length-1].f,true);}
+  });
+  chips.forEach(ch=>ch.addEventListener('click',()=>tuneTo(parseFloat(ch.dataset.f),true)));
+
+  /* first view: sweep up from the bottom of the band and land on channel 001 */
+  freq = reduce ? 10 : 0; render();
+  if(!reduce){
+    new IntersectionObserver(es=>{
+      if(es[0].isIntersecting && !scanned){ scanned=true; tuneTo(10,false,2600); }
+    },{threshold:.3}).observe(document.getElementById('radio'));
+  }
+})();
+</script>
+</body>
+</html>

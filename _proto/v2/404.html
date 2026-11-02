@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 | Static Studios</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v=20261101d">
+<style>
+  .flat{position:fixed;inset:0;z-index:1;pointer-events:none}
+  .dead{position:absolute;inset:0;display:grid;place-items:center;z-index:2;padding:24px;text-align:center}
+  /* the numerals are a window onto the snow, not type sitting on top of it */
+  .glyphs{display:block;width:min(78vw,620px);height:auto;margin:0 auto;
+    image-rendering:pixelated}
+  .dead h1{margin:0;line-height:0}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
+    white-space:nowrap}
+  .dead p{font-size:12px;line-height:1.9;color:#777;margin:18px 0 0;letter-spacing:.5px}
+  .dead a{font-size:11px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;
+    border-bottom:1px solid #171717;padding-bottom:2px;display:inline-block;margin-top:26px}
+</style>
+</head>
+<body>
+<canvas class="flat" id="flat" aria-hidden="true"></canvas>
+
+<main class="dead">
+  <div>
+    <h1><canvas class="glyphs" id="glyphs" aria-hidden="true"></canvas><span class="sr">404</span></h1>
+    <p>No pulse on this page. It either moved, or it never existed.</p>
+    <a href="/">Back to Static Studios</a>
+  </div>
+</main>
+
+<script>
+/* Snow, then the numerals punched out of it. putImageData ignores composite
+   modes, so the noise goes down first and the glyphs are applied afterwards
+   with destination-in, which keeps only the pixels the text covers. */
+(function glyphs(){
+  const c=document.getElementById('glyphs'); if(!c) return;
+  const x=c.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let seed=0x9E3779B9, img=null, buf=null, W=0, H=0;
+  const rnd=()=>{seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;return seed>>>0;};
+
+  function size(){
+    const cssW=c.clientWidth||Math.min(innerWidth*0.78,620);
+    if(cssW<1) return false;
+    const cssH=Math.round(cssW*0.42);
+    c.style.height=cssH+'px';
+    W=Math.max(1,Math.round(cssW/3));H=Math.max(1,Math.round(cssH/3));
+    c.width=W;c.height=H;
+    img=x.createImageData(W,H);buf=new Uint32Array(img.data.buffer);
+    return true;
+  }
+  function paint(now){
+    if(!buf) return;
+    const bar=(((now*0.00013)%1)*1.55-0.28)*H, barH=Math.max(2,H*0.22);
+    for(let y=0;y<H;y++){
+      const tear=(rnd()%769===0)?((rnd()%13)-6):0;
+      const lift=Math.max(0,1-Math.abs(y-bar)/barH)*46;
+      const row=y*W;
+      for(let px=0;px<W;px++){
+        let v=(rnd()&255)+lift; if(v>255)v=255;
+        let xx=px+tear; if(xx<0)xx+=W; else if(xx>=W)xx-=W;
+        buf[row+xx]=0xff000000|(v<<16)|(v<<8)|v;
+      }
+    }
+    x.globalCompositeOperation='source-over';
+    x.putImageData(img,0,0);
+    // keep only what the numerals cover
+    x.globalCompositeOperation='destination-in';
+    x.fillStyle='#000';
+    x.textAlign='center';x.textBaseline='middle';
+    let fs=H*1.02;
+    x.font='700 '+fs+'px "IBM Plex Mono",ui-monospace,monospace';
+    const want=W*0.96, got=x.measureText('404').width;
+    if(got>0&&got!==want){ fs=fs*want/got; x.font='700 '+fs+'px "IBM Plex Mono",ui-monospace,monospace'; }
+    x.fillText('404',W/2,H/2+fs*0.02);
+    x.globalCompositeOperation='source-over';
+  }
+  function start(){
+    if(!size()) return;
+    paint(performance.now());
+    if(reduce) return;                       // one frozen frame, no flicker
+    let last=0;
+    (function loop(t){
+      requestAnimationFrame(loop);
+      if(document.hidden||t-last<62) return; last=t;
+      paint(t);
+    })(0);
+  }
+  addEventListener('resize',()=>{ if(size()) paint(performance.now()); });
+  // wait for the webfont, otherwise the mask is cut with a fallback face
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(start);
+})();
+
+(function(){
+  const c=document.getElementById('flat'), x=c.getContext('2d');
+  let W,H;
+  function size(){const d=Math.min(devicePixelRatio||1,2.5);
+    W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;
+    c.style.width=W+'px';c.style.height=H+'px';x.setTransform(d,0,0,d,0,0);}
+  size();addEventListener('resize',size);
+
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const t0=performance.now();
+  // one last weak beat, then flat forever
+  const BEAT_AT=900, BEAT_W=0.03;
+
+  function spike(u){
+    if(Math.abs(u)>1) return 0;
+    if(u<-0.34) return 0;
+    if(u<-0.16) return -0.18*(1-(Math.abs(u+0.25)/0.09));
+    if(u<0)     return (1+u/0.16);
+    if(u<0.17)  return (1-u/0.17)-(u/0.17)*0.45;
+    if(u<0.42)  return -0.45*(1-(u-0.17)/0.25);
+    return 0;
+  }
+
+  function draw(now){
+    const t=now-t0, cy=H*0.5;
+    x.clearRect(0,0,W,H);
+    // the trace sweeps in from the left once, then holds flat
+    const sweep=Math.min(1,t/1400);
+    const beatPos = t>BEAT_AT ? Math.min(1,(t-BEAT_AT)/2600) : -1;
+
+    x.beginPath();
+    for(let px=0;px<=W*sweep;px+=2){
+      const s=px/W;
+      let off=0;
+      if(beatPos>=0 && !reduce){
+        const u=(s-beatPos)/BEAT_W;
+        // the beat weakens as it travels, then nothing
+        const decay=Math.max(0,1-beatPos*1.6);
+        if(Math.abs(u)<=1) off=spike(u)*52*decay;
+      }
+      px===0 ? x.moveTo(px,cy+off) : x.lineTo(px,cy+off);
+    }
+    x.strokeStyle='rgba(23,23,23,.55)';x.lineWidth=1.2;x.stroke();
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

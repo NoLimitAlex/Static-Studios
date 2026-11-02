@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Harvey: "Dance Until We're Dead" TikTok Campaign Case Study | 10M Views | Static Studios</title>
+<style>
+/* case study, v2 styling */
+*{box-sizing:border-box}
+html,body{margin:0}
+:root{font-family:'IBM Plex Mono',ui-monospace,monospace;color:#171717;background:#fff;
+  font-synthesis:none;-webkit-font-smoothing:antialiased}
+body{min-height:100svh;padding-bottom:0}
+a{color:inherit}
+::selection{background:#171717;color:#fff}
+.subpage-head{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  font-size:12px;padding:38px 45px 0}
+.wordmark{font-weight:700;letter-spacing:-.05em;text-decoration:none}
+.subpage-head a{text-decoration:none}
+.wrap{width:min(100%,640px);margin:0 auto;padding:90px 24px 120px;
+  animation:arrive .38s cubic-bezier(.16,.8,.3,1) both}
+@keyframes arrive{from{transform:scale(1.03);filter:blur(7px);opacity:0}
+  to{transform:scale(1);filter:blur(0);opacity:1}}
+.eyebrow{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:16px}
+.hero{display:flex;align-items:center;gap:22px;margin-bottom:46px}
+.hero-badge{flex:0 0 auto;width:clamp(88px,13vw,124px);aspect-ratio:1;background:#171717;
+  border:1px solid #171717;display:flex;align-items:center;justify-content:center;
+  padding:0;overflow:hidden}
+.hero-badge svg{width:66%;height:auto;display:block}
+.hero-badge img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.06)}
+.hero-text{display:flex;flex-direction:column;gap:7px;min-width:0}
+h1{font-size:clamp(22px,3.4vw,34px);font-weight:700;letter-spacing:-.06em;line-height:1.12;margin:0}
+.artist{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#777}
+section{margin-bottom:38px}
+h2{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:400;color:#777;
+  padding-bottom:9px;border-bottom:1px solid #e4e4e4;margin:0 0 16px}
+p{font-size:13px;line-height:1.9;color:#454545;margin:0 0 14px;max-width:62ch}
+p strong{color:#171717;font-weight:500}
+.aside{font-size:12px;color:#777;border-left:1px solid #171717;padding-left:15px;margin-top:17px}
+.bignum{font-size:clamp(44px,9vw,78px);font-weight:700;letter-spacing:-.065em;line-height:.95;
+  font-variant-numeric:tabular-nums;color:#171717}
+.bignum-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#777;margin:5px 0 18px}
+.metrics{display:flex;gap:clamp(22px,5vw,46px);flex-wrap:wrap;margin:22px 0 20px;
+  padding:16px 0;border-top:1px solid #171717;border-bottom:1px solid #171717}
+.metrics div{display:flex;flex-direction:column;gap:4px}
+.metrics b{font-size:clamp(15px,2.2vw,20px);font-weight:500;letter-spacing:-.04em;line-height:1}
+.metrics span{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#777}
+.pullquote{border:1px solid #171717;background:#fff;padding:24px;margin:0 0 38px}
+.pullquote p{font-size:14px;line-height:1.7;color:#171717;margin:0 0 12px;max-width:none}
+.pullquote cite{font-style:normal;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#777}
+.cta{border:1px dashed #171717;padding:26px;text-align:center}
+.cta p{margin:0 auto 15px;font-size:12px}
+.cta a{display:inline-block;font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  text-decoration:none;border:1px solid #171717;padding:11px 22px;
+  transition:background .18s ease,color .18s ease}
+.cta a:hover{background:#171717;color:#fff}
+.site-footer{font-size:10px;color:#555;padding:0 45px 30px}
+.site-footer a{text-decoration:none}
+@media(max-width:600px){.subpage-head{padding:26px 24px 0}.site-footer{padding:0 24px 24px}
+  .wrap{padding:70px 24px 90px}.hero{gap:16px}}
+.hero-badge{position:relative}
+.mini-static{position:absolute;inset:0;width:100%;height:100%;display:block;
+  z-index:2;opacity:.36;pointer-events:none;image-rendering:pixelated}
+.hero-badge svg,.hero-badge img{position:relative;z-index:1}
+canvas#heat{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+canvas#zap{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
+.subpage-head,.wrap,.site-footer{position:relative;z-index:2}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="heat" aria-hidden="true"></canvas>
+<canvas id="zap" aria-hidden="true"></canvas>
+<div class="subpage-head">
+  <a class="wordmark" href="/" data-zap>STATIC STUDIOS</a>
+  <a href="/music/campaigns/" data-zap aria-label="Back to campaigns">Back</a>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Campaign 001 / Case Study</div>
+  <header class="hero">
+    <div class="hero-badge"><canvas class="mini-static" aria-hidden="true"></canvas><svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="cover art"><g fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="118" cy="150" rx="15" ry="21" transform="rotate(-8 118 150)"/><ellipse cx="114" cy="214" rx="15" ry="21" transform="rotate(-8 114 214)"/><path d="M182 128 Q252 200 190 288" fill="none" stroke-width="20"/></g></svg></div>
+    <div class="hero-text"><h1>Dance Until<br>We're Dead</h1><div class="artist">Harvey Hilton</div></div>
+  </header>
+  <article>
+    
+    
+
+    <section>
+      <h2>The Brief</h2>
+      <p>Harvey Hilton had an unreleased track with a release date one week out. It needed
+      exposure: real people hearing it before and as it dropped.</p>
+    </section>
+
+    <section>
+      <h2>The Approach</h2>
+      <p>We ran the track through our UGC creator network, placing it with creators whose
+      audiences already respond to that kind of sound. Campaigns can be aimed at a specific
+      audience or territory, or left to our team to direct.</p>
+    </section>
+
+    <section>
+      <h2>The Result</h2>
+      <div class="bignum">10M</div>
+      <div class="bignum-lbl">Views</div>
+      <div class="metrics">
+        <div><b>257 000</b><span>Shares</span></div>
+        <div><b>19,3 %</b><span>Engagement rate</span></div>
+        <div><b>17</b><span>Videos</span></div>
+      </div>
+      <p>10,007,951 views across 17 placements, with 256,894 shares and a 19,3 % engagement
+      rate. Shares matter more than the view count here: a share is somebody putting the
+      track in front of their own audience, which is the kind of organic discovery that
+      keeps working after a campaign ends.</p>
+    </section>
+  </article>
+  <blockquote class="pullquote">
+    <p>&ldquo;Static got my track in front of millions and created so many opportunities for people
+    to discover my music.&rdquo;</p>
+    <cite>Harvey Hilton</cite>
+  </blockquote>
+  <section class="cta">
+    <p>Want results like this for your track?</p>
+    <a href="/music/contact/" data-zap>Contact Static Studios</a>
+  </section>
+</div>
+
+<footer class="site-footer"><a href="/privacy/" data-zap>Privacy &amp; legal</a></footer>
+<script>document.addEventListener('keydown',e=>{if(e.key==='Escape')location.href='/music/campaigns/'});</script>
+<script src="/script.js?v=20261101d"></script>
+</body>
+</html>

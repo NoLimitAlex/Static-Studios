@@ -1,2 +1,6 @@
-_proto/
+_proto/*
+!_proto/v2/
+!_proto/VERSIONS.md
+!_proto/v2-audit-plan-2026-11-01.json
+*.bak
 outreach/

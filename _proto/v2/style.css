@@ -1,0 +1,485 @@
+/* Static Studios */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  /* Tokens. Every colour reads from here, so the whole site re-points from one
+     block. --ink is always the FOREGROUND and --paper the BACKGROUND, so a
+     theme flip is a values change, not a rewrite.
+
+     Dark edition, borrowing the v3 concept's palette. */
+  --ink:#F2F0EB;                        /* text, rules, solid fills */
+  --paper:#0B0B0C;                      /* the page */
+  --text-2:rgba(242,240,235,.80);       /* secondary prose */
+  --muted:rgba(242,240,235,.56);        /* labels, captions */
+  --muted-2:rgba(242,240,235,.40);      /* the quietest readable text */
+  --faint:rgba(242,240,235,.34);        /* footer */
+  --line:rgba(242,240,235,.14);         /* hairline dividers */
+  --line-2:rgba(242,240,235,.24);       /* form underlines */
+  --placeholder:rgba(242,240,235,.30);
+  --shade:#141416;                      /* the mystery card's stripe */
+  --screen:#0E0E10;                     /* the dial's screen, under the page */
+  --on-screen:#F2F0EB;
+  --on-screen-2:rgba(242,240,235,.62);
+  --on-screen-3:rgba(242,240,235,.40);
+  --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --f-display:'Archivo','Arial Narrow',system-ui,sans-serif;
+
+  font-family:var(--f-mono);
+  color:var(--ink);background:var(--paper);font-synthesis:none;
+  -webkit-font-smoothing:antialiased;
+  color-scheme:dark;
+}
+
+body{min-height:100svh;position:relative;overflow-x:hidden}
+a{color:inherit}
+::selection{background:var(--ink);color:var(--paper)}
+
+/* ---- home ---- */
+canvas#pulse-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+/* Screen burn left by the sweep. Low-res backing, stretched by CSS: the
+   browser's upscaling is what gives the heat its glow.
+   z-index 0, NOT 1. At 1 it painted over subpage copy, because .subpage opens
+   a stacking context at z-index 2 and its children are unpositioned, so the
+   burn composited above the text instead of behind it. */
+canvas#heat{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.identity{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:2;padding:24px}
+.identity h1{
+  font-size:clamp(28px,5.15vw,88px);font-weight:700;letter-spacing:-.065em;
+  line-height:1.12;margin:0;text-align:center;background:transparent;padding:15px 22px;
+}
+.home-nav{
+  position:absolute;bottom:40px;left:0;right:0;display:flex;justify-content:center;
+  gap:36px;font-size:12px;z-index:3;
+}
+.home-nav a{padding:8px 0;text-decoration:none}
+.home-nav a:hover{text-decoration:underline}
+.site-footer{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:10px;color:var(--faint);z-index:3}
+.site-footer a{text-decoration:none}
+
+
+
+/* ---- display type ----
+   Archivo variable, used ONLY for headline type. The width axis is the point:
+   IBM Plex Mono has no condensed cut, so big headings could never be tight.
+   Everything else stays mono, which is still the site's voice. */
+.identity h1,.note h1,.note-h2,.sc-song,.sc-big,.sc-stats b,.campaign h3,.tally dd,.wordmark{
+  font-family:var(--f-display);font-stretch:75%;font-synthesis:none}
+/* Condensing Archivo narrows the SPACE glyph too: at 62% a space measures
+   about a quarter of a capital, and negative letter-spacing then eats most of
+   what is left, so words visibly run together. word-spacing puts the gap back
+   without loosening the letters. The tighter the width, the more it needs. */
+.identity h1{font-stretch:68%;font-weight:800;letter-spacing:-.035em;word-spacing:.16em}
+.note h1{font-stretch:70%;font-weight:800;letter-spacing:-.035em;word-spacing:.15em}
+.sc-song{font-stretch:62%;font-weight:900;letter-spacing:-.025em;word-spacing:.2em}
+.sc-big,.tally dd{font-stretch:75%;font-weight:800;letter-spacing:-.02em;word-spacing:.1em}
+.sc-stats b,.campaign h3{font-stretch:78%;font-weight:700;letter-spacing:-.015em;word-spacing:.08em}
+.wordmark{font-stretch:112%;font-weight:700;letter-spacing:.01em}
+.note-h2{font-stretch:92%;font-weight:700;letter-spacing:.06em}
+
+/* ---- subpages ---- */
+.subpage{min-height:100svh;padding:38px 45px;display:flex;flex-direction:column;position:relative;z-index:2}
+.subpage header{display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:12px}
+.wordmark{font-weight:700;letter-spacing:-.05em;text-decoration:none}
+.subpage header a{text-decoration:none}
+.note{width:min(100%,640px);margin:auto;padding:100px 0 140px}
+.note h1{font-size:clamp(27px,4vw,42px);letter-spacing:-.06em;line-height:1.15;margin:0 0 27px;font-weight:700}
+.note p{font-size:14px;line-height:1.9;margin:0 0 30px}
+.email{font-size:14px;display:inline-block;margin-bottom:26px}
+.subpage .site-footer{position:static;text-align:left;margin-top:auto}
+
+.note-h2{font-size:13px;letter-spacing:.5px;text-transform:uppercase;font-weight:700;
+  margin:34px 0 14px;color:var(--ink)}
+/* named recipients on the privacy notice: a list reads as a disclosure,
+   prose reads as a reassurance. Legal pages want the disclosure. */
+.processors{margin:0 0 30px;border-top:1px solid var(--line)}
+.processors > div{border-bottom:1px solid var(--line);padding:14px 0;
+  display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:8px 22px}
+.processors dt{font-size:12px;font-weight:700;margin:0;line-height:1.6}
+.processors dd{margin:0;font-size:12px;line-height:1.8;color:var(--text-2)}
+.processors .where{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;
+  color:var(--muted);margin-top:5px}
+@media(max-width:560px){.processors > div{grid-template-columns:1fr;gap:5px}}
+
+p.fineprint,.fineprint{font-size:11px;line-height:1.9;color:var(--text-2);margin-top:40px}
+.note-link{font-size:11px;line-height:1.9;color:var(--text-2)}
+
+/* ---- service list ---- */
+.service-list{margin:0 0 34px;border-top:1px solid var(--line)}
+.service-list details{border-bottom:1px solid var(--line)}
+.service-list summary{font-size:13px;padding:15px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.service-list summary::-webkit-details-marker{display:none}
+.service-list summary::after{content:"+";color:var(--muted-2)}
+.service-list details[open] summary::after{content:"\2013"}
+.service-list details p{font-size:12px;line-height:1.8;color:var(--text-2);margin:0 0 17px}
+
+/* ---- brief form ---- */
+.brief{margin:0 0 34px;padding-top:4px}
+.brief-lead{font-size:12px;line-height:1.8;color:var(--muted);margin:0 0 22px}
+.brief label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);margin:0 0 6px}
+.brief input,.brief select{
+  font:inherit;font-size:13px;color:var(--ink);width:100%;
+  background:transparent;border:0;border-bottom:1px solid var(--line-2);
+  padding:8px 0;margin:0 0 20px;border-radius:0;
+  transition:border-color .18s ease}
+.brief input:focus,.brief select:focus{outline:none;border-bottom-color:var(--ink)}
+.brief input::placeholder{color:var(--placeholder)}
+.brief select{appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted-2) 50%),
+                   linear-gradient(135deg,var(--muted-2) 50%,transparent 50%);
+  background-position:right 4px center,right 0 center;
+  background-size:4px 4px,4px 4px;background-repeat:no-repeat;padding-right:18px}
+.brief-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.btn{font:inherit;font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  text-decoration:none;display:inline-block;padding:11px 18px;cursor:pointer;
+  background:var(--ink);color:var(--paper);border:1px solid var(--ink);
+  transition:transform .12s ease,opacity .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+.brief-status{font-size:11px;color:var(--muted);margin:12px 0 0;min-height:1.2em}
+
+
+
+/* the campaigns page runs wider than the prose column: the concept sets the
+   dial against a 1360px measure and it needs the room */
+.note-wide{width:min(100%,1180px)}
+.radio .sc-big{font-size:clamp(34px,4.2vw,64px)}
+.radio .sc-song{font-size:clamp(40px,5vw,84px)}
+
+/* ---- campaign dial ----
+   The stylesheet below is lifted verbatim from the v3 concept. It is written
+   against that file's token names, where --ink is the dark BACKGROUND and
+   --text the foreground, which is the opposite of this site's --ink. Rather
+   than hand-translating it (and drifting from the original), its names are
+   aliased here, scoped to .radio, so the block can stay byte-for-byte. */
+.radio{
+  --ink:#0B0B0C; --ink-2:#111113;
+  --line:rgba(242,240,235,.10);
+  --line-2:rgba(242,240,235,.20);
+  --line-3:rgba(242,240,235,.34);
+  --text:#F2F0EB; --text-2:rgba(242,240,235,.82); --muted:#9A968F;
+  --signal:#FFFFFF;
+  --tight:-.055em;
+  /* The dial is a dark device whatever the page around it is doing. v3's own
+     rules mostly omit `color` because its body was already light; here the
+     container has to set it, or the screen's type inherits the page colour
+     and goes dark-on-dark in the light build. */
+  color:var(--text);
+  --f-serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+}
+
+/* ---------- campaign dial ---------- */
+.radio{border:1px solid var(--line-2); background:var(--ink-2)}
+.screen{position:relative; overflow:hidden; background:#0D0D0F; border-bottom:1px solid var(--line-2); isolation:isolate}
+.screen::after{content:""; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(to bottom, rgba(0,0,0,.13) 0 1px, transparent 1px 3px), radial-gradient(130% 100% at 50% 50%, transparent 55%, rgba(0,0,0,.55)); z-index:3}
+.cards{display:grid}
+.station-card{grid-area:1/1; display:grid; align-content:start; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:clamp(24px,4vw,64px); padding:clamp(28px,4vw,56px); padding-top:clamp(56px,5vw,72px); opacity:0; visibility:hidden; transition:opacity .25s, visibility 0s .25s}
+.station-card.on{opacity:1; visibility:visible; transition:opacity .25s}
+.sc-freq{font-family:var(--f-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--signal); display:flex; gap:14px; align-items:center}
+.sc-song{font-family:var(--f-display); font-stretch:62%; font-weight:900; text-transform:uppercase; font-size:clamp(52px,6.4vw,104px); line-height:.82; margin:18px 0 10px; text-wrap:balance}
+.sc-artist{font-family:var(--f-display); font-stretch:125%; font-weight:700; font-size:clamp(15px,1.3vw,18px); letter-spacing:.14em; text-transform:uppercase; color:var(--text-2)}
+.sc-brief{color:var(--text-2); margin:24px 0 0; max-width:44ch; font-size:16px}
+.sc-big{font-family:var(--f-display); font-stretch:75%; font-weight:800; font-size:clamp(46px,5.6vw,88px); line-height:.9; letter-spacing:-.015em; font-variant-numeric:tabular-nums}
+.sc-big-l{font-family:var(--f-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:8px}
+.sc-stats{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin:26px 0}
+.sc-stats div{background:#0D0D0F; padding:14px 16px}
+.sc-stats b{display:block; font-family:var(--f-display); font-stretch:75%; font-weight:800; font-size:26px; line-height:1; font-variant-numeric:tabular-nums}
+.sc-stats span{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.sc-quote{font-family:var(--f-serif); font-style:italic; font-size:clamp(22px,2vw,30px); line-height:1.2; margin:0 0 22px; color:var(--text)}
+.sc-quote cite{display:block; font-family:var(--f-mono); font-style:normal; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:12px}
+.station-card.open-st .sc-song{color:transparent; -webkit-text-stroke:1.5px var(--text)}
+.screen-static{position:absolute; inset:0; width:100%; height:100%; image-rendering:pixelated; pointer-events:none; z-index:2; opacity:1}
+.hud{position:absolute; top:16px; left:clamp(20px,3.4vw,48px); right:clamp(20px,3.4vw,48px); display:flex; justify-content:space-between; z-index:4; font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-2); pointer-events:none}
+.hud span{background:rgba(11,11,12,.86); padding:6px 9px}
+.hud .lock{color:var(--signal)}
+.band{position:relative; height:116px; cursor:ew-resize; touch-action:pan-y; user-select:none; -webkit-user-select:none; outline-offset:-3px}
+.band-ticks{position:absolute; left:28px; right:28px; bottom:0; top:0}
+.tick{position:absolute; bottom:0; width:1px; height:10px; background:var(--line-3)}
+.tick.mid{height:18px}
+.tick.maj{height:30px; background:var(--text-2)}
+.tick-l{position:absolute; bottom:38px; transform:translateX(-50%); font-family:var(--f-mono); font-size:11px; color:var(--muted)}
+.st-mark{position:absolute; top:6px; z-index:3; transform:translateX(-50%); background:var(--ink-2); border:0; padding:4px 6px; cursor:pointer; font-family:var(--f-mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-2); display:flex; flex-direction:column; align-items:center; gap:6px; white-space:nowrap}
+.st-mark::after{content:""; width:7px; height:7px; background:var(--text-2); transform:rotate(45deg)}
+.st-mark.on{color:var(--signal)} .st-mark.on::after{background:var(--signal)}
+.needle{position:absolute; top:0; bottom:0; width:2px; margin-left:-1px; background:var(--signal); box-shadow:0 0 14px rgba(255,255,255,.55); pointer-events:none; z-index:2}
+.needle::before{content:""; position:absolute; top:0; left:-6px; width:14px; height:8px; background:var(--signal)}
+.radio-foot{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; align-items:center; padding:14px 18px; border-top:1px solid var(--line-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.st-chips{display:flex; gap:8px; flex-wrap:wrap}
+.st-chip{background:none; border:1px solid var(--line-2); padding:8px 10px; font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-2); cursor:pointer}
+.st-chip[aria-selected="true"]{border-color:var(--signal); color:var(--ink); background:var(--signal)}
+
+
+/* this site's additions to the concept's dial */
+.deadair{position:absolute;top:0;bottom:0;left:85.7%;right:0;z-index:0;
+  background:repeating-linear-gradient(45deg,rgba(242,240,235,.07) 0 3px,transparent 3px 7px)}
+.link-arrow{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;text-decoration:none;color:var(--text);
+  border-bottom:1px solid var(--line-3);padding-bottom:3px;transition:border-color .18s ease}
+.link-arrow:hover{border-bottom-color:var(--text)}
+.sc-brief-top{margin-top:0}
+@media(max-width:600px){
+  .band{height:86px}
+  .band-ticks{left:18px;right:18px}
+}
+
+
+/* the tally strip under the campaigns intro */
+.tally{display:flex;gap:40px;flex-wrap:wrap;margin:0 0 32px;padding:18px 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tally dt{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.tally dd{font-size:clamp(20px,2.6vw,27px);font-weight:700;letter-spacing:-.045em;margin:0;
+  font-variant-numeric:tabular-nums}
+p.note-lead,.note-lead{font-size:12px;line-height:1.9;color:var(--text-2)}
+.campaign h3{font-size:15px;font-weight:700;letter-spacing:-.03em;margin:0 0 4px}
+
+/* ---- campaigns ---- */
+.campaign{border-bottom:1px solid var(--line);padding:26px 0}
+.campaign:first-of-type{border-top:1px solid var(--line)}
+.campaign h2{font-size:15px;font-weight:700;letter-spacing:-.03em;margin:0 0 4px}
+.campaign .artist{font-size:11px;color:var(--muted);margin:0 0 14px;text-transform:uppercase;letter-spacing:1px}
+.campaign dl{display:flex;gap:30px;flex-wrap:wrap;margin:0 0 14px}
+.campaign dt{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:0 0 3px}
+.campaign dd{font-size:17px;font-weight:500;letter-spacing:-.03em;margin:0}
+.campaign p{font-size:12px;line-height:1.8;color:var(--text-2);margin:0}
+
+/* ---- zap transition ---- */
+canvas#zap{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
+
+@media(max-width:600px){
+  .identity h1{font-size:clamp(30px,9vw,50px);padding:12px;letter-spacing:-.055em}
+  .identity h1 span{display:block}
+  .home-nav{bottom:28px;gap:22px;font-size:11px}
+  .subpage{padding:26px 24px}
+  .note{padding:75px 0 100px}
+  .note p,.email{font-size:12px}
+}
+
+/* ---- campaign carousel: ported from the live site, monochrome ---- */
+.carousel{width:100%;display:flex;flex-direction:column;align-items:center;gap:18px;margin:0 0 34px}
+.car-row{display:flex;align-items:center;gap:14px;width:100%}
+.car-viewport{flex:1;overflow:hidden;padding:10px 0 18px}
+.car-track{display:flex;width:100%;
+  transition:transform .5s cubic-bezier(.45,.05,.35,1),filter .5s ease}
+.car-track.moving{filter:url(#mblur)}
+.camp-card.shake{animation:cshake .18s ease-in-out}
+@keyframes cshake{0%,100%{transform:translateX(0)}28%{transform:translateX(-5px)}
+  62%{transform:translateX(5px)}85%{transform:translateX(-2px)}}
+
+.camp-card{
+  --art:var(--ink);--label:var(--muted);
+  flex:0 0 100%;display:flex;background:var(--paper);position:relative;
+  border:1px solid var(--ink);box-shadow:7px 7px 0 rgba(0,0,0,.45);
+  min-height:250px;overflow:hidden;
+}
+a.camp-card{text-decoration:none;color:inherit;cursor:pointer;
+  transition:box-shadow .22s ease,transform .22s ease}
+a.camp-card:hover{transform:translateY(-3px);box-shadow:10px 11px 0 rgba(0,0,0,.6)}
+a.camp-card:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+
+/* Dark panel, white artwork, snow laid over the top. The noise sits ABOVE the
+   art rather than behind it, which is what makes it read as a signal being
+   received rather than a texture. On hover it thins out and the art resolves. */
+.camp-art{flex:0 0 42%;position:relative;border-right:1px solid var(--ink);
+  background:var(--art,var(--ink));display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mini-static{position:absolute;inset:0;width:100%;height:100%;display:block;
+  z-index:2;opacity:.36;pointer-events:none;
+  image-rendering:pixelated;transition:opacity .35s ease}
+a.camp-card:hover .mini-static,
+a.camp-card:focus-visible .mini-static{opacity:.14}
+.camp-art svg,.camp-art .camp-cover{position:relative;z-index:1}
+.camp-art svg{width:72%;height:auto;display:block}
+.camp-art svg g{fill:var(--paper);stroke:var(--paper)}
+.camp-cover{width:78%;height:auto;aspect-ratio:1;object-fit:cover;display:block;
+  border:2px solid var(--paper);filter:grayscale(1) contrast(1.12);
+  transition:transform .5s ease}
+a.camp-card:hover .camp-cover{transform:scale(1.03)}
+
+.camp-info{flex:1;display:flex;flex-direction:column;justify-content:center;gap:9px;padding:24px 26px}
+.camp-eyebrow{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted-2)}
+.camp-song{font-size:clamp(18px,2.4vw,26px);font-weight:700;letter-spacing:-.055em;line-height:1.12}
+.camp-artist{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--label)}
+.stat{display:flex;align-items:baseline;gap:10px;margin:6px 0 0;
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:11px 0}
+.stat-num{font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.06em;
+  font-variant-numeric:tabular-nums;line-height:1}
+.stat-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.stat-sub{display:flex;gap:20px;flex-wrap:wrap}
+.stat-sub span{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.stat-sub b{font-weight:500;color:var(--ink);letter-spacing:0;font-size:11px}
+.camp-quote{font-size:11px;line-height:1.8;color:var(--text-2);position:relative;padding-left:15px;margin:2px 0 0}
+.camp-quote::before{content:"\201C";position:absolute;left:-1px;top:-5px;font-size:20px;font-weight:700;color:var(--muted-2)}
+.camp-quote cite{display:block;margin-top:7px;font-style:normal;font-size:9px;
+  letter-spacing:1px;text-transform:uppercase;color:var(--muted-2)}
+.camp-note{font-size:11px;line-height:1.8;color:var(--text-2);border-left:1px solid var(--ink);padding-left:14px;margin:2px 0 0}
+.card-cue{position:absolute;right:13px;bottom:10px;font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--muted-2);transition:color .22s ease,transform .22s ease}
+a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--ink);transform:translateX(3px)}
+
+.camp-card.mystery{align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  background:repeating-linear-gradient(45deg,var(--shade) 0 14px,var(--paper) 14px 28px);
+  border-style:dashed;text-align:center;padding:38px 20px}
+.mystery-mark{font-size:clamp(52px,12vw,78px);font-weight:700;line-height:1;
+  animation:float 2.6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+.camp-card.mystery p{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);line-height:1.9}
+
+.car-btn{flex:0 0 auto;width:32px;height:32px;border:1px solid var(--ink);background:transparent;
+  font:inherit;font-size:14px;line-height:1;cursor:pointer;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .12s ease,background .15s ease,color .15s ease,opacity .2s ease}
+.car-btn:hover:not(:disabled){background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+.car-btn:disabled{opacity:.22;cursor:default}
+.car-dots{display:flex;gap:8px;align-items:center;justify-content:center}
+.dot{width:7px;height:7px;border:1px solid var(--ink);border-radius:50%;background:transparent;
+  cursor:pointer;padding:0;transition:background .2s ease,transform .2s ease}
+.dot.on{background:var(--ink);transform:scale(1.2)}
+.car-hint{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted-2);text-align:center}
+
+.zoom-clone{position:fixed;z-index:9998;margin:0;transform-origin:center center;
+  transition:transform .42s cubic-bezier(.5,0,.75,0),filter .42s ease,opacity .42s ease-in;
+  will-change:transform,filter,opacity}
+.zoom-fade{transition:opacity .3s ease;opacity:0!important}
+
+@media(max-width:600px){
+  .camp-card{flex-direction:column;min-height:0;box-shadow:5px 5px 0 rgba(0,0,0,.45)}
+  .camp-art{flex:0 0 auto;border-right:none;border-bottom:1px solid var(--ink);aspect-ratio:16/10}
+  .camp-art svg{width:auto;height:62%}
+  .camp-cover{width:auto;height:70%}
+  .car-row{gap:7px}
+}
+
+/* ---- gate (the root page) ----
+   Nothing but the names. Wordmark in the corner, the audiences stacked in the
+   centre, privacy at the foot. The field of lines carries the rest. */
+.gate{min-height:100svh;position:relative}
+.gate header{position:absolute;top:38px;left:45px;right:45px;display:flex;
+  justify-content:space-between;font-size:12px;z-index:3}
+.gate header a{text-decoration:none}
+.gate-menu{position:absolute;inset:0;display:grid;place-items:center;z-index:2;padding:24px;text-align:center}
+.gate-ask{font-family:var(--f-mono);font-size:11px;font-weight:400;letter-spacing:1.2px;text-transform:uppercase;color:var(--faint);margin:0 0 22px}
+.gate-note{font-size:12px;line-height:1.9;color:var(--muted);margin:26px auto 0;max-width:46ch}
+.gate-menu nav{display:flex;flex-direction:column;align-items:center;gap:clamp(4px,1vw,12px)}
+.gate-menu nav a{
+  font-family:var(--f-display);font-stretch:68%;font-weight:800;letter-spacing:-.035em;
+  word-spacing:.16em;font-size:clamp(34px,5.2vw,76px);line-height:1.05;text-decoration:none;
+  padding:4px 10px;position:relative;transition:opacity .2s ease,transform .2s ease}
+.gate-menu nav:hover a:not(:hover){opacity:.3}
+.gate-menu nav a:hover,.gate-menu nav a:focus-visible{transform:translateX(6px)}
+.gate-menu nav a::before{content:"";position:absolute;left:-18px;top:50%;width:10px;height:2px;
+  background:var(--ink);transform:scaleX(0);transform-origin:right;transition:transform .2s ease}
+.gate-menu nav a:hover::before,.gate-menu nav a:focus-visible::before{transform:scaleX(1)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* identity page of each sub-site: the wordmark, and under it what was picked,
+   set in the same grey as the lines in the field behind it */
+.identity h1 a{text-decoration:none;pointer-events:auto}
+.identity-sub{font-family:var(--f-mono);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--faint);text-align:center;margin:-6px 0 0}
+/* an area that is not open yet: the same grey, one line under the label */
+.identity-note{text-transform:none;letter-spacing:.3px;margin-top:10px;animation:blink 2.4s steps(1,end) infinite}
+@keyframes blink{0%,92%{opacity:1}96%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.identity-note{animation:none}}
+
+/* sub-site header with more than one link on the right */
+.sub-nav{display:flex;gap:22px}
+.sub-nav a{text-decoration:none}
+.eyebrow{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.note .eyebrow{margin-bottom:14px}
+
+/* the creators page's four asks */
+.plain-list{margin:0 0 30px;padding:0 0 0 1.4em;font-size:14px;line-height:1.9}
+.plain-list li{padding-left:6px;margin:0 0 4px}
+
+/* contact page: the doors as rows in the service list */
+.service-link{display:flex;justify-content:space-between;gap:16px;padding:15px 0;
+  font-size:13px;text-decoration:none;border-bottom:1px solid var(--line)}
+.service-link span:last-child{color:var(--muted);font-size:11px}
+.service-link:hover span:first-child{text-decoration:underline}
+
+@media(max-width:600px){
+  .gate header{top:26px;left:24px;right:24px}
+  .gate-menu nav a{font-size:clamp(34px,10vw,52px)}
+  .identity-sub{font-size:11px;margin-top:2px}
+  .sub-nav{gap:14px}
+  .plain-list{font-size:12px}
+}
+
+/* ---- no signal (areas not open yet) ---- */
+canvas#flat-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.home.nosignal .identity h1{background:var(--paper);padding:6px 22px}
+.home.nosignal .identity-sub{background:var(--paper);display:inline-block;padding:2px 10px}
+.identity-note a{color:var(--text-2);text-decoration:none;border-bottom:1px solid var(--line-2);padding-bottom:1px;pointer-events:auto;transition:color .18s ease,border-color .18s ease}
+.identity-note a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.home.nosignal .identity>div{display:flex;flex-direction:column;align-items:center}
+
+/* ---- campaigns: the device is the page ----
+   Header, then the tuner filling the rest of the first screen. The plain
+   text log sits below the fold for anyone who scrolls, and for search. */
+.radio-page{min-height:100svh}
+.radio-full{width:100%;margin:22px 0 0;height:calc(100svh - 38px - 20px - 22px - 38px - 30px);min-height:520px}
+.radio-page .site-footer{margin-top:14px}
+.radio-full .radio{height:100%;display:flex;flex-direction:column;min-height:0}
+.radio-full .screen{flex:1;min-height:0;display:flex}
+.radio-full .cards{flex:1;min-height:0}
+.radio-full .station-card{height:100%;align-content:center;padding-top:clamp(56px,6vh,96px);
+  grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,5vw,96px);padding-left:clamp(28px,5vw,80px);padding-right:clamp(28px,5vw,80px)}
+.radio-full .sc-song{font-size:clamp(44px,7.4vw,136px)}
+.radio-full .sc-big{font-size:clamp(46px,7vw,124px)}
+.radio-full .sc-brief{font-size:clamp(14px,1.25vw,19px);max-width:48ch}
+.radio-full .sc-quote{font-size:clamp(20px,2.1vw,34px)}
+.radio-full .band{flex:0 0 116px}
+.radio-full .radio-foot{flex:0 0 auto}
+.log{margin-top:90px;padding-top:0}
+.log .tally{margin-top:0}
+@media(max-width:900px){
+  .radio-full .station-card{grid-template-columns:1fr;align-content:start;overflow:auto;gap:22px}
+  .radio-full .sc-song{font-size:clamp(40px,11vw,72px)}
+  .radio-full .sc-big{font-size:clamp(40px,10vw,64px)}
+}
+@media(max-width:600px){
+  .radio-full{height:calc(100svh - 26px - 20px - 22px - 26px - 30px);min-height:560px}
+  .radio-full .band{flex:0 0 86px}
+  .radio-full .station-card{padding:48px 20px 20px}
+  .log{margin-top:60px}
+}
+
+/* ---- shared footer (from the v3 concept, on this site's tokens) ----
+   On the gate and identity pages it sits below the first screen, so the
+   screen stays empty and the footer is there for whoever scrolls. */
+.screen-1{position:relative;min-height:100svh}
+.home .screen-1,.gate .screen-1{height:100svh}
+.foot{position:relative;z-index:2;padding:clamp(64px,8vw,120px) 45px 28px;border-top:1px solid var(--line);
+  overflow:hidden;background:var(--paper)}
+.subpage .foot{margin:120px -45px 0;width:calc(100% + 90px)}
+.subpage .foot{margin-bottom:-38px}
+.radio-page .foot{margin-top:60px}
+.foot-cta{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(48px,6vw,96px)}
+.foot-cta h2{font-family:var(--f-display);font-stretch:62%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(44px,6vw,96px);line-height:.86;margin:0;max-width:14ch;letter-spacing:-.01em;word-spacing:.12em}
+.btn .arr{display:inline-block;transition:transform .25s ease}
+.btn:hover .arr{transform:translateX(4px)}
+.foot-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:32px 0;border-top:1px solid var(--line-2)}
+.foot-cols h3{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.foot-cols a,.foot-cols p{display:block;text-decoration:none;color:var(--text-2);font-size:15px;margin:0 0 8px;transition:color .2s}
+.foot-cols a:hover{color:var(--ink)}
+.foot-mark{font-family:var(--f-display);font-stretch:125%;font-weight:900;text-transform:uppercase;
+  font-size:calc((min(100vw,1360px) - 90px) / 10.95);line-height:.8;letter-spacing:-.01em;margin:12px 0 0;white-space:nowrap}
+.foot-base{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px;font-family:var(--f-mono);
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* static-filled text: noise texture clipped to the glyphs, jumping like a mistuned set */
+.static-fill{color:var(--text-2)}
+.has-noise .static-fill{background-image:var(--noise);background-size:128px 128px;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:noiseJump .55s steps(1) infinite}
+@keyframes noiseJump{0%{background-position:0 0}20%{background-position:-37px 51px}40%{background-position:63px -22px}
+  60%{background-position:-81px -67px}80%{background-position:29px 88px}100%{background-position:0 0}}
+@media(prefers-reduced-motion:reduce){.has-noise .static-fill{animation:none}}
+@media(max-width:900px){.foot-cols{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){
+  .foot{padding:56px 24px 22px}
+  .subpage .foot{margin:80px -24px -26px;width:calc(100% + 48px)}
+  .foot-cta h2{font-size:clamp(38px,11vw,56px)}
+  .foot-mark{font-size:calc((100vw - 48px) / 10.95)}
+  .foot-cols a,.foot-cols p{font-size:14px}
+}
