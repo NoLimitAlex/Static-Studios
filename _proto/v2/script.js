@@ -581,6 +581,23 @@ const heat=(()=>{
 })();
 
 
+/* ═══ GATE PICK ═══════════════════════════════════════════════════════
+   Clicking a name on the gate swells it and drops the other two while the
+   sweep runs; Back (bfcache) puts the menu as it was. */
+(function gatePick(){
+  const nav=document.querySelector('.gate-menu nav'); if(!nav) return;
+  nav.addEventListener('click',e=>{
+    const a=e.target.closest('a');
+    if(!a||e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0) return;   // new-tab clicks leave it alone
+    a.classList.add('is-picked'); nav.classList.add('picked');
+  });
+  addEventListener('pageshow',()=>{
+    nav.classList.remove('picked');
+    nav.querySelectorAll('.is-picked').forEach(a=>a.classList.remove('is-picked'));
+  });
+})();
+
+
 /* ═══ NOISE SOURCE (footer wordmark) ═══════════════════════════════════
    One tile of snow as a data URL, clipped to the big footer wordmark by
    CSS and jumped around by a steps() animation. From the v3 concept. */
