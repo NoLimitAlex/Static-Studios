@@ -26,7 +26,7 @@
   Inquire about:</p>
   <div class="service-list">
     <details><summary>Launch campaigns</summary>
-      <p>Creator videos built around the app, timed to launch week. One-off or ongoing. Reporting covers views, shares and engagement rate, per video.</p></details>
+      <p>Creator videos built around the app, at launch or any time after it. An app that is already live is the easiest to measure: every video points to a store page that works. One-off or ongoing. Reporting covers views, shares and engagement rate, per video.</p></details>
     <details><summary>Feature and update pushes</summary>
       <p>A set of creators showing one new feature in use, for an audience that already knows the category but not your app.</p></details>
     <details><summary>New market campaigns</summary>
@@ -48,8 +48,12 @@
     <input id="f-app" data-label="App" data-subject placeholder="App name">
     <label for="f-platform">Platform</label>
     <input id="f-platform" data-label="Platform" placeholder="iOS, Android, web">
-    <label for="f-date">Launch or update date</label>
-    <input id="f-date" data-label="Key date" placeholder="Live now, or the date">
+    <label for="f-when">Where the app is</label>
+    <select id="f-when" data-label="Stage">
+      <option>Live now</option><option>Coming up</option><option>No date yet</option>
+    </select>
+    <label for="f-date">Date (optional)</label>
+    <input id="f-date" data-label="Date" data-empty="None" placeholder="Only if there is one">
     <label for="f-goal">What the campaign needs to do</label>
     <input id="f-goal" data-label="Goal" placeholder="Installs, a new feature, a new country">
     <label for="f-budget">Roughly what you have set aside (optional)</label>

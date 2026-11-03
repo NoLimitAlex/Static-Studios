@@ -26,7 +26,7 @@
   Inquire about:</p>
   <div class="service-list">
     <details><summary>TikTok music campaigns</summary>
-      <p>Campaign planning, creator sourcing and delivery for labels, artists and managers. One-off or ongoing. Campaigns can combine our in-house accounts with external TikTok pages. Reporting covers views, shares, engagement rate and cost per thousand views, per video.</p></details>
+      <p>Campaign planning, creator sourcing and delivery for labels, artists and managers. One-off or ongoing, for a new release, a track that is already out, or one that had its moment and deserves another. Campaigns can combine our in-house accounts with external TikTok pages. Reporting covers views, shares, engagement rate and cost per thousand views, per video.</p></details>
     <details><summary>Sound promotion &amp; page placements</summary>
       <p>Promote a track through the TikTok accounts we work with, as standalone placements or as part of a wider campaign. Account details are available on request.</p></details>
     <details><summary>Artist fan pages</summary>
@@ -34,7 +34,7 @@
     <details><summary>International audience campaigns</summary>
       <p>The creators we work with are not limited to one territory. Campaigns can be aimed at audiences outside an artist's home market, which is usually the hardest part of a release to reach.</p></details>
     <details><summary>Creators: work with us</summary>
-      <p>Post on TikTok in meme, emotional, gaming or another niche? We pay creators to use a track in their own style of video, with a clear brief on the song, the mood and the release date. No exclusivity, you keep posting your own stuff. <a href="/creators/" data-zap>See what we ask for</a>, or <a href="mailto:contact@staticstudios.io?subject=Creator%20(music)">email us your handle</a>.</p></details>
+      <p>Post on TikTok in meme, emotional, gaming or another niche? We pay creators to use a track in their own style of video, with a clear brief on the song, the mood and what the video needs to do. No exclusivity, you keep posting your own stuff. <a href="/creators/" data-zap>See what we ask for</a>, or <a href="mailto:contact@staticstudios.io?subject=Creator%20(music)">email us your handle</a>.</p></details>
   </div>
   <h2 class="note-h2">Campaign brief</h2>
   <form class="brief" id="brief" data-subject="Campaign brief" data-fallback="new track" autocomplete="on">
@@ -48,9 +48,13 @@
     <input id="f-artist" data-label="Artist" data-subject placeholder="Artist name">
     <label for="f-track">Track</label>
     <input id="f-track" data-label="Track" placeholder="Track title">
-    <label for="f-date">Release date</label>
-    <input id="f-date" data-label="Release date" placeholder="Out now, or the date">
-    <label for="f-goal">What the release needs to do</label>
+    <label for="f-when">Release</label>
+    <select id="f-when" data-label="Release">
+      <option>Already out</option><option>Coming up</option><option>No release date</option>
+    </select>
+    <label for="f-date">Date (optional)</label>
+    <input id="f-date" data-label="Date" data-empty="None" placeholder="Only if there is one">
+    <label for="f-goal">What the campaign needs to do</label>
     <input id="f-goal" data-label="Goal" placeholder="Reach a new country, grow the fanbase">
     <label for="f-budget">Roughly what you have set aside (optional)</label>
     <input id="f-budget" data-label="Budget" data-empty="Not given" placeholder="Optional">

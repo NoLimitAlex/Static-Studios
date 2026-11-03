@@ -26,7 +26,7 @@
   internationally. Inquire about:</p>
   <div class="service-list">
     <details><summary>Launch campaigns</summary>
-      <p>Creator videos built around the game, timed to release day or the week before it. One-off or ongoing. Reporting covers views, shares and engagement rate, per video.</p></details>
+      <p>Creator videos built around the game, at launch or any time after it. A game that is already out is the easiest to measure: every video points to a store page that is live. One-off or ongoing. Reporting covers views, shares and engagement rate, per video.</p></details>
     <details><summary>Early access, demo and Next Fest pushes</summary>
       <p>A smaller set of creators to get a playable build in front of the right audience before the full launch, and read what people respond to.</p></details>
     <details><summary>Update and season campaigns</summary>
@@ -34,7 +34,7 @@
     <details><summary>International audience campaigns</summary>
       <p>The creators we work with are not limited to one territory. Campaigns can be aimed at a market the game has not reached yet.</p></details>
     <details><summary>Creators: work with us</summary>
-      <p>Make gaming or meme videos on TikTok? Game campaigns pay creators to play and post around a launch, a demo or a big update, in their own style, with a clear brief on the game and the date. No exclusivity. <a href="/creators/" data-zap>See what we ask for</a>, or <a href="mailto:contact@staticstudios.io?subject=Creator%20(games)">email us your handle</a>.</p></details>
+      <p>Make gaming or meme videos on TikTok? Game campaigns pay creators to play and post around a launch, a demo or a big update, in their own style, with a clear brief on the game and what the video needs to do. No exclusivity. <a href="/creators/" data-zap>See what we ask for</a>, or <a href="mailto:contact@staticstudios.io?subject=Creator%20(games)">email us your handle</a>.</p></details>
   </div>
   <h2 class="note-h2">Campaign brief</h2>
   <form class="brief" id="brief" data-subject="Game campaign brief" data-fallback="new game" autocomplete="on">
@@ -48,8 +48,12 @@
     <input id="f-game" data-label="Game" data-subject placeholder="Game title">
     <label for="f-platform">Platform</label>
     <input id="f-platform" data-label="Platform" placeholder="Steam, console, mobile, Roblox">
-    <label for="f-date">Key date</label>
-    <input id="f-date" data-label="Key date" placeholder="Launch, demo, early access or update">
+    <label for="f-when">Where the game is</label>
+    <select id="f-when" data-label="Stage">
+      <option>Out now</option><option>Early access or demo</option><option>Coming up</option><option>No date yet</option>
+    </select>
+    <label for="f-date">Date (optional)</label>
+    <input id="f-date" data-label="Date" data-empty="None" placeholder="Only if there is one">
     <label for="f-goal">What the campaign needs to do</label>
     <input id="f-goal" data-label="Goal" placeholder="Wishlists, launch players, a new market">
     <label for="f-budget">Roughly what you have set aside (optional)</label>
