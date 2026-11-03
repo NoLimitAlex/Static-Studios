@@ -33,6 +33,15 @@ html,body{margin:0;padding:0}
 body{min-height:100svh;position:relative;overflow-x:hidden}
 a{color:inherit}
 ::selection{background:var(--ink);color:var(--paper)}
+/* scrollbar: a thin hairline thumb on no track, instead of the browser's grey bar.
+   Chrome, Edge and Firefox read the standard pair; Safari only the -webkit- rules. */
+html{scrollbar-width:thin;scrollbar-color:rgba(242,240,235,.22) transparent}
+@supports not (scrollbar-color:auto){
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(242,240,235,.22);border-radius:3px}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(242,240,235,.45)}
+}
 
 /* ---- home ---- */
 canvas#pulse-bg{position:fixed;inset:0;z-index:0;pointer-events:none}

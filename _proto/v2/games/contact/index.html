@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://staticstudios.io/games/contact/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=20261103a">
+<link rel="stylesheet" href="/style.css?v=20261103b">
 </head>
 <body class="subpage">
 <canvas id="heat" aria-hidden="true"></canvas>
@@ -36,9 +36,34 @@
     <details><summary>Creators: work with us</summary>
       <p>Make gaming or meme videos on TikTok? Game campaigns pay creators to play and post around a launch, a demo or a big update, in their own style, with a clear brief on the game and the date. No exclusivity. <a href="/creators/" data-zap>See what we ask for</a>, or <a href="mailto:contact@staticstudios.io?subject=Creator%20(games)">email us your handle</a>.</p></details>
   </div>
-  <p class="note-lead">Tell us the game, the platform, the date and roughly what you have set aside, and
-  we will propose a campaign or a smaller test.</p>
-  <a class="email" href="mailto:contact@staticstudios.io?subject=Game%20campaign">contact@staticstudios.io</a>
+  <h2 class="note-h2">Campaign brief</h2>
+  <form class="brief" id="brief" data-subject="Game campaign brief" data-fallback="new game" autocomplete="on">
+    <p class="brief-lead">Fill in what you know and we will propose a campaign or a smaller
+    test. Nothing is sent until you send it from your own email or DMs.</p>
+    <label for="f-role">I am</label>
+    <select id="f-role" data-label="From">
+      <option>At the studio</option><option>At the publisher</option><option>Other</option>
+    </select>
+    <label for="f-game">Game</label>
+    <input id="f-game" data-label="Game" data-subject placeholder="Game title">
+    <label for="f-platform">Platform</label>
+    <input id="f-platform" data-label="Platform" placeholder="Steam, console, mobile, Roblox">
+    <label for="f-date">Key date</label>
+    <input id="f-date" data-label="Key date" placeholder="Launch, demo, early access or update">
+    <label for="f-goal">What the campaign needs to do</label>
+    <input id="f-goal" data-label="Goal" placeholder="Wishlists, launch players, a new market">
+    <label for="f-budget">Roughly what you have set aside (optional)</label>
+    <input id="f-budget" data-label="Budget" data-empty="Not given" placeholder="Optional">
+    <label for="f-email">Your email</label>
+    <input id="f-email" type="email" data-label="Reply to" autocomplete="email" placeholder="you@studio.com">
+    <div class="brief-actions">
+      <a class="btn" id="send" href="mailto:contact@staticstudios.io?subject=Game%20campaign%20brief">Send by email</a>
+      <button class="btn ghost" id="copy" type="button">Copy for DMs</button>
+    </div>
+    <p class="brief-status" id="copyStatus" aria-live="polite"></p>
+  </form>
+  <p class="note-link">Prefer to write it yourself?
+  <a href="mailto:contact@staticstudios.io?subject=Game%20campaign">contact@staticstudios.io</a></p>
   <p class="note-link">Looking for campaign results?
   <a href="/music/campaigns/" data-zap>See campaigns</a>.</p>
 </main>
@@ -57,6 +82,6 @@
   <div class="foot-mark static-fill" aria-hidden="true">Static Studios</div>
   <div class="foot-base"><span>&copy; 2026 Static Studios</span><span>Creator campaigns for music, games and apps</span></div>
 </footer>
-<script src="/script.js?v=20261103a"></script>
+<script src="/script.js?v=20261103b"></script>
 </body>
 </html>

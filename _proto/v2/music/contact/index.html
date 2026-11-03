@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://staticstudios.io/music/contact/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=20261103a">
+<link rel="stylesheet" href="/style.css?v=20261103b">
 </head>
 <body class="subpage">
 <canvas id="heat" aria-hidden="true"></canvas>
@@ -36,9 +36,34 @@
     <details><summary>Creators: work with us</summary>
       <p>Post on TikTok in meme, emotional, gaming or another niche? We pay creators to use a track in their own style of video, with a clear brief on the song, the mood and the release date. No exclusivity, you keep posting your own stuff. <a href="/creators/" data-zap>See what we ask for</a>, or <a href="mailto:contact@staticstudios.io?subject=Creator%20(music)">email us your handle</a>.</p></details>
   </div>
-  <p class="note-lead">Tell us the artist, the track, the date and roughly what you have set aside, and
-  we will propose a campaign or a smaller test.</p>
-  <a class="email" href="mailto:contact@staticstudios.io?subject=Music%20campaign">contact@staticstudios.io</a>
+  <h2 class="note-h2">Campaign brief</h2>
+  <form class="brief" id="brief" data-subject="Campaign brief" data-fallback="new track" autocomplete="on">
+    <p class="brief-lead">Fill in what you know and we will propose a campaign or a smaller
+    test. Nothing is sent until you send it from your own email or DMs.</p>
+    <label for="f-role">I am</label>
+    <select id="f-role" data-label="From">
+      <option>The artist</option><option>The manager</option><option>At the label</option><option>Other</option>
+    </select>
+    <label for="f-artist">Artist</label>
+    <input id="f-artist" data-label="Artist" data-subject placeholder="Artist name">
+    <label for="f-track">Track</label>
+    <input id="f-track" data-label="Track" placeholder="Track title">
+    <label for="f-date">Release date</label>
+    <input id="f-date" data-label="Release date" placeholder="Out now, or the date">
+    <label for="f-goal">What the release needs to do</label>
+    <input id="f-goal" data-label="Goal" placeholder="Reach a new country, grow the fanbase">
+    <label for="f-budget">Roughly what you have set aside (optional)</label>
+    <input id="f-budget" data-label="Budget" data-empty="Not given" placeholder="Optional">
+    <label for="f-email">Your email</label>
+    <input id="f-email" type="email" data-label="Reply to" autocomplete="email" placeholder="you@label.com">
+    <div class="brief-actions">
+      <a class="btn" id="send" href="mailto:contact@staticstudios.io?subject=Campaign%20brief">Send by email</a>
+      <button class="btn ghost" id="copy" type="button">Copy for DMs</button>
+    </div>
+    <p class="brief-status" id="copyStatus" aria-live="polite"></p>
+  </form>
+  <p class="note-link">Prefer to write it yourself?
+  <a href="mailto:contact@staticstudios.io?subject=Music%20campaign">contact@staticstudios.io</a></p>
   <p class="note-link">Looking for campaign results?
   <a href="/music/campaigns/" data-zap>See campaigns</a>.</p>
 </main>
@@ -57,6 +82,6 @@
   <div class="foot-mark static-fill" aria-hidden="true">Static Studios</div>
   <div class="foot-base"><span>&copy; 2026 Static Studios</span><span>Creator campaigns for music, games and apps</span></div>
 </footer>
-<script src="/script.js?v=20261103a"></script>
+<script src="/script.js?v=20261103b"></script>
 </body>
 </html>

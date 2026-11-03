@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://staticstudios.io/apps/contact/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=20261103a">
+<link rel="stylesheet" href="/style.css?v=20261103b">
 </head>
 <body class="subpage">
 <canvas id="heat" aria-hidden="true"></canvas>
@@ -36,9 +36,34 @@
     <details><summary>Creators: work with us</summary>
       <p>Prefer brand deals? App campaigns are built around UGC creators who work the app naturally into the videos they already make. It does not have to be a demo on camera: a looksmaxxing edit can carry a face analysis app as part of the edit itself. Paid per video, a clear brief on the app and what the video needs to do, usage rights agreed up front, no exclusivity. <a href="/creators/" data-zap>See what we ask for</a>, or <a href="mailto:contact@staticstudios.io?subject=Creator%20(apps)">email us your handle</a>.</p></details>
   </div>
-  <p class="note-lead">Tell us the app, the platform, the date and roughly what you have set aside, and
-  we will propose a campaign or a smaller test.</p>
-  <a class="email" href="mailto:contact@staticstudios.io?subject=App%20campaign">contact@staticstudios.io</a>
+  <h2 class="note-h2">Campaign brief</h2>
+  <form class="brief" id="brief" data-subject="App campaign brief" data-fallback="new app" autocomplete="on">
+    <p class="brief-lead">Fill in what you know and we will propose a campaign or a smaller
+    test. Nothing is sent until you send it from your own email or DMs.</p>
+    <label for="f-role">I am</label>
+    <select id="f-role" data-label="From">
+      <option>A founder</option><option>In marketing</option><option>Other</option>
+    </select>
+    <label for="f-app">App</label>
+    <input id="f-app" data-label="App" data-subject placeholder="App name">
+    <label for="f-platform">Platform</label>
+    <input id="f-platform" data-label="Platform" placeholder="iOS, Android, web">
+    <label for="f-date">Launch or update date</label>
+    <input id="f-date" data-label="Key date" placeholder="Live now, or the date">
+    <label for="f-goal">What the campaign needs to do</label>
+    <input id="f-goal" data-label="Goal" placeholder="Installs, a new feature, a new country">
+    <label for="f-budget">Roughly what you have set aside (optional)</label>
+    <input id="f-budget" data-label="Budget" data-empty="Not given" placeholder="Optional">
+    <label for="f-email">Your email</label>
+    <input id="f-email" type="email" data-label="Reply to" autocomplete="email" placeholder="you@company.com">
+    <div class="brief-actions">
+      <a class="btn" id="send" href="mailto:contact@staticstudios.io?subject=App%20campaign%20brief">Send by email</a>
+      <button class="btn ghost" id="copy" type="button">Copy for DMs</button>
+    </div>
+    <p class="brief-status" id="copyStatus" aria-live="polite"></p>
+  </form>
+  <p class="note-link">Prefer to write it yourself?
+  <a href="mailto:contact@staticstudios.io?subject=App%20campaign">contact@staticstudios.io</a></p>
   <p class="note-link">Looking for campaign results?
   <a href="/music/campaigns/" data-zap>See campaigns</a>.</p>
 </main>
@@ -57,6 +82,6 @@
   <div class="foot-mark static-fill" aria-hidden="true">Static Studios</div>
   <div class="foot-base"><span>&copy; 2026 Static Studios</span><span>Creator campaigns for music, games and apps</span></div>
 </footer>
-<script src="/script.js?v=20261103a"></script>
+<script src="/script.js?v=20261103b"></script>
 </body>
 </html>

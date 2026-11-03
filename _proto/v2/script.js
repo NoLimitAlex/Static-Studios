@@ -248,32 +248,29 @@ const THEME=(()=>{
 
 /* Brief form. No backend: it rebuilds a mailto link as you type, so Send opens
    the sender's own mail app with the brief already written. Copy for DMs puts
-   the same text on the clipboard for Instagram. */
+   the same text on the clipboard for Instagram. The fields are whatever the page
+   marks with data-label (music, games and apps ask for different things); the
+   one marked data-subject names the email, data-fallback covers it when empty. */
 (function brief(){
   const form=document.getElementById('brief'); if(!form) return;
   const $=id=>document.getElementById(id);
-  const F=['f-role','f-artist','f-track','f-date','f-goal','f-budget','f-email'];
-  if(F.some(id=>!$(id))) return;
-  const val=id=>($(id).value||'').trim();
+  const fields=[...form.querySelectorAll('[data-label]')];
+  const send=$('send'); if(!send||!fields.length) return;
+  const val=f=>(f.value||'').trim();
   function text(){
-    return [
-      'STATIC STUDIOS / CAMPAIGN BRIEF','',
-      'From: '+val('f-role'),
-      'Artist or project: '+(val('f-artist')||'-'),
-      'Track: '+(val('f-track')||'-'),
-      'Release date: '+(val('f-date')||'-'),
-      'Goal: '+val('f-goal'),
-      'Budget: '+(val('f-budget')||'Not given'),
-      'Reply to: '+(val('f-email')||'-')
-    ].join('\n');
+    return ['STATIC STUDIOS / CAMPAIGN BRIEF','']
+      .concat(fields.map(f=>f.dataset.label+': '+(val(f)||f.dataset.empty||'-')))
+      .join('\n');
   }
   function update(){
-    const a=val('f-artist');
-    $('send').href='mailto:contact@staticstudios.io'
-      +'?subject='+encodeURIComponent('Campaign brief: '+(a||'new track'))
+    const s=form.querySelector('[data-subject]');
+    send.href='mailto:contact@staticstudios.io'
+      +'?subject='+encodeURIComponent((form.dataset.subject||'Campaign brief')+': '
+        +((s&&val(s))||form.dataset.fallback||'new campaign'))
       +'&body='+encodeURIComponent(text());
   }
-  F.forEach(id=>{$(id).addEventListener('input',update);$(id).addEventListener('change',update);});
+  fields.forEach(f=>{f.addEventListener('input',update);f.addEventListener('change',update);});
+  form.addEventListener('submit',e=>{e.preventDefault(); send.click();});   // Enter sends
   update();
   const copy=$('copy'), status=$('copyStatus');
   if(copy) copy.addEventListener('click',async()=>{
