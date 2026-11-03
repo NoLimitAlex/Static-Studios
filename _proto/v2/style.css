@@ -120,6 +120,43 @@ p.fineprint,.fineprint{font-size:11px;line-height:1.9;color:var(--text-2);margin
 .service-list summary::after{content:"+";color:var(--muted-2)}
 .service-list details[open] summary::after{content:"\2013"}
 .service-list details p{font-size:12px;line-height:1.8;color:var(--text-2);margin:0 0 17px}
+.service-list details p.learn-more{margin-top:-8px}
+.learn-more a{font-size:11px;letter-spacing:.06em;text-decoration:none;border-bottom:1px solid var(--line-2);color:var(--ink)}
+.learn-more a:hover{border-bottom-color:var(--ink)}
+
+/* ---- service articles and the FAQ (3 Nov) ----
+   Article on the right, the sibling pages in a menu on the left so a reader can move
+   between services without going back. Under 760px the menu becomes a strip on top. */
+.svc{width:min(100%,1000px);margin:auto;padding:100px 0 140px;display:grid;
+  grid-template-columns:210px minmax(0,1fr);gap:clamp(32px,6vw,84px)}
+.svc .note{width:auto;margin:0;padding:0;max-width:640px}
+.svc-menu{position:sticky;top:38px;align-self:start;font-size:12px}
+.svc-menu p{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.svc-menu a{display:block;padding:9px 0;border-bottom:1px solid var(--line);text-decoration:none;
+  color:var(--text-2);line-height:1.5;transition:color .2s}
+.svc-menu a:hover,.svc-menu a[aria-current="page"]{color:var(--ink)}
+.svc-menu a[aria-current="page"]::before{content:"";display:inline-block;width:8px;height:1px;
+  background:var(--ink);vertical-align:middle;margin-right:8px}
+.svc-menu a.svc-back{border-bottom:0;margin-top:10px;color:var(--muted);font-size:11px}
+.crumbs{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.crumbs a{text-decoration:none;color:var(--muted)}
+.crumbs a:hover{color:var(--ink)}
+.note ul.plain-list{margin:0 0 30px}
+.faq h2.note-h2{margin-top:44px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{font-size:13px;padding:15px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--muted-2)}
+.faq details[open] summary::after{content:"\2013"}
+.faq details p{font-size:12px;line-height:1.8;color:var(--text-2);margin:0 0 17px}
+@media(max-width:760px){
+  .svc{grid-template-columns:1fr;gap:28px;padding-top:70px}
+  .svc-menu{position:static;display:flex;gap:18px;overflow-x:auto;white-space:nowrap;
+    padding-bottom:8px;border-bottom:1px solid var(--line);scrollbar-width:none}
+  .svc-menu p{display:none}
+  .svc-menu a{border:0;padding:4px 0}
+  .svc-menu a.svc-back{margin:0}
+}
 
 /* ---- brief form ---- */
 .brief{margin:0 0 34px;padding-top:4px}
