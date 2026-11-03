@@ -137,7 +137,11 @@ p.fineprint,.fineprint{font-size:11px;line-height:1.9;color:var(--text-2);margin
   background-image:linear-gradient(45deg,transparent 50%,var(--muted-2) 50%),
                    linear-gradient(135deg,var(--muted-2) 50%,transparent 50%);
   background-position:right 4px center,right 0 center;
-  background-size:4px 4px,4px 4px;background-repeat:no-repeat;padding-right:18px}
+  background-size:4px 4px,4px 4px;background-repeat:no-repeat;padding-right:18px;
+  color-scheme:dark}
+/* the open list is drawn by the OS; without this Windows paints it white with the
+   page's near-white text on top */
+.brief select option{background:#141416;color:#F2F0EB}
 .brief-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
 .btn{font:inherit;font-size:11px;letter-spacing:1px;text-transform:uppercase;
   text-decoration:none;display:inline-block;padding:11px 18px;cursor:pointer;
