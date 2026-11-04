@@ -48,7 +48,7 @@ deliberately, one piece at a time:
 
 | Version | Where | What it is |
 |---|---|---|
-| **v2.0** | git tag `v2.0` (commit b1691eb), snapshot `static-studios-v2-site-2026-11-04-v2.0.zip` in the OneDrive workspace | The prototype as reviewed by ChatGPT on 4 Nov 2026: plain gate with four names, music/games/apps sections, Learn more service pages, FAQ, creators section. Games/apps campaign pages are the "No signal yet" screens. |
+| **v2.0** | git tag `v2.0` (commit 4494f6f after the 4 Nov history clean-up), snapshot `static-studios-v2-site-2026-11-04-v2.0.zip` in the OneDrive workspace | The prototype as reviewed by ChatGPT on 4 Nov 2026: plain gate with four names, music/games/apps sections, Learn more service pages, FAQ, creators section. Games/apps campaign pages are the "No signal yet" screens. |
 | **v2.1** | branch `v2.1` (tag `v2.1` when finished) | Fixes from that review: no "we haven't run one yet" lines, "Harvey Hilton's campaign" instead of "our last campaign", games/apps playbook tuners, music tuner opens on Harvey, Harvey dates and engagement formula from the Apify export, KayAitchBee dates, email hint, one job per page (less repeated copy). |
 
 **Going back to v2.0:** `git checkout v2.0` (look only) or `git checkout v2-prototype` (the branch stays on v2.0 until v2.1 is approved), or unzip the v2.0 snapshot.
