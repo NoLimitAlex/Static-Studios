@@ -515,69 +515,6 @@ const heat=(()=>{
 })();
 
 
-/* ═══ NO SIGNAL (areas not open yet) ══════════════════════════════════
-   The identity page of an area with no campaign on the log yet. Instead of
-   the field of pulsing lines there is one trace across the middle of the
-   screen: it sweeps in from the left, manages one weak beat, and goes flat.
-   Every few seconds a faint blip, so it reads as dormant rather than dead.
-   The wordmark sits on a paper panel so the trace runs behind it. */
-(function flatline(){
-  const c=document.getElementById('flat-bg'); if(!c) return;
-  const x=c.getContext('2d');
-  let W,H;
-  function size(){
-    const d=Math.min(devicePixelRatio||1,2.5);
-    W=innerWidth;H=innerHeight;
-    c.width=Math.round(W*d);c.height=Math.round(H*d);
-    c.style.width=W+'px';c.style.height=H+'px';
-    x.setTransform(d,0,0,d,0,0);
-  }
-  size();addEventListener('resize',size);
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const t0=performance.now();
-  const BEAT_AT=900, BEAT_W=0.03, BLIP_EVERY=7000;
-  function spike(u){
-    if(Math.abs(u)>1) return 0;
-    if(u<-0.34) return 0;
-    if(u<-0.16) return -0.18*(1-(Math.abs(u+0.25)/0.09));
-    if(u<0)     return (1+u/0.16);
-    if(u<0.17)  return (1-u/0.17)-(u/0.17)*0.45;
-    if(u<0.42)  return -0.45*(1-(u-0.17)/0.25);
-    return 0;
-  }
-  function draw(now){
-    const t=now-t0, cy=H*0.5;
-    x.clearRect(0,0,W,H);
-    const sweep=Math.min(1,t/1400);
-    // one weak beat as the trace arrives, then a faint blip every few seconds
-    let beatPos=-1, amp=0;
-    if(t>BEAT_AT){
-      const since=(t-BEAT_AT)%BLIP_EVERY, first=t-BEAT_AT<BLIP_EVERY;
-      beatPos=Math.min(1,since/2600);
-      amp=first?52:16;
-    }
-    x.beginPath();
-    for(let px=0;px<=W*sweep;px+=2){
-      const s=px/W; let off=0;
-      if(beatPos>=0&&!reduce){
-        const u=(s-beatPos)/BEAT_W;
-        const decay=Math.max(0,1-beatPos*1.6);
-        if(Math.abs(u)<=1) off=spike(u)*amp*decay;
-      }
-      px===0?x.moveTo(px,cy+off):x.lineTo(px,cy+off);
-    }
-    x.strokeStyle='rgba('+THEME.rgb+',.42)';x.lineWidth=1.2;x.stroke();
-    // the head of the sweep, while it is still travelling
-    if(sweep<1){
-      x.beginPath();x.arc(W*sweep,cy,3,0,Math.PI*2);
-      x.fillStyle='rgba('+THEME.rgb+',.9)';x.fill();
-    }
-    if(!(reduce&&sweep>=1)) requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
-})();
-
-
 /* ═══ GATE PICK ═══════════════════════════════════════════════════════
    Clicking a name on the gate swells it and drops the other two while the
    sweep runs; Back (bfcache) puts the menu as it was. */
