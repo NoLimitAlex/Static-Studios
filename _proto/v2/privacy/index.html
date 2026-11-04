@@ -11,10 +11,10 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=20261104c">
+<link rel="preload" href="/fonts/archivo-normal-400-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-mono-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261104c">
+<link rel="stylesheet" href="/style.css?v=20261104e">
 </head>
 <body class="subpage">
 <canvas id="heat" aria-hidden="true"></canvas>
@@ -61,9 +61,8 @@
   regardless of whether the visitor has signed in to GitHub. We do not have access to
   those logs, we cannot query them, and we do not receive any report derived from them.
   Their retention is determined by GitHub and governed by the GitHub Privacy Statement.</p>
-  <p>Typefaces are requested from Google Fonts, at fonts.googleapis.com and
-  fonts.gstatic.com. Your browser makes those requests directly, which means Google
-  receives your IP address and the technical details that accompany any web request.</p>
+  <p>The typefaces used on this site are served from this website itself, so loading
+  a page does not contact any third-party font service.</p>
 
   <h2 class="note-h2">4. Information you send to us</h2>
   <p>When you write to us we receive whatever the message contains. In practice this is
@@ -105,12 +104,6 @@
       <dd>Operates our email. Stores and delivers correspondence on our instructions.
       <div class="where">European Union data centre</div></dd>
     </div>
-    <div>
-      <dt>Google</dt>
-      <dd>Serves the typefaces used on this site. Receives a request from your browser,
-      including your IP address, when a page loads.
-      <div class="where">Google Fonts</div></dd>
-    </div>
   </dl>
 
   <h2 class="note-h2">7. Transfers outside the EEA</h2>
@@ -119,14 +112,13 @@
   need to access that data centre, that such access is covered by a data processing
   agreement based on the European Commission's standard contractual clauses, and that
   there is no physical transfer of the data out of the European Union.</p>
-  <p>Two transfers do occur, neither of which involves anything you have sent us. GitHub,
+  <p>One transfer does occur, and it does not involve anything you have sent us. GitHub,
   which hosts this website, is based in the United States and logs visitor IP addresses
-  there. Google receives a request from your browser when the typefaces load. Both are
-  caused by visiting the site rather than by contacting us, and both rely on the
-  safeguards those providers have put in place. Those safeguards are the European
-  Commission's standard contractual clauses and, where the provider is certified under it,
-  the EU-US Data Privacy Framework, which the European Commission recognised in July 2023
-  as providing an adequate level of protection.</p>
+  there. This is caused by visiting the site rather than by contacting us, and it relies
+  on the safeguards GitHub has put in place: the European Commission's standard
+  contractual clauses and, where the provider is certified under it, the EU-US Data
+  Privacy Framework, which the European Commission recognised in July 2023 as providing
+  an adequate level of protection.</p>
 
   <h2 class="note-h2">8. Retention</h2>
   <p>Correspondence is retained for as long as it continues to serve the purpose for which
@@ -179,7 +171,7 @@
   <a class="email" href="mailto:contact@staticstudios.io?subject=Data%20protection%20enquiry">contact@staticstudios.io</a>
 
   <p class="fineprint">Alex Leppänen, trading as Static Studios, Espoo, Finland.
-  Last updated 29 October 2026. This notice is provided for transparency and is not legal
+  Last updated 4 November 2026. This notice is provided for transparency and is not legal
   advice. It should be reviewed by a qualified adviser before the practice it describes
   changes materially.</p>
 </main>
@@ -198,6 +190,6 @@
   <div class="foot-mark static-fill" aria-hidden="true">Static Studios</div>
   <div class="foot-base"><span>&copy; 2026 Static Studios</span><span>Creator campaigns for music, games and apps</span></div>
 </footer>
-<script src="/script.js?v=20261104b"></script>
+<script src="/script.js?v=20261104e"></script>
 </body>
 </html>

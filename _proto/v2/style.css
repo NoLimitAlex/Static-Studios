@@ -565,3 +565,29 @@ a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--ink)
   .side-menu{position:static;display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
   .side-menu a{border-bottom:0;white-space:nowrap}
 }
+
+/* ---- phone readability (4 Nov 2026, from the site scorecard) ----
+   Body copy at least 14px, labels at least 11-12px, and every header, nav and
+   footer link a tap target close to 44px tall. Desktop is unchanged. */
+@media(max-width:600px){
+  .note p,.email,.plain-list,.service-list details p,.faq details p{font-size:14px;line-height:1.75}
+  .service-list summary,.faq summary{font-size:14px}
+  .note-link,.learn-more a,.brief-lead,.brief-hint,.brief-status,p.fineprint,.fineprint,.note-lead{font-size:13px}
+  .eyebrow,.crumbs,.svc-menu p,.tally dt,.processors .where,.side-menu,.identity-sub{font-size:12px}
+  .brief label{font-size:12px}
+  .brief input,.brief select{font-size:16px}
+  .subpage header a,.gate header a,.home-nav a{display:inline-flex;align-items:center;min-height:44px}
+  .foot-cols a{display:block;padding:12px 0;margin:0}
+  .foot-cta .btn{padding:16px 18px}
+  .side-menu a,.svc-menu a{padding:13px 0}
+  .brief input::placeholder{font-size:13px}
+  .processors dt,.processors dd{font-size:14px}
+  /* the band is too narrow for word labels on a phone: keep the diamonds, the
+     numbered chips under the band name every station */
+  .playbook .st-mark{font-size:0;gap:0;padding:4px}
+  .radio-page:not(.playbook) .st-mark{font-size:11px}
+  /* gate and identity pages: the absolute Privacy link as a real tap target */
+  body:not(.subpage) .site-footer{bottom:0;font-size:11px}
+  body:not(.subpage) .site-footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px}
+  .home-nav{bottom:44px}
+}

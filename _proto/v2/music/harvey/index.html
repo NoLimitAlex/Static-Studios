@@ -27,6 +27,7 @@
 /* case study, v2 styling */
 *{box-sizing:border-box}
 html,body{margin:0}
+html{overflow-x:hidden}
 :root{font-family:'IBM Plex Mono',ui-monospace,monospace;color:#171717;background:#fff;
   font-synthesis:none;-webkit-font-smoothing:antialiased}
 body{min-height:100svh;padding-bottom:0}
@@ -78,7 +79,10 @@ p strong{color:#171717;font-weight:500}
 .site-footer{font-size:10px;color:#555;padding:0 45px 30px}
 .site-footer a{text-decoration:none}
 @media(max-width:600px){.subpage-head{padding:26px 24px 0}.site-footer{padding:0 24px 24px}
-  .wrap{padding:70px 24px 90px}.hero{gap:16px}}
+  .wrap{padding:70px 24px 90px}.hero{gap:16px}
+  p{font-size:14px}.aside,.cta p{font-size:13px}
+  .eyebrow,h2,.bignum-lbl,.metrics span,.pullquote cite{font-size:11px}
+  .site-footer{font-size:11px}.site-footer a{display:inline-flex;align-items:center;min-height:44px}}
 .hero-badge{position:relative}
 .mini-static{position:absolute;inset:0;width:100%;height:100%;display:block;
   z-index:2;opacity:.36;pointer-events:none;image-rendering:pixelated}
@@ -87,9 +91,8 @@ canvas#heat{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-even
 canvas#zap{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
 .subpage-head,.wrap,.site-footer{position:relative;z-index:2}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/ibm-plex-mono-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css?v=20261104c">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -189,7 +192,7 @@ canvas#zap{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
       <p class="aside">The 17 videos went up between 15 and 23 July 2026. Numbers as of
       23 September 2026, from the public TikTok counts on each video. Engagement rate is
       likes, comments, shares and saves divided by views: 1,546,943 likes, 16,013
-      comments, 256,894 shares and 107,849 saves.</p>
+      comments, 256,894 shares and 107,849 saves. <a href="https://www.tiktok.com/music/DANCE-UNTIL-WERE-DEAD-7658727006590225174" target="_blank" rel="noopener">See the sound on TikTok</a>.</p>
     </section>
   </article>
   <blockquote class="pullquote">
@@ -207,6 +210,6 @@ canvas#zap{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
 
 <footer class="site-footer"><a href="/privacy/" data-zap>Privacy &amp; legal</a></footer>
 <script>document.addEventListener('keydown',e=>{if(e.key==='Escape')location.href='/music/campaigns/'});</script>
-<script src="/script.js?v=20261104b"></script>
+<script src="/script.js?v=20261104e"></script>
 </body>
 </html>

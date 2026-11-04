@@ -112,3 +112,10 @@
   .has-noise .cr-avatar{animation:none}
   .cr-door strong,.cr-door .arr{transition:none}
 }
+
+/* phone readability (4 Nov 2026) */
+@media(max-width:600px){
+  .cr-steps > li,.cr-door span,.cr-lede,.cr-page p,.cr-page li{font-size:14px}
+  .cr-asks{font-size:13px}
+  .cr-kicker,.cr-hint,.cr-door small,.cr-h2,.cr-page h2,.cr-stats div{font-size:11px}
+}
