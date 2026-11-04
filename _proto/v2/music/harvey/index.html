@@ -87,6 +87,25 @@ p strong{color:#171717;font-weight:500}
 .mini-static{position:absolute;inset:0;width:100%;height:100%;display:block;
   z-index:2;opacity:.36;pointer-events:none;image-rendering:pixelated}
 .hero-badge svg,.hero-badge img{position:relative;z-index:1}
+/* top videos (4 Nov 2026): link-out cards, nothing loads from TikTok until a tap */
+.reel{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(138px,1fr);gap:12px;
+  overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px;margin:0 -2px 6px;scrollbar-width:thin}
+.reel a{position:relative;display:flex;flex-direction:column;justify-content:space-between;
+  aspect-ratio:9/16;background:#171717;color:#fff;border-radius:16px;overflow:hidden;
+  padding:12px;text-decoration:none;scroll-snap-align:start;border:1px solid #171717;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.reel a:hover,.reel a:focus-visible{transform:translateY(-3px)}
+.reel a:focus-visible{outline:2px solid #171717;outline-offset:3px}
+.reel .mini-static{opacity:.14}
+.reel a>*:not(canvas){position:relative;z-index:3}
+.reel .rk{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#bbb}
+.reel .play{align-self:center;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.7);
+  display:grid;place-items:center}
+.reel .play::before{content:"";margin-left:4px;border-left:13px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.reel b{display:block;font-size:24px;font-weight:700;letter-spacing:-.05em;line-height:1}
+.reel .vl{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#bbb;margin-top:4px}
+.reel .go{display:block;font-size:10px;letter-spacing:.6px;text-transform:uppercase;margin-top:10px;border-top:1px solid rgba(255,255,255,.25);padding-top:8px}
+@media(max-width:600px){.reel{grid-auto-columns:46%}.reel .rk,.reel .vl,.reel .go{font-size:11px}}
 canvas#heat{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 canvas#zap{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
 .subpage-head,.wrap,.site-footer{position:relative;z-index:2}
@@ -193,6 +212,25 @@ canvas#zap{position:fixed;inset:0;z-index:9999;pointer-events:none;display:none}
       23 September 2026, from the public TikTok counts on each video. Engagement rate is
       likes, comments, shares and saves divided by views: 1,546,943 likes, 16,013
       comments, 256,894 shares and 107,849 saves. <a href="https://www.tiktok.com/music/DANCE-UNTIL-WERE-DEAD-7658727006590225174" target="_blank" rel="noopener">See the sound on TikTok</a>.</p>
+    </section>
+    <section>
+      <h2>The top videos</h2>
+      <div class="reel">
+        <a href="https://www.tiktok.com/@_distraughtt/video/7665154019471445270" target="_blank" rel="noopener" aria-label="Video 1: 4.3M views, posted 22 Jul 2026. Opens on TikTok"><canvas class="mini-static" aria-hidden="true"></canvas>
+          <span class="rk">#1 &middot; 22 Jul</span><span class="play" aria-hidden="true"></span>
+          <span><b>4.3M</b><span class="vl">views</span><span class="go">Watch on TikTok &#8599;</span></span></a>
+        <a href="https://www.tiktok.com/@smegmamuncher21/video/7664262907156368642" target="_blank" rel="noopener" aria-label="Video 2: 2.0M views, posted 19 Jul 2026. Opens on TikTok"><canvas class="mini-static" aria-hidden="true"></canvas>
+          <span class="rk">#2 &middot; 19 Jul</span><span class="play" aria-hidden="true"></span>
+          <span><b>2.0M</b><span class="vl">views</span><span class="go">Watch on TikTok &#8599;</span></span></a>
+        <a href="https://www.tiktok.com/@baaors/video/7665511472381922582" target="_blank" rel="noopener" aria-label="Video 3: 1.7M views, posted 23 Jul 2026. Opens on TikTok"><canvas class="mini-static" aria-hidden="true"></canvas>
+          <span class="rk">#3 &middot; 23 Jul</span><span class="play" aria-hidden="true"></span>
+          <span><b>1.7M</b><span class="vl">views</span><span class="go">Watch on TikTok &#8599;</span></span></a>
+        <a href="https://www.tiktok.com/@smegmamuncher21/video/7664656357445946646" target="_blank" rel="noopener" aria-label="Video 4: 1.7M views, posted 20 Jul 2026. Opens on TikTok"><canvas class="mini-static" aria-hidden="true"></canvas>
+          <span class="rk">#4 &middot; 20 Jul</span><span class="play" aria-hidden="true"></span>
+          <span><b>1.7M</b><span class="vl">views</span><span class="go">Watch on TikTok &#8599;</span></span></a>
+      </div>
+      <p class="aside">The four biggest of the 17 videos: 9.7M of the 10M views. Each one
+      opens on TikTok in a new tab; nothing from TikTok loads on this page.</p>
     </section>
   </article>
   <blockquote class="pullquote">
