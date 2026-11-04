@@ -27,7 +27,7 @@
 <link rel="preload" href="/fonts/ibm-plex-mono-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css?v=20261104c">
 <link rel="stylesheet" href="/style.css?v=20261104f">
-<link rel="stylesheet" href="/creators/creators.css?v=20261104e">
+<link rel="stylesheet" href="/creators/creators.css?v=20261104g">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -74,7 +74,7 @@
         <p class="cr-handle">@<span data-name>yourname</span></p>
         <div class="cr-stats"><div><b>&middot;&middot;&middot;</b>Following</div><div><b>&middot;&middot;&middot;</b>Followers</div><div><b>&middot;&middot;&middot;</b>Likes</div></div>
         <span class="cr-follow">Follow</span>
-        <p class="cr-bio">memes &middot; gaming &middot; edits<br>business: <span class="cr-mail"><span data-name>yourname</span>@staticstudios.io</span></p>
+        <p class="cr-bio">memes &middot; gaming &middot; edits<br>business: <span class="cr-mail"><span class="cr-mail-name" data-name>yourname</span><span class="cr-mail-at">@staticstudios.io</span></span></p>
         <div class="cr-grid"><span></span><span></span><span></span><span></span><span></span><span></span></div>
       </div>
     </div>
@@ -102,7 +102,7 @@
   </div>
   <div class="foot-cols">
     <div><h3>Channels</h3><a href="/music/artists/" data-zap>TikTok campaigns for artists &amp; labels</a><a href="/games/studios/" data-zap>TikTok campaigns for game studios</a><a href="/apps/developers/" data-zap>TikTok campaigns for apps</a></div>
-    <div><h3>Work</h3><a href="/music/harvey/" data-zap>Harvey &middot; Dance Until We&rsquo;re Dead</a><a href="/music/kayaitchbee/" data-zap>KayAitchBee &middot; Say Shit</a><a href="/music/campaigns/" data-zap>Campaigns</a></div>
+    <div><h3>Work</h3><a href="/music/harvey/" data-zap>Harvey Hilton &middot; Dance Until We&rsquo;re Dead</a><a href="/music/kayaitchbee/" data-zap>KayAitchBee &middot; Say Shit</a><a href="/music/campaigns/" data-zap>Music campaigns</a></div>
     <div><h3>Studio</h3><a href="/creators/" data-zap>For creators</a><a href="/faq/" data-zap>FAQ</a><a href="/contact/" data-zap>Contact</a><a href="/privacy/" data-zap>Privacy &amp; legal</a></div>
     <div><h3>Contact</h3><a href="mailto:contact@staticstudios.io">contact@staticstudios.io</a><a href="https://instagram.com/staticstudios.io" target="_blank" rel="noopener">Instagram @staticstudios.io</a><p>Espoo, Finland</p></div>
   </div>
@@ -121,9 +121,16 @@
   const probe=document.createElement('span'); probe.setAttribute('aria-hidden','true');
   probe.style.cssText='position:absolute;visibility:hidden;white-space:pre;left:-9999px;top:0';
   input.parentNode.appendChild(probe);
-  function fit(){ const cs=getComputedStyle(input);
-    probe.style.font=cs.font; probe.style.letterSpacing=cs.letterSpacing; probe.style.textTransform=cs.textTransform;
-    probe.textContent=input.value||input.placeholder; input.style.width=Math.ceil(probe.offsetWidth+6)+'px'; }
+  /* a long name shrinks the type until it fits the column, down to 60% of the base size */
+  function measure(){ const cs=getComputedStyle(input);
+    probe.style.font=cs.font; probe.style.fontSize=cs.fontSize; probe.style.fontStretch=cs.fontStretch; probe.style.letterSpacing=cs.letterSpacing; probe.style.textTransform=cs.textTransform;
+    probe.textContent=input.value||input.placeholder; return probe.offsetWidth+6; }
+  function fit(){ input.style.fontSize='';
+    const base=parseFloat(getComputedStyle(input).fontSize), room=input.parentNode.clientWidth;
+    let w=measure();
+    if(room>0 && w>room){ input.style.fontSize=Math.max(base*.6,Math.floor(base*room/w))+'px'; w=measure();
+      for(let fs=parseFloat(input.style.fontSize);w>room&&fs>base*.6;){ fs=Math.max(base*.6,fs-1); input.style.fontSize=fs+'px'; w=measure(); } }
+    input.style.width=Math.ceil(room>0?Math.min(w,room):w)+'px'; }
   addEventListener('resize',fit); if(document.fonts) document.fonts.ready.then(fit);
   input.addEventListener('input',()=>{
     const clean=input.value.toLowerCase().replace(/[^a-z0-9._]/g,'').slice(0,22);

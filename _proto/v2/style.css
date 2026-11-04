@@ -591,3 +591,19 @@ a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--ink)
   body:not(.subpage) .site-footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px}
   .home-nav{bottom:44px}
 }
+
+/* ---- phone layout fixes (4 Nov 2026, from the visual scan) ----
+   Tuner: on a phone the cards no longer sit in a fixed-height box that clips them;
+   the screen grows to the tallest card and the page scrolls. Service and FAQ menus
+   wrap instead of hiding links off-screen. Identity-page nav keeps a 16px gutter. */
+@media(max-width:760px){
+  .svc-menu{flex-wrap:wrap;overflow:visible;row-gap:4px}
+  .svc-menu a{white-space:normal}
+}
+@media(max-width:600px){
+  .radio-full{height:auto;min-height:0}
+  .radio-full .screen{flex:none}
+  .radio-full .cards{flex:none}
+  .radio-full .station-card{height:auto;overflow:visible}
+  .home-nav{left:16px;right:16px;gap:14px;flex-wrap:wrap;justify-content:center;row-gap:2px}
+}
