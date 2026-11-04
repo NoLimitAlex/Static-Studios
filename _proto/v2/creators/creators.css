@@ -74,11 +74,6 @@
 .cr-h2 + .cr-steps{margin-top:22px}
 
 /* ---- inner pages (join / brands): wider note with a side label ---- */
-.cr-page{display:grid;grid-template-columns:200px minmax(0,640px);gap:clamp(24px,5vw,70px);padding:100px 0 40px;
-  width:min(100%,960px);margin:0 auto}
-.cr-side{position:sticky;top:40px;align-self:start;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
-.cr-side a{display:block;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--line);color:var(--muted)}
-.cr-side a:hover,.cr-side a[aria-current="page"]{color:var(--ink)}
 .cr-page h1{font-family:var(--f-display);font-stretch:68%;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;
   font-size:clamp(42px,6vw,84px);line-height:.95;margin:0 0 28px}
 .cr-page p,.cr-page li{font-size:14px;line-height:1.8;color:var(--text-2)}
@@ -103,10 +98,7 @@
   .cr-hero{grid-template-columns:1fr;min-height:0}
   .cr-phone{width:min(100%,280px)}
   .cr-steps{grid-template-columns:1fr 1fr}
-  .cr-page{grid-template-columns:1fr;padding-top:70px}
-  .cr-side{position:static;display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
-  .cr-side a{border-bottom:0;white-space:nowrap}
-}
+    }
 @media(max-width:600px){
   .cr main{padding-top:60px}
   .cr-doors{grid-template-columns:1fr}

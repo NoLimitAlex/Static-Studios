@@ -540,3 +540,28 @@ a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--ink)
   .foot-mark{font-size:calc((100vw - 48px) / 10.95)}
   .foot-cols a,.foot-cols p{font-size:14px}
 }
+
+/* ---- side menu (shared component, 4 Nov 2026) ----
+   Alex's pick ("exactly what I wanted on the side"): small spaced capitals,
+   hairline rows, the current page in full white, sticky beside the content.
+   Under 900px it becomes one sideways-scrolling row above the content.
+   Markup:
+     <main class="side-layout">
+       <nav class="side-menu" aria-label="Section">
+         <a href="/a/" data-zap>Page A</a>
+         <a href="/b/" data-zap aria-current="page">Page B</a>
+       </nav>
+       <article>...</article>
+     </main>
+   .side-layout is optional: any two-column grid works with .side-menu on the left. */
+.side-layout{display:grid;grid-template-columns:200px minmax(0,640px);gap:clamp(24px,5vw,70px);
+  width:min(100%,960px);margin:0 auto;padding:100px 0 40px}
+.side-menu{position:sticky;top:40px;align-self:start;font-size:10px;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--muted)}
+.side-menu a{display:block;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+.side-menu a:hover,.side-menu a[aria-current="page"]{color:var(--ink)}
+@media(max-width:900px){
+  .side-layout{grid-template-columns:1fr;padding-top:70px}
+  .side-menu{position:static;display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
+  .side-menu a{border-bottom:0;white-space:nowrap}
+}
