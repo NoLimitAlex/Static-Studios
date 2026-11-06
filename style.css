@@ -402,8 +402,8 @@ a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--ink)
 }
 
 /* ---- gate (the root page) ----
-   Nothing but the names on plain black (3 Nov: no line field, no text lines; the
-   H1 is .sr for search). Wordmark in the corner, privacy at the foot. A name
+   The names on plain black (3 Nov: no line field), with a question above and the
+   H1 under them since 6 Nov. Wordmark in the corner, privacy at the foot. A name
    grows on hover; on click it grows again and the other two drop out while the
    sweep runs (script.js adds .picked / .is-picked). */
 .gate{min-height:100svh;position:relative}
@@ -425,6 +425,14 @@ a.camp-card:hover .card-cue,a.camp-card:focus-visible .card-cue{color:var(--ink)
 @media(prefers-reduced-motion:reduce){.gate-menu nav a{transition:opacity .2s ease}
   .gate-menu nav a:hover,.gate-menu nav a:focus-visible,.gate-menu nav a:active,
   .gate-menu nav.picked a.is-picked{transform:none}}
+/* gate (6 Nov): a small question above the names and the one line that says what
+   the studio does under them, both mono grey, so a first-time visitor knows where
+   they are. They fade out with the names when one is picked. */
+.gate-ask,.gate-line{font-family:var(--f-mono);font-weight:400;font-size:12px;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--muted);margin:0;transition:opacity .3s ease}
+.gate-ask{margin-bottom:clamp(18px,2.6vw,34px)}
+.gate-line{margin-top:clamp(22px,3vw,40px);text-transform:none;letter-spacing:.3px;font-size:13px;line-height:1.6;color:var(--text-2)}
+.gate-menu > div:has(nav.picked) .gate-ask,.gate-menu > div:has(nav.picked) .gate-line{opacity:0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
 /* identity page of each sub-site: the wordmark, and under it what was picked,
