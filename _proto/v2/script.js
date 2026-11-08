@@ -38,11 +38,7 @@ const THEME=(()=>{
     c.style.width=W+'px';c.style.height=H+'px';
     x.setTransform(dpr,0,0,dpr,0,0);
   }
-  size();
-  // with reduced motion the field is one static frame: redraw it after a resize
-  // (resizing wipes the canvas) and when the tab comes back into view
-  addEventListener('resize',()=>{size(); if(reduce) requestAnimationFrame(draw);});
-  document.addEventListener('visibilitychange',()=>{ if(reduce&&!document.hidden) requestAnimationFrame(draw); });
+  size();addEventListener('resize',size);
 
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const lines=[];
@@ -94,20 +90,8 @@ const THEME=(()=>{
     return 0;
   }
 
-  /* Battery (4 Nov 2026): on touch screens the field runs at ~30fps instead of
-     every frame, and with reduced motion it draws once and stops (the lines
-     stay, nothing moves). Hidden tabs skip drawing entirely. */
-  const coarse=matchMedia('(pointer:coarse)').matches;
-  let lastDraw=0;
   function draw(now){
-    if(!reduce) requestAnimationFrame(draw);
-    if(document.hidden) return;
-    if(coarse && now-lastDraw<32) return;
-    // f = how many 60fps frames this draw stands for, so a 30fps phone moves the
-    // pulses as fast as a 60fps desktop instead of at half speed
-    const f=lastDraw?Math.min(4,(now-lastDraw)/16.667):1;
-    lastDraw=now;
-    curOn += (curT-curOn)*(1-Math.pow(0.93,f));        // ease the interference in and out
+    curOn += (curT-curOn)*0.07;        // ease the interference in and out
     x.clearRect(0,0,W,H);
     for(let i=lines.length-1;i>=0;i--){
       const L=lines[i];
@@ -115,7 +99,7 @@ const THEME=(()=>{
       if(t>=1){lines.splice(i,1);continue;}
       // ENTRANCE ONLY: the fade-in is replaced by the beam drawing itself
       // across. The fade-out at the end of life is the original.
-      const z=reduce?1:Math.min(1,age/L.zap);
+      const z=Math.min(1,age/L.zap);
       const reach=1-Math.pow(1-z,3);
       const hot=z<1?(1-z)*(1-z):0;
       const alpha = t>0.82 ? (1-(t-0.82)/0.18) : 1;
@@ -191,11 +175,12 @@ const THEME=(()=>{
       }
 
       for(let j=L.pulses.length-1;j>=0;j--){
-        L.pulses[j].p += 0.0011*f;
+        L.pulses[j].p += 0.0011;
         if(L.pulses[j].p>1.05) L.pulses.splice(j,1);
       }
     }
     if(lines.length<MAX && Math.random()<0.03) spawn();
+    requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
 })();
