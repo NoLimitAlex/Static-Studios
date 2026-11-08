@@ -351,13 +351,16 @@ const heat=(()=>{
                                // yellow for a beat before it starts cooling
       }
     }
-    live=true;
+    live=true; kick();
   }
-  let lastT=performance.now();
+  /* The loop only runs while there is heat on screen: deposit() starts it, and
+     it stops itself once everything has cooled (battery, 4 Nov 2026). */
+  let lastT=performance.now(), running=false;
+  function kick(){ if(!running){ running=true; lastT=performance.now(); requestAnimationFrame(frame); } }
   function frame(now){
-    requestAnimationFrame(frame);
     const dt=Math.min(0.05,(now-lastT)/1000); lastT=now;
-    if(!grid||!live||document.hidden) return;
+    if(!grid||!live||document.hidden){ running=false; return; }
+    requestAnimationFrame(frame);
     const keep=Math.pow(COOL,dt);
     let any=false;
     for(let i=0;i<buf.length;i++){
@@ -372,7 +375,7 @@ const heat=(()=>{
     live=any;
     h.putImageData(img,0,0);
   }
-  if(size()) requestAnimationFrame(frame);
+  size();
   addEventListener('resize',size);
   /* Animation frames stop in a background tab, so a burn that was mid-fade
      when you switched away would be frozen there waiting for you. Wipe it on
