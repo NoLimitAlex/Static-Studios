@@ -44,39 +44,21 @@ const THEME=(()=>{
   const lines=[];
   const MAX=18;
 
-  /* Cursor interference. A line passing near the pointer picks up a local
-     wobble, strongest where the pointer is closest and fading out with
-     distance, so moving across the field disturbs the signal rather than
-     sitting on top of it. */
-  const CUR_R=150;        // how close the pointer has to be, in px
-  const CUR_AMP=17;       // how far the line is pushed at full strength
-  let mx=-99999,my=-99999,curOn=0,curT=0;
-  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;curT=1;},{passive:true});
-  addEventListener('blur',()=>{curT=0;});
-  document.addEventListener('mouseout',e=>{if(!e.relatedTarget)curT=0;});
-
-  function spawn(aged){
+  function spawn(){
     // pick an angle, then extend the line well past both edges
     const ang=Math.random()*Math.PI;
     const cx=Math.random()*W, cy=Math.random()*H;
     const r=Math.hypot(W,H);
-    let x1=cx-Math.cos(ang)*r, y1=cy-Math.sin(ang)*r;
-    let x2=cx+Math.cos(ang)*r, y2=cy+Math.sin(ang)*r;
-    // ENTRANCE ONLY: fire from either end, not always the same one
-    if(Math.random()<0.5){ const tx=x1,ty=y1; x1=x2;y1=y2; x2=tx;y2=ty; }
-    const life=9000+Math.random()*7000;
     lines.push({
-      x1:x1, y1:y1, x2:x2, y2:y2,
-      // ENTRANCE ONLY: stagger the opening batch through their lifetimes so
-      // the page does not start with eleven lines firing at once
-      born:performance.now()-(aged?Math.random()*life*0.8:0),
-      life:life,
-      zap:150+Math.random()*130,                  // ENTRANCE ONLY: ms to cross
+      x1:cx-Math.cos(ang)*r, y1:cy-Math.sin(ang)*r,
+      x2:cx+Math.cos(ang)*r, y2:cy+Math.sin(ang)*r,
+      born:performance.now(),
+      life:9000+Math.random()*7000,
       pulses:[],
       next:Math.random()*2600
     });
   }
-  for(let i=0;i<11;i++) spawn(true);
+  for(let i=0;i<11;i++) spawn();
 
   // classic ECG-ish spike, u in [-1,1]
   function spike(u){
@@ -91,18 +73,13 @@ const THEME=(()=>{
   }
 
   function draw(now){
-    curOn += (curT-curOn)*0.07;        // ease the interference in and out
     x.clearRect(0,0,W,H);
     for(let i=lines.length-1;i>=0;i--){
       const L=lines[i];
       const age=now-L.born, t=age/L.life;
       if(t>=1){lines.splice(i,1);continue;}
-      // ENTRANCE ONLY: the fade-in is replaced by the beam drawing itself
-      // across. The fade-out at the end of life is the original.
-      const z=Math.min(1,age/L.zap);
-      const reach=1-Math.pow(1-z,3);
-      const hot=z<1?(1-z)*(1-z):0;
-      const alpha = t>0.82 ? (1-(t-0.82)/0.18) : 1;
+      // lightning in, slow fade out
+      const alpha = t<0.06 ? (t/0.06) : t>0.82 ? (1-(t-0.82)/0.18) : 1;
 
       if(!reduce && age>L.next){
         L.pulses.push({p:-0.05, big:Math.random()<0.22});
@@ -112,67 +89,20 @@ const THEME=(()=>{
       const len=Math.hypot(dx,dy);
       const nx=-dy/len, ny=dx/len;                  // perpendicular
 
-      /* Where the pointer falls on THIS line, and how hard it pulls.
-         cs is the point along the line nearest the pointer; perp is the
-         pointer's signed distance from the line, which both sets the strength
-         and decides which side the line bends toward. */
-      let cs=0, cAmp=0, cSide=1;
-      if(curOn>0.004){
-        const rx=mx-L.x1, ry=my-L.y1;
-        cs=(rx*dx+ry*dy)/(len*len);
-        const perp=rx*nx+ry*ny, ap=Math.abs(perp);
-        if(ap<CUR_R && cs>-0.02 && cs<1.02){
-          cAmp=(1-ap/CUR_R)*curOn;
-          cSide=perp<0?-1:1;
-        }
-      }
-
       x.beginPath();
       const STEP=0.004;
-      for(let s=0;s<=reach;s+=STEP){
+      for(let s=0;s<=1;s+=STEP){
         let off=0;
         for(const pl of L.pulses){
           const u=(s-pl.p)/0.021;
           if(Math.abs(u)<=1) off += spike(u)*(pl.big?66:31);
         }
-        if(cAmp>0.004){
-          // a soft wobble in line-space, centred under the pointer
-          const ds=(s-cs)*len;
-          off += cSide*cAmp*CUR_AMP*Math.exp(-(ds*ds)/(2*90*90))*Math.sin(ds*0.045-now*0.006);
-        }
         const px=L.x1+dx*s+nx*off, py=L.y1+dy*s+ny*off;
         s===0 ? x.moveTo(px,py) : x.lineTo(px,py);
       }
-      x.strokeStyle='rgba('+THEME.rgb+','+(alpha*0.3)+')';
+      x.strokeStyle='rgba('+THEME.rgb+','+(alpha*0.3)+')';   // dark theme: read the ink colour
       x.lineWidth=1;
       x.stroke();
-
-      // ENTRANCE ONLY: a brighter stretch chasing the tip while it travels.
-      // hot is 0 once the entrance is done, so this stops drawing entirely.
-      if(hot>0.002){
-        const a0=Math.max(0,reach-0.16);
-        let off0=0,off1=0;
-        for(const pl of L.pulses){
-          const u0=(a0-pl.p)/0.021, u1=(reach-pl.p)/0.021;
-          if(Math.abs(u0)<=1) off0 += spike(u0)*(pl.big?66:31);
-          if(Math.abs(u1)<=1) off1 += spike(u1)*(pl.big?66:31);
-        }
-        const g=x.createLinearGradient(L.x1+dx*a0+nx*off0, L.y1+dy*a0+ny*off0,
-                                       L.x1+dx*reach+nx*off1, L.y1+dy*reach+ny*off1);
-        g.addColorStop(0,'rgba('+THEME.rgb+',0)');
-        g.addColorStop(1,'rgba('+THEME.rgb+','+(alpha*0.72*hot)+')');
-        x.beginPath();
-        for(let s=a0;s<=reach;s+=STEP){
-          let off=0;
-          for(const pl of L.pulses){
-            const u=(s-pl.p)/0.021;
-            if(Math.abs(u)<=1) off += spike(u)*(pl.big?66:31);
-          }
-          const px=L.x1+dx*s+nx*off, py=L.y1+dy*s+ny*off;
-          s===a0 ? x.moveTo(px,py) : x.lineTo(px,py);
-        }
-        x.strokeStyle=g;x.lineWidth=1.5;x.stroke();
-      }
 
       for(let j=L.pulses.length-1;j>=0;j--){
         L.pulses[j].p += 0.0011;
